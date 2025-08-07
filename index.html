@@ -12,8 +12,9 @@
     <script src="https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.min.js"></script>
     <style>
         body { font-family: 'Poppins', sans-serif; background-color: #f8f7f2; }
-        .font-noto { font-family: 'Noto Serif SC', serif; }
+        .font-noto { font-family: 'Noto Serif SC', serif; border-left: 16px solid #10bbbb; padding-left: 1rem;}
         .visual-anchor { font-size: 14rem; font-weight: 900; line-height: 0.8; color: transparent; -webkit-text-stroke: 2px #ef4444; z-index: -1; }
+        .card-content { min-height: 800px; }
         .card-content h3 { font-family: 'Noto Serif SC', serif; font-size: 2.5rem; font-weight: 700; margin-bottom: 1rem; }
         .card-content h4 { font-family: 'Noto Serif SC', serif; font-size: 1.5rem; font-weight: 700; margin-top: 2rem; margin-bottom: 0.5rem; border-left: 4px solid #ef4444; padding-left: 1rem; }
         .card-content p, .card-content li { font-family: 'Poppins', 'Noto Serif SC', serif; font-size: 1.1rem; line-height: 2; margin-bottom: 1rem; }
@@ -22,6 +23,7 @@
         .card-content th, .card-content td { font-family: 'Poppins', sans-serif; border: 1px solid #d1d5db; padding: 0.75rem; text-align: left; }
         .card-content th { background-color: #f3f4f6; font-weight: 600; }
         .card-content pre { background-color: #f3f4f6; padding: 1rem; border-radius: 0.5rem; overflow-x: auto; margin: 1rem 0; font-family: 'Courier New', Courier, monospace; white-space: pre-wrap; }
+        .footer { font-family: 'Noto Serif SC', serif; font-size: 1.5rem; font-weight: 700; margin-top: 2rem; margin-bottom: 0.5rem; background: #10bbbb; padding-left: 1rem; margin: 0;}
         .diagram-placeholder { cursor: pointer; font-size: 3rem; color: #ef4444; transition: transform 0.2s; }
         .diagram-placeholder:hover { transform: scale(1.1); }
         .home-card-list li { font-size: 1.1rem; line-height: 1.8; margin-bottom: 0.5rem; }
@@ -36,8 +38,8 @@
 </head>
 <body class="text-gray-800">
 
-    <header class="sticky top-0 z-30 w-full bg-white/95 backdrop-blur-sm border-b-2 border-gray-200 py-4 px-4 md:px-12">
-        <div class="flex justify-between items-center max-w-screen-2xl mx-auto">
+    <header class="sticky top-0 z-30 w-full bg-white/95 backdrop-blur-sm border-b-2 border-gray-200 py-4 px-4">
+        <div class="flex justify-between items-center mx-auto">
             <h1 class="font-noto text-3xl md:text-4xl font-bold whitespace-nowrap">GenAI應用技術演進史</h1>
             <div class="flex items-center space-x-2">
                 <button id="start-journey" class="bg-red-500 text-white font-poppins font-semibold py-2 px-4 rounded-lg hover:bg-red-600 transition">開始演進之旅</button>
@@ -55,6 +57,13 @@
             </aside>
             <section id="info-cards-container" class="col-span-12 md:col-span-10 relative">
                 <!-- Dynamically generated cards will be inserted here -->
+            </section>
+            <aside class="col-span-12 md:col-span-2 flex items-center justify-center relative">
+            </aside>
+            <section id="info-cards-container" class="col-span-12 md:col-span-10 relative">
+                <div class="footer p-10 shadow-lg rounded-lg"> 
+                    <h4>此時此刻，AI的演進還在繼續中...(未完待續)</h4>
+                </div>
             </section>
         </div>
     </main>
@@ -228,35 +237,11 @@
                     mermaid: null
                 },
                 {
-                    id: 21,
-                    anchor: 'P1',
-                    title: '問題P1',
-                    subtitle: '',
-                    body: `<h4>那些應用技術是可以來解決GenAI產生幻覺？</h4>`,
-                    mermaid: null
-                },
-                {
                     id: 19,
                     anchor: 'R1',
                     title: '問題R1',
                     subtitle: '',
                     body: `<h4>要怎麼讓已整合RAG技術的GenAI只回答搜尋到的文件內容，而不會亂說話？</h4>`,
-                    mermaid: null
-                },
-                {
-                    id: 24,
-                    anchor: 'R2',
-                    title: '問題R2',
-                    subtitle: '',
-                    body: `<h4>要讓GenAI能夠回答GeDCC上關於ISO 27001管理規範的問題，可以使用那種技術來達成？</h4>`,
-                    mermaid: null
-                },
-                {
-                    id: 23,
-                    anchor: 'F1',
-                    title: '問題F1',
-                    subtitle: '',
-                    body: `<h4>ChatGPT聊天介面上可以開啟的網頁搜尋功能，你覺得是使用哪一種應用技術達成？</h4>`,
                     mermaid: null
                 },
                 {
@@ -268,11 +253,35 @@
                     mermaid: null
                 },
                 {
+                    id: 21,
+                    anchor: 'P1',
+                    title: '問題P1',
+                    subtitle: '',
+                    body: `<h4>那些應用技術是可以來解決GenAI產生幻覺？</h4>`,
+                    mermaid: null
+                },
+                {
                     id: 22,
                     anchor: 'A1',
                     title: '問題A1',
                     subtitle: '',
                     body: `<h4>AI輔助開發工具用了那些我們剛剛講述的應用技術？</h4>`,
+                    mermaid: null
+                },
+                {
+                    id: 23,
+                    anchor: 'F1',
+                    title: '問題F1',
+                    subtitle: '',
+                    body: `<h4>ChatGPT聊天介面上可以開啟的網頁搜尋功能，你覺得是使用哪一種應用技術達成？</h4>`,
+                    mermaid: null
+                },
+                {
+                    id: 24,
+                    anchor: 'R2',
+                    title: '問題R2',
+                    subtitle: '',
+                    body: `<h4>要讓GenAI能夠回答公司關於ISO 27001內部管理規範的問題，可以使用那種技術來達成？</h4>`,
                     mermaid: null
                 },
                 {
@@ -307,6 +316,22 @@
                     body: `<h4>Business Analyst或Project Manager們可以怎麼來使用這些GenAI技術？</h4>`,
                     mermaid: null
                 },
+                {
+                    id: 29,
+                    anchor: 'M2',
+                    title: '問題M2',
+                    subtitle: '',
+                    body: `<h4>請說明Function Calling和MCP之間的差異？</h4>`,
+                    mermaid: null
+                },
+                {
+                    id: 30,
+                    anchor: 'P2',
+                    title: '問題P2',
+                    subtitle: '',
+                    body: `<h4>你覺得 prompt 裡的角色設定（像是 '你是一個資安顧問'）真的有用嗎？模型會照做？</h4>`,
+                    mermaid: null
+                }
             ];
 
             const cardsContainer = document.getElementById('info-cards-container');

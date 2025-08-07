@@ -12,3 +12,6 @@
 - [GenAI應用技術演進史](https://github.com/daxiaguojin/daxiaguojin.github.io/blob/main/TEXT.md)
 
 ## 工具：
+- VS Code + [Roo Code](https://roocode.com/)
+- [Gemini Cli](https://github.com/google-gemini/gemini-cli)
+- Github
