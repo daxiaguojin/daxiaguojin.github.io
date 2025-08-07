@@ -6,7 +6,7 @@
 
 ## 提示詞：
 - [雜誌資訊卡風格](https://github.com/daxiaguojin/daxiaguojin.github.io/blob/main/PROMPT-1.md)
-- [像素藝術風格](https://github.com/daxiaguojin/daxiaguojin.github.io/blob/main/PROMPT-1.md)
+- [像素藝術風格](https://github.com/daxiaguojin/daxiaguojin.github.io/blob/main/PROMPT-2.md)
 
 ## 本文：
 - [GenAI應用技術演進史](https://github.com/daxiaguojin/daxiaguojin.github.io/blob/main/TEXT.md)
