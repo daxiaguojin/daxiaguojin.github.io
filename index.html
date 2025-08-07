@@ -1,2611 +1,557 @@
 <!DOCTYPE html>
-<html lang="zh-TW">
+<html lang="zh-Hant">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>GenAI應用技術演進史 - Generative AI Evolution Timeline</title>
-    <!-- Include Mermaid.js for diagram rendering -->
-    <script type="module">
-        import mermaid from 'https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.esm.min.mjs';
-        mermaid.initialize({ 
-            startOnLoad: true,
-            theme: 'neutral',
-            themeVariables: {
-                primaryColor: '#002200',
-                primaryTextColor: '#00FF41',
-                primaryBorderColor: '#00FF41',
-                lineColor: '#00FF41'
-            }            
-        });
-    </script>
+    <title>GenAI 技術演進史</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@400;700&family=Poppins:wght@400;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.min.js"></script>
     <style>
-        /* 像素藝術字體和基礎設置 */
-        @import url('https://fonts.googleapis.com/css2?family=Press+Start+2P&family=Noto+Sans+TC:wght@400;700;900&display=swap');
-
-        :root {
-            --bg-color: #000000;
-            --primary-text-color: #00FF41;
-            --highlight-color: #EC2D7A;
-            --highlight-text-shadow: #00FF41;
-            --card-bg-color: linear-gradient(135deg, #001100, #002200);
-            --card-border-color: #00FF41;
-            --card-hover-border-color: #EC2D7A;
-            --card-hover-shadow-color: #EC2D7A;
-            --card-before-bg: linear-gradient(45deg, #EC2D7A, #00FF41);
-            --mermaid-bg-color: rgba(0, 40, 0, 0.8);
-            --mermaid-border-color: #00FF41;
-            --mermaid-text-color: #00FF41;
-            --mermaid-node-fill-color: #001100;
-            --mermaid-node-rect-fill-color: #002200;
-            --mermaid-arrow-color: #00FF41;
-            --control-btn-bg: linear-gradient(135deg, #EC2D7A, #FF4081);
-            --control-btn-hover-bg: linear-gradient(135deg, #FF4081, #EC2D7A);
-            --control-btn-text-color: #000000;
-            --control-btn-border-color: #00FF41;
-            --control-btn-hover-border-color: #EC2D7A;
-            --control-btn-shadow-color: rgba(236, 45, 122, 0.3);
-            --control-btn-hover-shadow-color: rgba(236, 45, 122, 0.5);
-            --tech-tag-bg: rgba(0, 255, 65, 0.1);
-            --tech-tag-border: #00FF41;
-            --tech-tag-text: #00FF41;
-            --tech-tag-hover-bg: rgba(236, 45, 122, 0.3);
-            --tech-tag-hover-border: #EC2D7A;
-            --tech-tag-hover-text: #EC2D7A;
-            --pixel-decoration-bg: #EC2D7A;
-            --connection-line-bg: linear-gradient(90deg, #00FF41, transparent);
-            --connection-line-shadow: #00FF41;
-            --orbit-ring-border: #00FF41;
-            --tech-dot-bg: linear-gradient(45deg, #EC2D7A, #eaff00);
-            --tech-dot-shadow: #540a0a;
-            --central-core-bg: linear-gradient(45deg, #EC2D7A, #00FF41);
-            --central-core-text: #000;
-            --intro-title-text: #EC2D7A;
-            --intro-description-text: #00FF41;
-        }
-
-        body.light-theme {
-            --bg-color: #f0f2f5;
-            --primary-text-color: #333740;
-            --highlight-color: #d63384;
-            --highlight-text-shadow: #198754;
-            --card-bg-color: linear-gradient(135deg, #ffffff, #f8f9fa);
-            --card-border-color: #dee2e6;
-            --card-hover-border-color: #d63384;
-            --card-hover-shadow-color: #d63384;
-            --card-before-bg: linear-gradient(45deg, #d63384, #198754);
-            --mermaid-bg-color: rgba(255, 255, 255, 0.8);
-            --mermaid-border-color: #dee2e6;
-            --mermaid-text-color: #333740;
-            --mermaid-node-fill-color: #ffffff;
-            --mermaid-node-rect-fill-color: #f8f9fa;
-            --mermaid-arrow-color: #333740;
-            --control-btn-bg: linear-gradient(135deg, #d63384, #e768a8);
-            --control-btn-hover-bg: linear-gradient(135deg, #e768a8, #d63384);
-            --control-btn-text-color: #ffffff;
-            --control-btn-border-color: #dee2e6;
-            --control-btn-hover-border-color: #d63384;
-            --control-btn-shadow-color: rgba(214, 51, 132, 0.2);
-            --control-btn-hover-shadow-color: rgba(214, 51, 132, 0.4);
-            --tech-tag-bg: rgba(25, 135, 84, 0.1);
-            --tech-tag-border: #198754;
-            --tech-tag-text: #198754;
-            --tech-tag-hover-bg: rgba(214, 51, 132, 0.1);
-            --tech-tag-hover-border: #d63384;
-            --tech-tag-hover-text: #d63384;
-            --pixel-decoration-bg: #d63384;
-            --connection-line-bg: linear-gradient(90deg, #198754, transparent);
-            --connection-line-shadow: #198754;
-            --orbit-ring-border: #198754;
-            --tech-dot-bg: linear-gradient(45deg, #d63384, #ffc107);
-            --tech-dot-shadow: #6f42c1;
-            --central-core-bg: linear-gradient(45deg, #d63384, #198754);
-            --central-core-text: #ffffff;
-            --intro-title-text: #d63384;
-            --intro-description-text: #333740;
-        }
-        
-        html {
-            scroll-behavior: smooth;
-        }
-
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-        
-        body {
-            background-color: var(--bg-color);
-            color: var(--primary-text-color);
-            font-family: 'Noto Sans TC', sans-serif;
-            overflow-x: hidden;
-            min-height: 100vh;
-            position: relative;
-        }
-        
-        /* 主容器 - 非對稱網格佈局 */
-        .main-container {
-            display: grid;
-            grid-template-columns: 1fr 2fr 1.5fr 1fr;
-            grid-template-rows: repeat(12, minmax(120px, auto));
-            gap: 20px;
-            padding: 40px 20px;
-            min-height: 150vh;
-            position: relative;
-            max-width: 100%;
-            /* BUG修復註解: 擴展網格以容納更多內容卡片 */
-        }
-        
-        /* 標題區域 - 破界設計 */
-        .title-section {
-            grid-column: 1 / 4;
-            grid-row: 1 / 3;
-            position: relative;
-            z-index: 10;
-            /* BUG修復註解: z-index確保標題不被其他元素遮擋 */
-        }
-        
-        .main-title {
-            font-family: 'Press Start 2P', monospace;
-            font-size: clamp(24px, 3.5vw, 42px);
-            color: var(--highlight-color);
-            text-shadow:
-                2px 2px 0px var(--highlight-text-shadow),
-                4px 4px 0px var(--bg-color);
-            margin-bottom: 20px;
-            transform: rotate(-2deg);
-            /* BUG修復註解: 調整字體大小以適應更長標題 */
-        }
-        
-        .subtitle {
-            font-size: 20px;
-            color: var(--primary-text-color);
-            font-weight: 700;
-            margin-left: 40px;
-            transform: rotate(1deg);
-        }
-        
-        /* AI技術卡片 - 統一樣式 */
-        .tech-card {
-            background: var(--card-bg-color);
-            border: 2px solid var(--card-border-color);
-            border-radius: 0; /* 像素藝術風格 */
-            padding: 25px;
-            position: relative;
-            width: 85%;
-            opacity: 0;
-            transform: translateY(80px) scale(0.7) rotateX(15deg);
-            transition: all 0.6s cubic-bezier(0.25, 0.46, 0.45, 0.94);
-            pointer-events: none;
-            filter: blur(5px);
-            margin: 0 auto; /* Center the cards */
-            /* BUG修復註解: 漸變背景確保可讀性 */
-        }
-        
-        .tech-card.show:hover {
-            border-color: var(--card-hover-border-color);
-            transform: translateY(-10px) scale(1.05) rotate(1deg);
-            box-shadow: 0 10px 30px var(--card-hover-shadow-color);
-        }
-        
-        .tech-card::before {
-            content: '';
-            position: absolute;
-            top: -5px;
-            left: -5px;
-            right: -5px;
-            bottom: -5px;
-            background: var(--card-before-bg);
-            z-index: -1;
-            opacity: 0;
-            transition: opacity 0.3s ease;
-            /* BUG修復註解: z-index -1 確保邊框效果在背景層 */
-        }
-        
-        .tech-card.show:hover::before {
-            opacity: 0.3;
-        }
-        
-        /* 卡片容器 - 改為垂直排列 */
-        .cards-container {
-            grid-column: 1 / 5;
-            grid-row: 2 / 13;
-            display: flex;
-            flex-direction: column;
-            gap: 30px;
-            align-items: center;
-            width: 100%;
-            margin: 0 auto;
-            padding-bottom: 120px; /* 為底部固定按鈕留出空間 */
-        }
-        
-        
-        .tech-card.show {
-            opacity: 1;
-            transform: translateY(0) scale(1) rotateX(0deg);
-            pointer-events: auto;
-            filter: blur(0px);
-            animation: cardGlow 2s ease-in-out 0.5s;
-        }
-        
-        .tech-card.show:nth-child(odd) {
-            transform: translateY(0) scale(1) rotate(-1deg) rotateX(0deg);
-        }
-        
-        .tech-card.show:nth-child(even) {
-            transform: translateY(0) scale(1) rotate(1deg) rotateX(0deg);
-        }
-        
-        /* 卡片出現動畫 */
-        @keyframes cardAppear {
-            0% {
-                transform: translateY(80px) scale(0.7) rotateX(15deg);
-                opacity: 0;
-                filter: blur(5px);
-            }
-            30% {
-                transform: translateY(20px) scale(0.9) rotateX(5deg);
-                opacity: 0.7;
-                filter: blur(2px);
-            }
-            60% {
-                transform: translateY(-10px) scale(1.05) rotateX(-2deg);
-                opacity: 0.9;
-                filter: blur(0px);
-            }
-            80% {
-                transform: translateY(5px) scale(0.98) rotateX(1deg);
-                opacity: 1;
-            }
-            100% {
-                transform: translateY(0) scale(1) rotateX(0deg);
-                opacity: 1;
-                filter: blur(0px);
-            }
-        }
-        
-        /* 動態卡片動畫 */
-        @keyframes cardSlideInFromLeft {
-            0% {
-                transform: translateX(-100px) scale(0.7) rotateZ(-5deg);
-                opacity: 0;
-                filter: blur(5px);
-            }
-            30% {
-                transform: translateX(-30px) scale(0.9) rotateZ(-2deg);
-                opacity: 0.7;
-                filter: blur(2px);
-            }
-            60% {
-                transform: translateX(10px) scale(1.05) rotateZ(1deg);
-                opacity: 0.9;
-                filter: blur(0px);
-            }
-            80% {
-                transform: translateX(-5px) scale(0.98) rotateZ(0.5deg);
-                opacity: 1;
-            }
-            100% {
-                transform: translateX(0) scale(1) rotateZ(0deg);
-                opacity: 1;
-                filter: blur(0px);
-            }
-        }
-        
-        @keyframes cardSlideInFromRight {
-            0% {
-                transform: translateX(100px) scale(0.7) rotateZ(5deg);
-                opacity: 0;
-                filter: blur(5px);
-            }
-            30% {
-                transform: translateX(30px) scale(0.9) rotateZ(2deg);
-                opacity: 0.7;
-                filter: blur(2px);
-            }
-            60% {
-                transform: translateX(-10px) scale(1.05) rotateZ(-1deg);
-                opacity: 0.9;
-                filter: blur(0px);
-            }
-            80% {
-                transform: translateX(5px) scale(0.98) rotateZ(-0.5deg);
-                opacity: 1;
-            }
-            100% {
-                transform: translateX(0) scale(1) rotateZ(0deg);
-                opacity: 1;
-                filter: blur(0px);
-            }
-        }
-        
-        @keyframes cardSlideInFromTop {
-            0% {
-                transform: translateY(-80px) scale(0.7) rotateX(15deg);
-                opacity: 0;
-                filter: blur(5px);
-            }
-            30% {
-                transform: translateY(-20px) scale(0.9) rotateX(5deg);
-                opacity: 0.7;
-                filter: blur(2px);
-            }
-            60% {
-                transform: translateY(10px) scale(1.05) rotateX(-2deg);
-                opacity: 0.9;
-                filter: blur(0px);
-            }
-            80% {
-                transform: translateY(-5px) scale(0.98) rotateX(1deg);
-                opacity: 1;
-            }
-            100% {
-                transform: translateY(0) scale(1) rotateX(0deg);
-                opacity: 1;
-                filter: blur(0px);
-            }
-        }
-        
-        @keyframes cardSlideInFromBottom {
-            0% {
-                transform: translateY(80px) scale(0.7) rotateX(-15deg);
-                opacity: 0;
-                filter: blur(5px);
-            }
-            30% {
-                transform: translateY(20px) scale(0.9) rotateX(-5deg);
-                opacity: 0.7;
-                filter: blur(2px);
-            }
-            60% {
-                transform: translateY(-10px) scale(1.05) rotateX(2deg);
-                opacity: 0.9;
-                filter: blur(0px);
-            }
-            80% {
-                transform: translateY(5px) scale(0.98) rotateX(-1deg);
-                opacity: 1;
-            }
-            100% {
-                transform: translateY(0) scale(1) rotateX(0deg);
-                opacity: 1;
-                filter: blur(0px);
-            }
-        }
-        
-        @keyframes cardZoomInRotate {
-            0% {
-                transform: scale(0) rotateZ(180deg);
-                opacity: 0;
-                filter: blur(5px);
-            }
-            30% {
-                transform: scale(0.7) rotateZ(90deg);
-                opacity: 0.7;
-                filter: blur(2px);
-            }
-            60% {
-                transform: scale(1.1) rotateZ(45deg);
-                opacity: 0.9;
-                filter: blur(0px);
-            }
-            80% {
-                transform: scale(0.95) rotateZ(10deg);
-                opacity: 1;
-            }
-            100% {
-                transform: scale(1) rotateZ(0deg);
-                opacity: 1;
-                filter: blur(0px);
-            }
-        }
-        
-        /* 卡片發光效果 */
-        @keyframes cardGlow {
-            0% {
-                box-shadow: 0 0 0px var(--card-border-color);
-                border-color: var(--card-border-color);
-            }
-            50% {
-                box-shadow: 0 0 30px var(--card-hover-shadow-color), 0 0 60px var(--card-hover-shadow-color);
-                border-color: var(--card-hover-border-color);
-            }
-            100% {
-                box-shadow: 0 0 0px var(--card-border-color);
-                border-color: var(--card-border-color);
-            }
-        }
-        
-        /* 技術名稱樣式 */
-        .tech-name {
-            font-family: 'Press Start 2P', monospace;
-            font-size: 24px; /* Increased from 16px */
-            color: var(--highlight-color);
-            margin-bottom: 12px; /* Increased from 10px */
-            text-shadow: 1px 1px 0px var(--bg-color);
-        }
-        
-        .tech-name-en {
-            font-size: 20px; /* Increased from 10px */
-            color: var(--primary-text-color);
-            margin-bottom: 18px; /* Increased from 15px */
-            opacity: 0.8;
-        }
-        
-        /* 時間標籤 */
-        .time-tag {
-            position: absolute;
-            top: -10px;
-            right: -10px;
-            background: var(--highlight-color);
-            color: var(--bg-color);
-            padding: 5px 10px;
-            font-family: 'Press Start 2P', monospace;
-            font-size: 16px;
-            font-weight: bold;
-            /* BUG修復註解: 絕對定位確保時間標籤不影響內容佈局 */
-        }
-        
-        /* 控制按鈕樣式 - 固定在底部 */
-        .control-buttons {
-            position: fixed;
-            bottom: 20px;
-            left: 50%;
-            transform: translateX(-50%);
-            display: flex;
-            justify-content: center;
-            gap: 20px;
-            z-index: 1000;
-            background: var(--bg-color);
-            padding: 15px 25px;
-            border-radius: 10px;
-            border: 2px solid var(--control-btn-border-color);
-            backdrop-filter: blur(10px);
-            box-shadow: 0 8px 32px var(--control-btn-shadow-color);
-        }
-        
-        .control-btn {
-            background: var(--control-btn-bg);
-            border: 2px solid var(--control-btn-border-color);
-            color: var(--control-btn-text-color);
-            padding: 12px 24px;
-            font-family: 'Press Start 2P', monospace;
-            font-size: 12px;
-            cursor: pointer;
-            transition: all 0.3s ease;
-            text-transform: uppercase;
-            box-shadow: 0 4px 8px var(--control-btn-shadow-color);
-        }
-        
-        .control-btn:hover {
-            background: var(--control-btn-hover-bg);
-            border-color: var(--control-btn-hover-border-color);
-            transform: translateY(-2px) scale(1.05);
-            box-shadow: 0 8px 15px var(--control-btn-hover-shadow-color);
-        }
-        
-        .control-btn:active {
-            transform: translateY(0) scale(1);
-            box-shadow: 0 4px 8px var(--control-btn-shadow-color);
-        }
-        
-        .control-btn:disabled {
-            opacity: 0.5;
-            cursor: not-allowed;
-            transform: none;
-        }
-        
-        /* 響應式設計 - 移動設備優化 */
-        @media (max-width: 768px) {
-            .control-buttons {
-                bottom: 10px;
-                left: 10px;
-                right: 10px;
-                transform: none;
-                flex-direction: column;
-                gap: 10px;
-                padding: 10px 15px;
-            }
-            
-            .control-btn {
-                font-size: 10px;
-                padding: 10px 16px;
-            }
-            
-            .cards-container {
-                padding-bottom: 180px; /* 移動設備需要更多空間 */
-            }
-        }
-        
-        /* 小螢幕優化 */
-        @media (max-width: 480px) {
-            .control-buttons {
-                gap: 8px;
-                padding: 8px 12px;
-            }
-            
-            .control-btn {
-                font-size: 8px;
-                padding: 8px 12px;
-            }
-        }
-        
-        /* 描述文字 */
-        .tech-description {
-            font-size: 20px; /* Increased from 14px */
-            line-height: 1.7; /* Increased from 1.6 */
-            color: var(--primary-text-color);
-            font-weight: 400;
-        }
-        
-        .tech-description strong {
-            color: var(--highlight-color);
-            font-weight: 700;
-            text-shadow: 1px 1px 0px var(--bg-color);
-        }
-        
-        /* Flow Card Styles */
-        .flow-container {
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            margin: 20px 0;
-            position: relative;
-        }
-
-/*
-        /* Mermaid diagram styling */
-        .mermaid {
-            background: var(--mermaid-bg-color);
-            border: 1px solid var(--mermaid-border-color);
-            border-radius: 4px;
-            padding: 20px;
-            margin: 20px 0;
-            text-align: center;
-            width: 100%;
-        }
-
-        .mermaid-container {
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            overflow: auto;
-            width: 100%;
-        }
-        
-        /* Style Mermaid diagrams for better visibility */
-        .mermaid :is(.node, .label) {
-            stroke: var(--mermaid-text-color) !important;
-            color: var(--mermaid-text-color) !important;
-            fill: var(--mermaid-node-fill-color) !important;
-        }
-
-        .mermaid :is(.flowchart-link) {
-            stroke-dasharray: 4, 4 !important;
-            animation: flow 1s linear infinite;
-            stroke-width: 2px !important;
-        }
-
-        .mermaid :is(.node) rect {
-            fill: var(--mermaid-node-rect-fill-color) !important;
-        }
-        
-        .mermaid :is(.node) text {
-            fill: var(--mermaid-text-color) !important;
-            stroke: none !important;
-        }
-        
-        .mermaid :is(.flowchart-link) path {
-            stroke: var(--mermaid-arrow-color) !important;
-        }
-        
-        .mermaid :is(.arrowheadPath) {
-            fill: var(--mermaid-arrow-color) !important;
-            stroke: var(--mermaid-arrow-color) !important;
-        }
-
-        /* 1:1 aspect ratio container */
-        .diagram-wrapper {
-            width: 100%;
-            max-width: 800px;
-            aspect-ratio: 1 / 1;
-            border: 1px solid var(--card-border-color);
-            padding: 10px;
-            box-sizing: border-box;
-            background: var(--bg-color);
-        }
-
-        @keyframes flow {
-            from {
-                stroke-dashoffset: 8;
-            }
-            to {
-                stroke-dashoffset: 0;
-            }
-        }        
-
-        .flow-step {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            z-index: 2;
-        }
-        
-        .user-step {
-            animation: pulse 2s infinite;
-        }
-        
-        .prompt-step {
-            animation: pulse 2s infinite 0.3s;
-        }
-        
-        .llm-step {
-            animation: pulse 2s infinite 0.6s;
-        }
-        
-        .knowledge-step {
-            animation: pulse 2s infinite 0.9s;
-        }
-        
-        .step-label {
-            font-family: 'Press Start 2P', monospace;
-            font-size: 12px;
-            color: var(--highlight-color);
-            margin-bottom: 10px;
-        }
-        
-        .step-icon {
-            font-size: 36px;
-            width: 60px;
-            height: 60px;
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            background: var(--card-bg-color);
-            border: 2px solid var(--card-border-color);
-            box-shadow: 0 0 10px var(--card-hover-shadow-color);
-        }
-        
-        .user-icon {
-            animation: bounce 1.5s infinite;
-        }
-        
-        .prompt-icon {
-            animation: bounce 1.5s infinite 0.5s;
-        }
-        
-        .llm-icon {
-            animation: bounce 1.5s infinite 1s;
-        }
-        
-        .knowledge-icon {
-            animation: bounce 1.5s infinite 1.5s;
-        }
-        
-        .flow-arrow {
-            display: flex;
-            align-items: center;
-            position: relative;
-            flex: 1;
-            max-width: 150px;
-            margin: 0 15px;
-        }
-        
-        .arrow-line {
-            height: 4px;
-            background: var(--primary-text-color);
-            flex: 1;
-            position: relative;
-            border-radius: 2px;
-        }
-        
-        .arrow-head {
-            width: 0;
-            height: 0;
-            border-top: 8px solid transparent;
-            border-bottom: 8px solid transparent;
-            border-left: 12px solid var(--primary-text-color);
-            margin-left: -2px;
-        }
-        
-        .double-arrow .arrow-head.left {
-            border-left: none;
-            border-right: 12px solid var(--primary-text-color);
-            margin-left: 0;
-            margin-right: -2px;
-        }
-        
-        .flow-description {
-            margin-top: 25px;
-            padding-top: 15px;
-            border-top: 1px dashed var(--primary-text-color);
-        }
-        
-        /* Flow Animations */
-        @keyframes pulse {
-            0%, 100% {
-                transform: scale(1);
-                box-shadow: 0 0 0 0 rgba(236, 45, 122, 0.4);
-            }
-            50% {
-                transform: scale(1.05);
-                box-shadow: 0 0 0 10px rgba(236, 45, 122, 0);
-            }
-        }
-        
-        @keyframes bounce {
-            0%, 100% {
-                transform: translateY(0);
-            }
-            50% {
-                transform: translateY(-10px);
-            }
-        }
-        
-        /* 像素藝術裝飾元素 */
-        .pixel-decoration {
-            position: absolute;
-            width: 20px;
-            height: 20px;
-            background: var(--pixel-decoration-bg);
-            /* BUG修復註解: 固定尺寸確保像素藝術效果一致 */
-        }
-        
-        .pixel-1 {
-            top: 10%;
-            left: 5%;
-            animation: pixelFloat 3s ease-in-out infinite;
-        }
-        
-        .pixel-2 {
-            top: 30%;
-            right: 10%;
-            animation: pixelFloat 4s ease-in-out infinite reverse;
-        }
-        
-        .pixel-3 {
-            bottom: 20%;
-            left: 15%;
-            animation: pixelFloat 5s ease-in-out infinite;
-        }
-        
-        .pixel-4 {
-            bottom: 40%;
-            right: 5%;
-            animation: pixelFloat 3.5s ease-in-out infinite reverse;
-        }
-        
-        /* 動畫效果 */
-        @keyframes pixelFloat {
-            0%, 100% { transform: translateY(0px) rotate(0deg); }
-            50% { transform: translateY(-20px) rotate(180deg); }
-        }
-        
-        @keyframes glitch {
-            0% { transform: translate(0); }
-            20% { transform: translate(-2px, 2px); }
-            40% { transform: translate(-2px, -2px); }
-            60% { transform: translate(2px, 2px); }
-            80% { transform: translate(2px, -2px); }
-            100% { transform: translate(0); }
-        }
-        
-        /* 連接線 - 視覺引導 */
-        .connection-line {
-            position: absolute;
-            height: 2px;
-            background: var(--connection-line-bg);
-            z-index: 1;
-            /* BUG修復註解: z-index 1 確保連接線在背景但不遮擋文字 */
-        }
-        
-        .line-1 {
-            top: 25%;
-            left: 20%;
-            width: 200px;
-            transform: rotate(15deg);
-            animation: lineGlow 2s ease-in-out infinite alternate;
-        }
-        
-        .line-2 {
-            top: 60%;
-            right: 25%;
-            width: 150px;
-            transform: rotate(-20deg);
-            animation: lineGlow 3s ease-in-out infinite alternate;
-        }
-        
-        @keyframes lineGlow {
-            0% { opacity: 0.3; box-shadow: 0 0 5px var(--connection-line-shadow); }
-            100% { opacity: 0.8; box-shadow: 0 0 15px var(--connection-line-shadow); }
-        }
-        
-        /* 響應式設計 */
-        @media (max-width: 768px) {
-            .main-container {
-                grid-template-columns: 1fr;
-                grid-template-rows: auto;
-                gap: 30px;
-                padding: 20px 10px;
-            }
-            
-            .title-section,
-            .tech-card {
-                grid-column: 1;
-                grid-row: auto;
-                transform: none !important;
-                margin: 0 !important;
-                /* BUG修復註解: 移動端重置變換和邊距避免佈局問題 */
-            }
-            
-            .main-title {
-                font-size: 20px;
-                transform: none;
-            }
-        }
-        
-        /* 首頁動畫元素 */
-        .intro-animation {
-            grid-column: 1 / 5;
-            grid-row: 2 / 12;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: start;
-            opacity: 1;
-            transition: opacity 1s ease-in-out;
-        }
-        
-        .intro-animation.hidden {
-            opacity: 0;
-            pointer-events: none;
-        }
-        
-        /* 中央動畫圓圈 */
-        .central-animation {
-            position: relative;
-            width: 300px;
-            height: 300px;
-            margin-bottom: 40px;
-        }
-        
-        .orbit-ring {
-            position: absolute;
-            border: 2px solid var(--orbit-ring-border);
-            border-radius: 50%;
-            opacity: 0.6;
-        }
-        
-        .orbit-1 {
-            width: 100px;
-            height: 100px;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-            animation: rotate 10s linear infinite;
-        }
-        
-        .orbit-2 {
-            width: 150px;
-            height: 150px;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-            animation: rotate 15s linear infinite reverse;
-        }
-        
-        .orbit-3 {
-            width: 200px;
-            height: 200px;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-            animation: rotate 20s linear infinite;
-        }
-        
-        .orbit-4 {
-            width: 250px;
-            height: 250px;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-            animation: rotate 25s linear infinite reverse;
-        }
-        
-        /* 軌道上的技術點 */
-        .tech-dot {
-            position: absolute;
-            width: 8px;
-            height: 8px;
-            background: var(--tech-dot-bg);
-            border-radius: 50%;
-            box-shadow: 0 0 10px var(--tech-dot-shadow);
-        }
-        
-        .dot-1 {
-            top: 0;
-            left: 50%;
-            transform: translateX(-50%);
-            animation: pulse 2s ease-in-out infinite;
-        }
-        
-        .dot-2 {
-            right: 0;
-            top: 50%;
-            transform: translateY(-50%);
-            animation: pulse 2s ease-in-out infinite 0.5s;
-        }
-        
-        .dot-3 {
-            bottom: 0;
-            left: 50%;
-            transform: translateX(-50%);
-            animation: pulse 2s ease-in-out infinite 1s;
-        }
-        
-        .dot-4 {
-            left: 0;
-            top: 50%;
-            transform: translateY(-50%);
-            animation: pulse 2s ease-in-out infinite 1.5s;
-        }
-        
-        /* 中央核心 */
-        .central-core {
-            position: absolute;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-            width: 40px;
-            height: 40px;
-            background: var(--central-core-bg);
-            border-radius: 50%;
-            animation: coreGlow 3s ease-in-out infinite;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-family: 'Press Start 2P', monospace;
-            font-size: 12px;
-            color: var(--central-core-text);
-        }
-        
-        /* 介紹文字 */
-        .intro-text {
-            text-align: center;
-            max-width: 800px;
-            margin-bottom: 30px;
-        }
-        
-        .intro-title {
-            font-family: 'Press Start 2P', monospace;
-            font-size: 24px;
-            color: var(--intro-title-text);
-            margin-bottom: 20px;
-            animation: textGlow 2s ease-in-out infinite alternate;
-        }
-        
-        .intro-description {
-            font-size: 20px;
-            color: var(--intro-description-text);
-            line-height: 1.6;
-            margin-bottom: 20px;
-        }
-        
-        .tech-preview {
-            display: flex;
-            flex-wrap: wrap;
-            justify-content: center;
-            gap: 15px;
-            margin-top: 20px;
-        }
-        
-        .tech-tag, .tech-preview a {
-            background: var(--tech-tag-bg);
-            border: 1px solid var(--tech-tag-border);
-            color: var(--tech-tag-text);
-            padding: 5px 12px;
-            font-size: 16px;
-            border-radius: 15px;
-            animation: tagFloat 3s ease-in-out infinite;
-            text-decoration: none; /* Remove underline from links */
-        }
-        
-        .tech-tag:hover, .tech-preview a:hover {
-            background: var(--tech-tag-hover-bg);
-            border-color: var(--tech-tag-hover-border);
-            color: var(--tech-tag-hover-text);
-            cursor: pointer;
-        }
-        
-        /* 粒子效果 */
-        .particle {
-            position: absolute;
-            width: 4px;
-            height: 4px;
-            background: var(--highlight-color);
-            border-radius: 50%;
-            pointer-events: none;
-            z-index: 1000;
-        }
-        
-        .particle.green {
-            background: var(--primary-text-color);
-        }
-        
-        @keyframes particleExplode {
-            0% {
-                transform: translate(0, 0) scale(0) rotate(0deg);
-                opacity: 1;
-            }
-            20% {
-                transform: translate(var(--deltaX, 0), var(--deltaY, 0)) scale(1.2) rotate(90deg);
-                opacity: 1;
-            }
-            80% {
-                transform: translate(calc(var(--deltaX, 0) * 2), calc(var(--deltaY, 0) * 2)) scale(0.8) rotate(270deg);
-                opacity: 0.3;
-            }
-            100% {
-                transform: translate(calc(var(--deltaX, 0) * 3), calc(var(--deltaY, 0) * 3)) scale(0) rotate(360deg);
-                opacity: 0;
-            }
-        }
-        
-        /* 新增動畫關鍵幀 */
-        @keyframes rotate {
-            from { transform: translate(-50%, -50%) rotate(0deg); }
-            to { transform: translate(-50%, -50%) rotate(360deg); }
-        }
-        
-        @keyframes pulse {
-            0%, 100% { 
-                transform: translateX(-50%) scale(1);
-                opacity: 1;
-            }
-            50% { 
-                transform: translateX(-50%) scale(1.5);
-                opacity: 0.7;
-            }
-        }
-        
-        @keyframes coreGlow {
-            0%, 100% {
-                box-shadow: 0 0 20px var(--highlight-color);
-                transform: translate(-50%, -50%) scale(1);
-            }
-            50% {
-                box-shadow: 0 0 40px var(--primary-text-color);
-                transform: translate(-50%, -50%) scale(1.1);
-            }
-        }
-        
-        @keyframes textGlow {
-            0% { text-shadow: 0 0 10px var(--highlight-color); }
-            100% { text-shadow: 0 0 20px var(--highlight-color), 0 0 30px var(--highlight-color); }
-        }
-        
-        @keyframes tagFloat {
-            0%, 100% { transform: translateY(0px); }
-            50% { transform: translateY(-10px); }
-        }
-        
-        /* 滾動效果 */
-        .fade-in {
-            opacity: 0;
-            transform: translateY(30px);
-            transition: all 0.6s ease;
-        }
-        
-        .fade-in.visible {
-            opacity: 1;
-            transform: translateY(0);
-        }
-        
-        .question-name {
-            font-size: x-large;
-            font-family: 'Press Start 2P', monospace;
-            color: var(--highlight-color);
-            margin-bottom: 12px; /* Increased from 10px */
-            text-shadow: 1px 1px 0px var(--bg-color);
-        }
-
-        .question-content {
-            font-size: x-large; /* Increased from 14px */
-            font-family: 'Press Start 2P', monospace;
-            line-height: 1.7; /* Increased from 1.6 */
-            color: var(--primary-text-color);
-            font-weight: 400;
-            margin-bottom: 20px; /* Increased from 15px */
-        }
+        body { font-family: 'Poppins', sans-serif; background-color: #f8f7f2; }
+        .font-noto { font-family: 'Noto Serif SC', serif; }
+        .visual-anchor { font-size: 14rem; font-weight: 900; line-height: 0.8; color: transparent; -webkit-text-stroke: 2px #ef4444; z-index: -1; }
+        .card-content h3 { font-family: 'Noto Serif SC', serif; font-size: 2.5rem; font-weight: 700; margin-bottom: 1rem; }
+        .card-content h4 { font-family: 'Noto Serif SC', serif; font-size: 1.5rem; font-weight: 700; margin-top: 2rem; margin-bottom: 0.5rem; border-left: 4px solid #ef4444; padding-left: 1rem; }
+        .card-content p, .card-content li { font-family: 'Poppins', 'Noto Serif SC', serif; font-size: 1.1rem; line-height: 2; margin-bottom: 1rem; }
+        .card-content ul { list-style-position: inside; padding-left: 1rem; list-style-type: disc; }
+        .card-content table { width: 100%; margin-top: 1rem; border-collapse: collapse; }
+        .card-content th, .card-content td { font-family: 'Poppins', sans-serif; border: 1px solid #d1d5db; padding: 0.75rem; text-align: left; }
+        .card-content th { background-color: #f3f4f6; font-weight: 600; }
+        .card-content pre { background-color: #f3f4f6; padding: 1rem; border-radius: 0.5rem; overflow-x: auto; margin: 1rem 0; font-family: 'Courier New', Courier, monospace; white-space: pre-wrap; }
+        .diagram-placeholder { cursor: pointer; font-size: 3rem; color: #ef4444; transition: transform 0.2s; }
+        .diagram-placeholder:hover { transform: scale(1.1); }
+        .home-card-list li { font-size: 1.1rem; line-height: 1.8; margin-bottom: 0.5rem; }
+        .home-card-list li a { cursor: pointer; transition: color 0.2s; }
+        .home-card-list li a:hover { color: #ef4444; text-decoration: underline; }
+        #mermaid-render-container svg { max-width: none; width: 100%; height: 100%; transition: transform 0.2s ease-in-out; transform-origin: 0 0; }
+        #mermaid-render-container.pan-active { cursor: grab; }
+        #mermaid-render-container.pan-active.panning { cursor: grabbing; }
+        .mermaid { display: flex; justify-content: center; width:100%; height:100%; font-family: 'Poppins', sans-serif; font-size: 1.2rem; }
+        #zoom-controls { padding-right: 20px; }
     </style>
 </head>
-<body>    
-    <!-- 像素裝飾元素 -->
-    <div class="pixel-decoration pixel-1"></div>
-    <div class="pixel-decoration pixel-2"></div>
-    <div class="pixel-decoration pixel-3"></div>
-    <div class="pixel-decoration pixel-4"></div>
-    
-    <!-- 連接線 -->
-    <div class="connection-line line-1"></div>
-    <div class="connection-line line-2"></div>
-    
-    <div class="main-container">
-        <!-- 標題區域 -->
-        <div class="title-section fade-in">
-            <h1 class="main-title">GenAI應用技術演進史</h1>
-            <div class="subtitle">Generative AI Application Technology Evolution Timeline</div>
-        </div>
-        
-        <!-- 控制按鈕 -->
-        <div class="control-buttons">
-            <button class="control-btn" id="startBtn">開始演進之旅</button>
-            <button class="control-btn" id="prevBtn" disabled>上一頁</button>
-            <button class="control-btn" id="nextBtn" disabled>下一頁</button>
-            <button class="control-btn" id="resetBtn">回到首頁</button>
-            <button class="control-btn" id="themeToggleBtn">切換主題</button>
-        </div>
-        
-        <!-- 首頁動畫 -->
-        <div class="intro-animation" id="introAnimation">
-            <div class="central-animation">
-                <!-- 軌道圓圈 -->
-                <div class="orbit-ring orbit-1">
-                    <div class="tech-dot dot-1"></div>
-                </div>
-                <div class="orbit-ring orbit-2">
-                    <div class="tech-dot dot-2"></div>
-                </div>
-                <div class="orbit-ring orbit-3">
-                    <div class="tech-dot dot-3"></div>
-                </div>
-                <div class="orbit-ring orbit-4">
-                    <div class="tech-dot dot-4"></div>
-                </div>
-                <!-- 中央核心 -->
-                <div class="central-core">AI</div>
-            </div>
-            
-            <div class="intro-text">
-                <div class="intro-title">探索GenAI應用技術演進</div>
-                <div class="intro-description">
-                    從早期的大型語言模型到現代的多代理系統，見證生成式人工智慧技術的革命性發展歷程。
-                    每一項技術都解決了前一代的問題，推動著AI向更智能、更實用的方向發展。
-                </div>
-                <div class="tech-preview">
-                    <a href="#gpt3-card" class="tech-tag">GPT-3.X</a>
-                    <a href="#llm-early-card" class="tech-tag">LLM</a>
-                    <a href="#prompt-engineering-card" class="tech-tag">Prompt Engineering</a>
-                    <a href="#token-card" class="tech-tag">Token</a>
-                    <a href="#rag-card" class="tech-tag">RAG</a>
-                    <a href="#in-context-learning-card" class="tech-tag">In-Context Learning</a>
-                    <a href="#function-calling-card" class="tech-tag">Function Calling</a>
-                    <a href="#agent-card" class="tech-tag">Agent</a>
-                    <a href="#agentic-rag-card" class="tech-tag">Agentic RAG</a>
-                    <a href="#mcp-card" class="tech-tag">MCP</a>
-                    <a href="#multi-agent-card" class="tech-tag">Multi-Agent</a>
-                    <a href="#ai-assisted-dev-card" class="tech-tag">AI-Assisted Dev</a>
-                    <a href="#vibe-coding-card" class="tech-tag">Vibe Coding</a>
-                    <a href="#vibe-spec-card" class="tech-tag">Vibe Spec</a>
-                    <a href="#multimodal-ai-card" class="tech-tag">Multimodal AI</a>
-                    <a href="#synthetic-media-card" class="tech-tag">Synthetic Media</a>
-                    <a href="#generative-design-card" class="tech-tag">Generative Design</a>
-                    <a href="#causal-ai-card" class="tech-tag">Causal AI</a>
-                    <a href="#" class="tech-tag" data-question="1">Question 1</a>
-                    <a href="#" class="tech-tag" data-question="2">Question 2</a>
-                    <a href="#" class="tech-tag" data-question="3">Question 3</a>
-                    <a href="#" class="tech-tag" data-question="4">Question 4</a>
-                    <a href="#" class="tech-tag" data-question="5">Question 5</a>
-                    <a href="#" class="tech-tag" data-question="6">Question 6</a>
-                    <a href="#" class="tech-tag" data-question="7">Question 7</a>
-                    <a href="#" class="tech-tag" data-question="8">Question 8</a>
-                    <a href="#" class="tech-tag" data-question="9">Question 9</a>
-                    <a href="#" class="tech-tag" data-question="10">Question 10</a>
-                </div>
+<body class="text-gray-800">
+
+    <header class="sticky top-0 z-30 w-full bg-white/95 backdrop-blur-sm border-b-2 border-gray-200 py-4 px-4 md:px-12">
+        <div class="flex justify-between items-center max-w-screen-2xl mx-auto">
+            <h1 class="font-noto text-3xl md:text-4xl font-bold whitespace-nowrap">GenAI應用技術演進史</h1>
+            <div class="flex items-center space-x-2">
+                <button id="start-journey" class="bg-red-500 text-white font-poppins font-semibold py-2 px-4 rounded-lg hover:bg-red-600 transition">開始演進之旅</button>
+                <button id="prev-card" class="bg-gray-200 text-gray-700 font-poppins font-semibold py-2 px-4 rounded-lg hover:bg-gray-300 transition">上一張卡片</button>
+                <button id="next-card" class="bg-gray-200 text-gray-700 font-poppins font-semibold py-2 px-4 rounded-lg hover:bg-gray-300 transition">下一張卡片</button>
+                <button id="go-home" class="bg-gray-200 text-gray-700 font-poppins font-semibold py-2 px-6 rounded-lg hover:bg-gray-300 transition">回到首頁</button>
             </div>
         </div>
-        
-        <!-- 卡片容器 -->
-        <div class="cards-container">
-                
-        <!-- GPT-3 卡片 -->
-        <div class="tech-card gpt3-card fade-in" id="gpt3-card">
-            <div class="time-tag">2020.06~2022.11</div>
-            <div class="tech-name">GPT-3/3.5</div>
-            <div class="tech-name-en">Generative Pre-trained Transformer 3/3.5</div>
-            <div class="tech-description">
-                OpenAI 於 2020 年 6 月 發佈 GPT-3，標誌著大型語言模型（LLM）的重要進展。1750億參數展現前所未有的語言理解和生成能力。
-                <br>
-                OpenAI於 2022 年 推出 GPT‑3.5，包括 text-davinci-002/003 及 gpt-3.5‑turbo，其中 ChatGPT 正是基於 GPT‑3.5 的 fine‑tuned 版本（即 InstructGPT 系列）。
-                <br>
-                ChatGPT於 2022 年 11 月推出，僅 5 天即突破 100 萬用戶，2 個月內達到 1 億用戶，顯著改變全球對 AI 的認知與採用節奏 。
-                <br>
-                <div class="mermaid-container">
-                    <div class="mermaid">
-timeline
-    title GPT 系列模型發布時間表
+    </header>
 
-    section Early LLM
-    2018 : GPT-1 發佈 : 1.17 億個參數
-    2019 : GPT-2 發佈 : 最大 15 億個參數
-    2020 : GPT-3 發佈 : 1750 億個參數
-    2022-11-30 : GPT-3.5 發佈 : 驅動 ChatGPT
-
-    section Evolving LLM
-    2023-03 : GPT-4 發佈 : 提升推理能力與穩定性
-    2023-11 : GPT-4 Turbo : 效能/成本優化 : context 最長 128K
-    2024-05 : GPT-4o 發佈 : 多模態整合 : 圖像、語音、影片
-                    </div>
-                </div>
-            </div>
-        </div>
-
-        <!-- 早期LLM 卡片 -->
-        <div class="tech-card llm-early-card fade-in" id="llm-early-card">
-            <div class="time-tag">~2022</div>
-            <div class="tech-name">早期LLM</div>
-            <div class="tech-name-en">Early Large Language Models</div>
-            <section class="tech-description" aria-labelledby="llm-early-issues">
-                <p id="llm-early-issues">
-                    早期的 LLM（如 GPT-2, GPT-3）能夠生成類似人類的自然語言文本，但存在幾個主要問題：
-                </p>
-                <ul>
-                    <li>
-                        <strong>知識受訓練數據限制：</strong>
-                        它們只能回答基於訓練數據的問題，無法即時更新知識。
-                    </li>
-                    <li>
-                        <strong>幻覺（Hallucination）問題：</strong>
-                        經常生成錯誤或不存在的資訊。
-                    </li>
-                    <li>
-                        <strong>缺乏行動能力：</strong>
-                        它們只能提供文本回應，不能與外部系統互動。
-                    </li>
-                </ul>
+    <main class="w-full mx-auto p-4">
+        <div class="grid grid-cols-12 gap-8">
+            <aside class="col-span-12 md:col-span-2 flex items-center justify-center relative">
+                <div id="visual-anchor-container" class="visual-anchor"></div>
+            </aside>
+            <section id="info-cards-container" class="col-span-12 md:col-span-10 relative">
+                <!-- Dynamically generated cards will be inserted here -->
             </section>
         </div>
-        
-        <!-- User-LLM Flow Card -->
-        <div class="tech-card flow-card fade-in" id="user-llm-card">
-            <div class="time-tag">~2022</div>
-            <div class="tech-name">User-LLM 交互</div>
-            <div class="tech-name-en">User-LLM Interaction</div>
-            <div class="tech-description">
-                <div class="mermaid-container">
-                    <div class="mermaid">
-flowchart LR
-    USER((User)) ------>| Query | LLM((LLM))
-    LLM ------>| Response | USER
+    </main>
 
-style USER strostroke-width:4px,color:#000,fill:#EC2D7A
-style LLM strostroke-width:4px,color:#FFF,fill:#540a0a
-
-                    </div>
-                </div>
-                <div class="flow-description">
-                    在早期 LLM 應用中，用戶與模型之間的交互是單向且靜態的：
-                    <ul>
-                        <li><strong>用戶輸入:</strong> 提供問題或指令</li>
-                        <li><strong>LLM 處理:</strong> 根據訓練數據生成回應</li>
-                        <li><strong>靜態輸出:</strong> 返回文本結果，並無與外部系統互動</li>
-                    </ul>
+    <div id="mermaid-modal" class="fixed inset-0 bg-black bg-opacity-75 flex items-center justify-center p-4 hidden z-50">
+        <div id="modal-overlay" class="absolute inset-0"></div>
+        <div class="bg-white rounded-lg shadow-2xl p-6 relative w-11/12 h-5/6 flex flex-col">
+            <button id="modal-close" class="absolute top-4 right-4 text-gray-500 hover:text-gray-800 text-2xl z-10">&times;</button>
+            <div class="flex justify-between items-center mb-4 flex-shrink-0">
+                <h3 id="modal-title" class="font-noto text-2xl font-bold">流程圖</h3>
+                <div id="zoom-controls" class="flex items-center space-x-2">
+                    <button id="zoom-out" class="p-2 bg-gray-200 rounded-md hover:bg-gray-300 transition-colors"><i class="fas fa-search-minus"></i></button>
+                    <button id="zoom-in" class="p-2 bg-gray-200 rounded-md hover:bg-gray-300 transition-colors"><i class="fas fa-search-plus"></i></button>
+                    <button id="zoom-reset" class="p-2 bg-gray-200 rounded-md hover:bg-gray-300 transition-colors"><i class="fas fa-expand"></i></button>
+                    <button id="pan-toggle" class="p-2 bg-gray-200 rounded-md hover:bg-gray-300 transition-colors"><i class="fas fa-arrows-alt"></i></button>
+                    <button id="download-svg" class="p-2 bg-gray-200 rounded-md hover:bg-gray-300 transition-colors"><i class="fas fa-file-code"></i></button>
+                    <button id="download-png" class="p-2 bg-gray-200 rounded-md hover:bg-gray-300 transition-colors"><i class="fas fa-file-image"></i></button>
                 </div>
             </div>
+            <div id="mermaid-render-container" class="flex-grow flex justify-center items-center bg-gray-100 p-4 rounded-md overflow-auto"></div>
         </div>
-        
-        <!-- Prompt Engineering 卡片 -->
-        <div class="tech-card prompt-card fade-in" id="prompt-engineering-card">
-            <div class="time-tag">2022~</div>
-            <div class="tech-name">提示工程</div>
-            <div class="tech-name-en">Prompt Engineering</div>
-            <div class="tech-description">
-                <strong>發現的問題:</strong>
-                <ul>
-                    <li>LLM雖然功能強大，但回應品質極度依賴使用者的輸入。</li>
-                    <li>初期使用者經常無法得到預期的回答，原因可能是輸入模糊、不具體、或缺乏上下文說明。</li>
-                    <li>LLM的回應常常出現錯誤、幻覺，或不符合商業應用場景的需求。</li>
-                </ul>
-                <br><br>
-                <strong>解決方案:</strong> Prompt Engineering（提示詞工程）
-                <br><br>
-                <strong>提示詞工程</strong>的基本概念與原理：透過設計更明確、有結構的提示詞（Prompt），來引導語言模型產生更精確、穩定、有用的回應。這些提示詞可包括範例、角色設定、格式限制、步驟指令等，引導 LLM 「如何思考與回答」。
-                <br><br>
-                <strong>改進點：</strong>
-                <ul>
-                    <li>提升 LLM 回應的一致性與可預測性。</li>
-                    <li>可針對不同任務（摘要、分類、問答、轉換格式等）設計不同的 prompt 模板，提高應用彈性與品質。</li>
-                    <li>可結合「Chain-of-Thought（思路鏈）」、「Zero-shot/One-shot/Few-shot Examples」等技巧，提升推理與問題解決能力。</li>
-                </ul>
-            </div>
-        </div>
-        
-        <!-- Prompt Engineering Flow Card -->
-        <div class="tech-card flow-card fade-in" id="enhanced-user-llm-card">
-            <div class="time-tag">2022~</div>
-            <div class="tech-name">增強的 User-LLM 交互</div>
-            <div class="tech-name-en">Enhanced User-LLM Interaction</div>
-            <div class="tech-description">
-                <div class="mermaid-container">
-                    <div class="mermaid">
-flowchart TD
-    USER((User)) --> |Query:「三角形內角和是多少？」| COMPOSE{{Compose Prompt}}
-
-    subgraph PE[Prompt Engineering]
-        ZERO[Zero‑Shot CoT]
-        SYSTEM[System Instructions]
-        CONTEXT[Context Injection]
-        FEWSHOT[Few‑shot Examples]
-        ZERO --> COMPOSE
-        SYSTEM --> COMPOSE
-        CONTEXT --> COMPOSE
-        FEWSHOT --> COMPOSE
-    end
-
-    COMPOSE --> LLM((LLM))
-    LLM --> |Response: 邏輯思維 + 最終答案| USER
-
-    subgraph Examples
-        ZERO_EX[Zero‑Shot CoT:
-        「三角形內角和是多少？ 請詳細分步驟解析之。」] --> ZERO
-        SYSTEM_EX[系統指令:
-        「你是一位資深數學教師，解答需邏輯清晰、步驟完整」] --> SYSTEM
-        CONTEXT_EX[上下文:
-        三角形知道內角和為 180°，問三角形的角推理。] --> CONTEXT
-        FEW_EX[Few‑Shot CoT 示例:
-        Q: 四邊形內角和？ 
-        A: …步驟… 最終答案
-        Q: 三邊形內角和？ 
-        A: …步驟… 180°] --> FEWSHOT
-    end
-
-style USER strostroke-width:4px,color:#000,fill:#EC2D7A
-style LLM strostroke-width:4px,color:#FFF,fill:#540a0a
-
-                   </div>
-               </div>
-                <div class="flow-description">
-                    提示工程改善了用戶與 LLM 之間的交互：
-                    <ul>
-                        <li><strong>結構化輸入:</strong> 用戶學習如何構造更有效的提示詞</li>
-                        <li><strong>中介層:</strong> 提示工程作為用戶和 LLM 之間的橋樑，引導模型產生更好的結果</li>
-                        <li><strong>改進的輸出:</strong> 經過優化的提示詞，LLM 能產生更精確、一致的回應</li>
-                    </ul>
-                </div>
-            </div>
-        </div>
-
-        <!-- Token Card -->
-        <div class="tech-card token-card fade-in" id="token-card">
-            <div class="time-tag">2020~</div>
-            <div class="tech-name">Token</div>
-            <div class="tech-name-en">Token</div>
-            <div class="tech-description">
-                <div class="mermaid-container">
-                    <div class="mermaid">
-timeline
-    title 最大 Token 上限數
-
-    GPT-3.5 : 4k ~ 16k tokens : 最多 24 頁
-    GPT-4.1 : ≈1,000k tokens : 約 1,500–2,000 頁
-    Claude 4（Sonnet 4 / Opus 4）: 200k ~ 500k tokens : 約 300–500 頁
-    Gemini 2.5 Pro : 1,000k tokens : 約 1,500–2,000 頁
-
-                    </div>
-                </div>
-                token 是現代大型語言模型（LLM）處理文本的基本單位。它不是固定的「字」或「詞」，而是由模型 tokenizer 自動分割出具有意義的「字串」或「子詞單位」。
-                <ul>
-                    <li>英文中的 "unbelievable" 可能被斷成 ["un", "believ", "able"]，所以一個字可能是多個 token。</li>
-                    <li>中文通常每個字是一個 token，例如「測」、「試」、「中」分別為獨立 tokens。</li>
-                </ul>
-                <br>
-                大型語言模型（LLM）在每次回答時，會依據目前「對話的完整上下文」來產生回應。而這個「上下文」包含：
-                <ul>
-                    <li>使用者的提問</li>
-                    <li>模型之前的回應</li>
-                    <li>系統訊息（如角色設定）</li>
-                    <li>你可能傳的文件、表格、指令等外部內容</li>
-                    <li>歷史對話記錄（多輪內容）</li>
-                    <li>模型之後的回應</li>
-                </ul>
-                <br>
-                當總 token 數超過限制時，模型會：
-                <ul>
-                    <li>裁切最早的歷史對話內容（通常是你最早的提問與模型的回覆）</li>
-                    <li>保留最近的幾輪對話 + 當前提問 + 系統訊息</li>
-                    <li>這會導致模型「忘記你先前說的話」，可能讓回答變得前後不一致。</li>
-                </ul>
-            </div>
-        </div>
-
-        <!-- RAG 卡片 -->
-        <div class="tech-card rag-card fade-in" id="rag-card">
-            <div class="time-tag">2021-23</div>
-            <div class="tech-name">RAG</div>
-            <div class="tech-name-en">Retrieval-Augmented Generation</div>
-            <div class="tech-description">
-                <strong>發現的問題:</strong>
-                <ul>
-                    <li>訓練好的 LLM 雖然能生成自然語言，但知識是靜態的，無法即時查詢最新資訊或公司內部資料。</li>
-                    <li>如果訓練資料中缺少某些領域的知識，模型會給出錯誤答案或胡亂編造。</li>
-                </ul>
-                <br><br>
-                <strong>解決方案:</strong> RAG（Retrieval-Augmented Generation，檢索增強生成）
-                <br><br>
-                <strong>原理：</strong>在 LLM 生成回應前，先從外部知識庫（如向量資料庫、企業內部文件）檢索相關資訊，並將這些資訊傳給 LLM 作為上下文來生成更準確的回應。
-                <br><br>
-                <strong>改進點：</strong>
-                <ul>
-                    <li>讓 LLM 可以即時訪問外部知識，減少幻覺。</li>
-                    <li>企業可以利用自己的資料（如技術文件、客服對話）來增強 LLM 的回答能力。</li>
-                </ul>
-            </div>
-        </div>
-        
-        <!-- RAG Flow Card -->
-        <div class="tech-card flow-card fade-in" id="rag-enhanced-card">
-            <div class="time-tag">2021-23</div>
-            <div class="tech-name">RAG 增強的 LLM</div>
-            <div class="tech-name-en">LLM Enhanced with RAG</div>
-            <div class="tech-description">
-                <div class="mermaid-container">
-                    <div class="mermaid">
-graph LR
-
-    %% --- Knowledge Base (Offline) ---
-    subgraph KB[Knowledge Base]
-        PDF[PDF Files]
-        PPTX[Office Files]
-        CONF[Confluence Pages]
-    end
-
-    subgraph INGESTION[Embedding → Vector DB]
-        direction LR
-        PDF --> CHUNK{{Chunk + Embed}}
-        PPTX --> CHUNK
-        CONF --> CHUNK
-        CHUNK --> VDB[(Vector DB)]
-    end
-
-    %% --- User Query Flow (Online RAG) ---
-    USER((User)) -->|Query| EQ{{Embed Query}}
-    EQ --> VDB
-    VDB --> TOPK[Top-k Similarity Search]
-    TOPK --> PROMPT{{Build Prompt}}
-    PROMPT --> LLM((LLM))
-    LLM -->|Response| USER
-
-style USER strostroke-width:4px,color:#000,fill:#EC2D7A
-style LLM strostroke-width:4px,color:#FFF,fill:#540a0a
-
-                    </div>
-                </div>
-                <div class="flow-description">
-                    RAG 通過將外部知識庫與 LLM 結合，顯著提升了模型的能力：
-                    <ul>
-                        <li><strong>雙向交互:</strong> LLM 與知識庫之間可以雙向通信</li>
-                        <li><strong>即時檢索:</strong> 根據用戶查詢從知識庫中檢索相關信息</li>
-                        <li><strong>增強生成:</strong> LLM 利用檢索到的信息生成更準確的回應</li>
-                        <li><strong>減少幻覺:</strong> 基於真實數據的回答降低了虛假信息的產生</li>
-                    </ul>
-                    <br>
-                    - 原始文檔 (string) → 使用 tokenizer 統計 token 長度 → chunking (使用 token count 作為切分邊界 + overlap) → 每個 chunk 啟用 tokenizer → 生成真正的 token ID 列表 → 再 embed 做語意向量。
-                    <br>
-                    - 而使用者的提問流程則是 Tokenizing (分詞) → Embedding (向量化)，最後再進行 retrieval 和 generation。
-                </div>
-            </div>
-        </div>
-        
-        <!-- In-Context Learning 卡片 -->
-        <div class="tech-card in-context-learning-card fade-in" id="in-context-learning-card">
-            <div class="time-tag">2022~</div>
-            <div class="tech-name">上下文學習</div>
-            <div class="tech-name-en">In-Context Learning</div>
-            <div class="tech-description">
-                <strong>發現的問題:</strong>
-                <ul>
-                    <li>LLM 雖然具備廣泛知識，但缺乏對特定企業情境的理解。</li>
-                    <li>無法長期記憶先前對話，也無法處理大量文件（受限於 token 上限）。</li>
-                </ul>
-                <br><br>
-                <strong>解決方案:</strong> 在 LLM 生成回應時，將相關資訊（例如使用者上傳的文件、對話上下文）一併作為 prompt 提供給模型參考，讓 LLM「彷彿」當下就學會這些資訊。
-                <br><br>
-                <strong>改進點:</strong>
-                <ul>
-                    <li>讓 LLM 在不需要重新訓練模型的情況下，也能理解特定情境或專案資料。</li>
-                    <li>適合中小型應用，或一次性處理文件（如合約審閱、報告摘要）。</li>
-                    <li>開發速度快、門檻低，是許多 Copilot 工具（如 Office、VS Code）常見的技術基礎。</li>
-                </ul>
-            </div>
-        </div>
-
-        <!-- In-Context Learning Flow Card -->
-        <div class="tech-card in-context-learning-flow-card fade-in" id="in-context-learning-flow-card">
-            <div class="time-tag">2022</div>
-            <div class="tech-name">上下文學習</div>
-            <div class="tech-name-en">In-Context Learning</div>
-            <div class="tech-description">
-                <div class="mermaid-container">
-                    <div class="mermaid">
-flowchart TD
-    subgraph ICL[In-Context Learning]
-        direction TB
-
-        INST[Instruction Prompting<br/>Zero-shot] --> LLM1((LLM))
-        FEWSHOT[Few-shot Prompting<br/>Examples] --> LLM2((LLM))
-        STUFFING[Prompt Stuffing<br/>Context Injection] --> LLM3((LLM))
-    end
-
-    USER((User)) ------> PROMPTING[Prompt Engineering]
-    PROMPTING ------>|Compose Prompt| ICL
-
-    LLM1 -->|Response| USER
-    LLM2 -->|Response| USER
-    LLM3 -->|Response| USER
-
-    subgraph Prompt_Stuffing_Context [Prompt Stuffing Details]
-        DOCS[Documents / Tables / Knowledge] --> STUFFING
-    end
-
-    USER --> Prompt_Stuffing_Context
-
-style USER strostroke-width:4px,color:#000,fill:#EC2D7A
-style LLM1 strostroke-width:4px,color:#FFF,fill:#540a0a
-style LLM2 strostroke-width:4px,color:#FFF,fill:#540a0a
-style LLM3 strostroke-width:4px,color:#FFF,fill:#540a0a
-
-                    </div>
-                </div>
-            </div>
-        </div>
-
-        <!-- Function Calling 卡片 -->
-        <div class="tech-card function-card fade-in" id="function-calling-card">
-            <div class="time-tag">2023.06</div>
-            <div class="tech-name">函數調用</div>
-            <div class="tech-name-en">Function Calling</div>
-            <div class="tech-description">
-                <strong>發現的問題:</strong>
-                <ul>
-                    <li>LLM 可以產生正確的建議（例如「你可以申請一張請購單」），但它無法執行具體的動作（如查詢某一張請購單進度，或將待簽核的表單填寫意見核准送出）。</li>
-                    <li>使用者仍然需要手動操作系統，降低了自動化效率。</li>
-                </ul>
-                <br><br>
-                <strong>解決方案:</strong> OpenAI 於 2023 年 6 月 在其 API 中引入此功能，讓 LLM 可以根據需求輸出結構化數據（如 JSON），並透過 API 調用外部系統來執行具體任務。
-                <br><br>
-                <div class="mermaid-container">
-                    <div class="mermaid">
-flowchart LR
-
-    USER((User)) -->|Query| LLM((LLM))
-    LLM --> CHECK{Need Function Call?}
-
-    CHECK -->|No| RESPONSE[Final Response]
-    CHECK -->|Yes| JSON{{Generate JSON Instructions}}
-
-    subgraph FC[Function Calling]
-        JSON --> FUNCTION{{Call Tool / API}}
-        FUNCTION --> EXECUTE{{Execute Function}}
-    end
-
-    EXECUTE -->|Execution Result| LLM
-    LLM -->|Response| USER
-    RESPONSE --> USER
-
-style USER strostroke-width:4px,color:#000,fill:#EC2D7A
-style LLM strostroke-width:4px,color:#FFF,fill:#540a0a
-                    </div>
-                </div>
-                <br><br>
-                <strong>改進點:</strong>
-                <ul>
-                    <li>讓 LLM 可以即時訪問外部知識，減少幻覺。</li>
-                    <li>企業可以利用自己的資料（如儲存在關聯式資料庫的資料、客服對話）來增強 LLM 的回答能力。</li>
-                </ul>
-            </div>
-        </div>
-        
-        <!-- Agent 卡片 -->
-        <div class="tech-card agent-card fade-in" id="agent-card">
-            <div class="time-tag">2023-24</div>
-            <div class="tech-name">智能代理</div>
-            <div class="tech-name-en">AI Agent</div>
-            <div class="tech-description">
-                <strong>發現的問題:</strong>
-                <ul>
-                    <li>Function Calling 讓 LLM 可以執行單個指令，但它無法自主計劃和執行複雜任務。例如：「幫我整理一份 IT 年度報告」涉及多個步驟（查詢數據 → 生成摘要 → 匯總成報告）。</li>
-                    <li>Function Calling 只能處理單一 API 呼叫，無法自己決定「下一步該做什麼」。</li>
-                </ul>
-                <br><br>
-                <strong>解決方案:</strong> 讓 LLM 不只是回答問題，而是根據目標「規劃步驟」、「決策下一步行動」並「執行多個函數」。在人工智慧領域，智能代理的概念早已存在，但結合 LLM 的 Agent 系統在 2023 年 開始受到廣泛關注。
-                <br><br>
-                <div class="mermaid-container">
-                    <div class="mermaid">
-flowchart TD
-
-    USER((User)) -->|Goal / Task| AGENT((AI Agent))
-
-    subgraph Agent Loop
-        AGENT --> PLAN{{Plan Next Action}}
-        PLAN --> ACT{Action Type?}
-        ACT -->|Tool| TOOL{{Tool / API Call}}
-        ACT -->|Reflect| THINK{{Internal Reflection}}
-        ACT -->|Ask| ASKUSER{{Ask User Clarification}}
-        TOOL --> OBSERVE{{Observe Result}}
-        THINK --> OBSERVE
-        ASKUSER --> USER
-        OBSERVE --> MEMORY{{Update Memory}}
-        MEMORY --> PLAN
-    end
-
-    AGENT -->|Final Response / Completion| USER
-
-style USER strostroke-width:4px,color:#000,fill:#EC2D7A
-style AGENT strostroke-width:4px,color:#FFF,fill:#540a0a
-
-                    </div>
-                </div>
-                <br><br>
-                <strong>改進點:</strong>
-                <ul>
-                    <li>讓 AI 可以自主處理複雜任務，而不只是單次回應。</li>
-                    <li>可以與 Function Calling 和 RAG 結合，形成完整的智能工作流。</li>
-                </ul>
-            </div>
-        </div>
-        
-        <!-- Agentic RAG 卡片 -->
-        <div class="tech-card agentic-rag-card fade-in" id="agentic-rag-card">
-            <div class="time-tag">2024</div>
-            <div class="tech-name">代理式RAG</div>
-            <div class="tech-name-en">Agentic RAG</div>
-            <div class="tech-description">
-                <strong>技術特點:</strong> 作為 RAG 的進化版本，Agentic RAG 在 2024 年 開始出現，結合 Agent 能力，使檢索與生成過程更加自主和靈活。
-                <br><br>
-                <div class="mermaid-container">
-                    <div class="mermaid">
-flowchart TD
-    USER((User)) -->|Query / Task| AGENT((AI Agent))
-
-    subgraph Agent Workflow
-        AGENT --> PLAN{{Plan Step}}
-        PLAN --> ACTION{Need External Knowledge?}
-        
-        ACTION -->|Yes| RETRIEVE{{Retrieve Documents}}
-        RETRIEVE --> EMBEDDING[Vector Similarity Search]
-        EMBEDDING --> CONTEXT[Relevant Context]
-
-        ACTION -->|No| THINK{{Use Internal Reasoning}}
-
-        CONTEXT --> AUGMENT[Augment Prompt]
-        THINK --> AUGMENT
-
-        AUGMENT --> LLM((LLM))
-
-        LLM --> TOOL_CHECK{Tool Call Needed?}
-        TOOL_CHECK -->|Yes| TOOL_EXEC{{Call Tool/API}}
-        TOOL_EXEC --> TOOL_RESULT[Tool Result]
-        TOOL_RESULT --> PLAN
-
-        TOOL_CHECK -->|No| RESPONSE[Final Response]
-    end
-
-    RESPONSE --> AGENT
-    AGENT -->|Response| USER
-
-style USER strostroke-width:4px,color:#000,fill:#EC2D7A
-style LLM strostroke-width:4px,color:#FFF,fill:#540a0a
-style AGENT strostroke-width:4px,color:#FFF,fill:#540a0a
-
-                    </div>
-                </div>
-                <br><br>
-                <strong>改進點:</strong> 能夠動態調整檢索策略，自主決定何時檢索、檢索什麼內容，以及如何整合檢索到的資訊，提供更智能的知識增強生成能力。
-            </div>
-        </div>
-        
-        <!-- MCP 卡片 -->
-        <div class="tech-card mcp-card fade-in" id="mcp-card">
-            <div class="time-tag">2024~25</div>
-            <div class="tech-name">模型上下文協議</div>
-            <div class="tech-name-en">Model Context Protocol (MCP)</div>
-            <div class="tech-description">
-                <strong>發現的問題:</strong> 在大型企業應用中，通常需要多個 AI 模型或和外部系統協作，例如：
-                <ul>
-                    <li>一個 RAG 系統負責檢索企業內部文件。</li>
-                    <li>一個 Function Calling 負責執行業務操作。</li>
-                    <li>一個 Agent 負責綜合決策並指導整個流程。</li>
-                </ul>
-                <p>這些 AI 模型和外部系統各自獨立，沒有標準化的方式來共享上下文資訊，導致資訊孤島。</p>
-                <br><br>
-                <strong>解決方案:</strong> 由 Anthropic 在 2024 年底推出的開放標準，它徹底改變了 AI 如何與「外部世界」互動的方式。你可以把它視為「AI 應用程式的 USB-C 接口」一種通用的連接方式，讓 AI 模型能安全、標準化地存取外部即時資料與工具。
-                <br><br>
-                <div class="mermaid-container">
-                    <div class="mermaid">
-flowchart TD
-    USER((User)) -->|Query| LLM((LLM))
-
-    LLM --> CHECK{Need context or tool?}
-    CHECK -->|No| RESPONSE[Final Response]
-    CHECK -->|Yes| MCP_CLIENT[MCP Client]
-
-    MCP_CLIENT -->|Prompt/Tool Request| MCP_SERVER[MCP Server]
-
-    subgraph Server Process
-        CONTEXT_MANAGER[Context Manager]
-        TOOL_REGISTRY[Tool Registry / Schema]
-        TOOL_EXECUTOR[Tool Executor]
-
-        MCP_SERVER --> CONTEXT_MANAGER
-        CONTEXT_MANAGER --> MEMORY_DB[(Long-Term Memory)]
-        CONTEXT_MANAGER --> VECTOR_DB[(Vector DB)]
-        CONTEXT_MANAGER -->|Compose Prompt| FINAL_PROMPT{{Final Prompt}}
-        FINAL_PROMPT --> MODEL((LLM))
-        MODEL -->|Response or ToolCall| MCP_SERVER
-        MCP_SERVER --> TOOL_REGISTRY
-        TOOL_REGISTRY --> TOOL_EXECUTOR
-        TOOL_EXECUTOR --> TOOL_RESULT[Result]
-        TOOL_RESULT --> MCP_SERVER
-    end
-
-    MCP_SERVER -->|Return Output| MCP_CLIENT
-    MCP_CLIENT -->|Return Decision or Augmented Prompt| LLM
-    LLM --> RESPONSE
-    RESPONSE --> USER
-
-style USER strostroke-width:4px,color:#000,fill:#EC2D7A
-style LLM strostroke-width:4px,color:#FFF,fill:#540a0a
-style MODEL strostroke-width:4px,color:#FFF,fill:#540a0a
-
-                    </div>
-                </div>
-                <br><br>
-                <strong>改進點:</strong>
-                <ul>
-                    <li>讓不同的 AI 模型互通，不再是獨立運行的「黑箱」。</li>
-                    <li>讓 AI 生態系統更加靈活，能夠跨系統處理更複雜的任務。</li>
-                </ul>
-            </div>
-        </div>
-        
-        <!-- Multi-Agent Systems 卡片 -->
-        <div class="tech-card multi-agent-card fade-in" id="multi-agent-card">
-            <div class="time-tag">2024</div>
-            <div class="tech-name">多代理系統</div>
-            <div class="tech-name-en">Multi-Agent Systems</div>
-            <div class="tech-description">
-                <strong>技術特點:</strong> 多代理系統的概念早已有之，但在 AI 領域，結合 LLM 的多代理協作系統在 2024 年 開始被廣泛研究和應用。
-                <br><br>
-                <strong>應用方式:</strong> 多個AI代理分工合作，各司其職，協同解決複雜問題，展現集體智慧的力量。每個代理可以專精於不同的任務領域，通過協作完成單一代理無法處理的複雜工作。
-            </div>
-        </div>
-        
-        <!-- AI-Assisted Software Development 卡片 -->
-        <div class="tech-card ai-assisted-dev-card fade-in" id="ai-assisted-dev-card">
-            <div class="time-tag">2025</div>
-            <div class="tech-name">AI 輔助開發</div>
-            <div class="tech-name-en">AI‑Assisted Software Development</div>
-            <div class="tech-description">
-                <strong>背景和問題：</strong> 隨著程式愈來愈複雜，開發者不僅要寫程式，還要 Debug、測試、維護 legacy code。
-                <br><br>
-                <strong>解決方案：</strong>
-                <ul>
-                    <li>AI 如 VS Code (內建GitHub Copilot，或外掛Gemini Code Assist、Cline、Roo Code等)、Cursor、Windsurf、Trae等IDE工具，可在撰寫程式時自動補全 code、生成測試範例、偵錯建議、撰寫註解，提升效率並減少 bug。 </li>
-                    <li>這些AI工具也不限於需要使用IDE才能使用。包括Claude (Claude Code)、Google (Gemini)、Atlassian (Rovo Dev)、Amazon (Kiro)、Qwen等都已釋出在命令列可以執行的AI輔助開發工具。</li>
-                </ul>
-                <br>
-                <strong>例子：</strong>
-                <ul>
-                    <li>補全：你寫 for (int i=0; i&lt;10; i++)，AI 即刻建議整個迴圈內容。</li>
-                    <li>偵錯：AI 主動指出潛在 Null pointer，並標記風險行數。</li>
-                </ul>
-            </div>
-        </div>
-
-        <!-- Vibe Coding 卡片 -->
-        <div class="tech-card vibe-coding-card fade-in" id="vibe-coding-card">
-            <div class="time-tag">2025</div>
-            <div class="tech-name">氛圍編程</div>
-            <div class="tech-name-en">Vibe Coding</div>
-            <div class="tech-description">
-                這個概念源自 OpenAI 聯合創辦人 Andrej Karpathy，在 2025 年提出，用來描述一種「幾乎忘記程式碼存在，只用語意導引 AI 寫程式」的新開發方式 。
-                <br><br>
-                它與「No‑code／Low‑code」不同，強調『自然語言 → AI 生成邏輯和介面』，開發者不需了解語法，只需透過描述讓 AI 完成大部分程式生成 。
-                <br><br>
-                <strong>技術特點:</strong> 建立在大型語言模型（如 GPT‑4、Claude、Gemini、DeepSeek、Qwen等）可理解並生成程式碼之能力。
-                <br><br>
-                <strong>應用方式:</strong> 幫助非程式背景者「自己作原型、小工具」。
-            </div>
-        </div>
-        
-        <!-- Vibe Spec 卡片 -->
-        <div class="tech-card vibe-spec-card fade-in" id="vibe-spec-card">
-            <div class="time-tag">2025</div>
-            <div class="tech-name">規格先行</div>
-            <div class="tech-name-en">Vibe Spec</div>
-            <div class="tech-description">
-                Vibe Spec（或稱 Vibespec）是一種將自然語言與正式規格結合的方式，讓 LLM 在生成程式碼前，先產生一份清晰、可追蹤的規格文件。這有助於避免隨性生成導致的混亂與錯誤。
-                <br><br>
-                <strong>解決的問題:</strong>
-                <ul>
-                    <li>Vibe Coding 雖快速流暢，但容易缺乏結構、可測試性，並帶來安全與維護風險。</li>
-                    <li>Vibe Spec 可以為每個功能定義需求、輸入/輸出、流程與測試標準，讓 AI 輸出的程式碼更穩健且可複製。</li>
-                </ul>
-                <br>
-                <strong>例子：</strong>
-                <ul>
-                    <li>工具層級：在絕大多數的AI輔助開發工具中，你都可以設定規則或透過提示詞讓 AI 在開始寫程式前，自動先生成 spec，而不是直接生成程式碼。</li>
-                    <li>實務流程：使用三份 Markdown 文件（requirements.md、design.md、tasks.md）來描述使用者故事、架構設計與任務拆解，類似 Kiro Spec 的開發流程，確保 AI 按 spec 編碼。</li>
-                </ul>
-            </div>
-        </div>
-
-        <!-- Vibe Spec Flow 卡片 -->
-        <div class="tech-card vibe-spec-flow-card fade-in" id="vibe-spec-flow-card">
-            <div class="time-tag">2025</div>
-            <div class="tech-name">規格先行</div>
-            <div class="tech-name-en">Vibe Spec</div>
-            <div class="tech-description">
-                <div class="mermaid-container">
-                    <div class="mermaid">
-flowchart TD
-  USER((User)) --> |啟動 Spec 模式| START[Spec Session]
-
-  subgraph Spec Workflow
-    START --> LLM((LLM))
-    LLM --> RA{{Define Requirements → requirements.md}}
-    RA --> DS{{Design System → design.md}}
-    DS --> TS{{Plan Tasks → tasks.md}}
-    TS --> EXEC{{Execute Tasks & Monitor Progress}}
-    EXEC --> DONE[功能完成]
-  end
-
-  subgraph Files 
-    RA --> REQ[requirements.md<br>（EARS 規範：WHEN … THE SYSTEM SHALL …）]
-    DS --> DES[design.md<br>（系統架構圖／接口／資料流程）]
-    TS --> TAS[tasks.md<br>（待辦清單、任務拆解、狀態追蹤）]
-  end
-
-  subgraph Auto Generation & Feedback
-    REQ --> TOOL_AI{{AI 製作需求草稿}}
-    TOOL_AI --> RA
-    DES --> TOOL_AI
-    TAS --> TOOL_AI
-    EXEC --> TOOL_AI
-  end
-
-style USER strostroke-width:4px,color:#000,fill:#EC2D7A
-style LLM strostroke-width:4px,color:#FFF,fill:#540a0a
-
-                    </div>
-                </div>
-            </div>
-        </div>        
-
-        <!-- Multimodal AI 卡片 -->
-        <div class="tech-card multimodal-ai-card fade-in" id="multimodal-ai-card">
-            <div class="time-tag">2025</div>
-            <div class="tech-name">多模態 AI</div>
-            <div class="tech-name-en">Multimodal AI</div>
-            <div class="tech-description">
-                <strong>背景和問題：</strong> 單純文本或圖像的思維限制創意與應用場景。
-                <br><br>
-                <strong>解決方案：</strong> 多模態模型能處理文字／圖片／語音／影音，讓應用更貼近複雜需求。 
-                <br><br>
-                <strong>例子：</strong>
-                <ul>
-                    <li>客服 AI 能根據客戶上傳的故障照片，分析問題並語音回覆操作步驟。</li>
-                    <li>企劃中 AI 幫你根據腳本直接生成簡短動畫提案片段。</li>
-                </ul>
-            </div>
-        </div>
-        
-        <!-- Synthetic Media 卡片 -->
-        <div class="tech-card synthetic-media-card fade-in" id="synthetic-media-card">
-            <div class="time-tag">2025</div>
-            <div class="tech-name">合成式多媒體</div>
-            <div class="tech-name-en">Synthetic Media</div>
-            <div class="tech-description">
-                <strong>背景和問題：</strong> 傳統影像、音頻內容製作耗時高、人力密集。
-                <br><br>
-                <strong>解決方案：</strong> GenAI可自動生成圖像、音樂、影片、甚至互動遊戲元素。 
-                <br><br>
-                <strong>例子：</strong>
-                <ul>
-                    <li>藝術家用 AI 生成獨特的數位藝術作品。</li>
-                    <li>影片製作者用 AI 生成動畫角色和背景。</li>
-                    <li>音樂人用 AI 生成背景音樂或聲效。</li>
-                </ul>
-            </div>
-        </div>
-        
-        <!-- Generative Design 卡片 -->
-        <div class="tech-card generative-design-card fade-in" id="generative-design-card">
-            <div class="time-tag">2025</div>
-            <div class="tech-name">生成設計</div>
-            <div class="tech-name-en">Generative Design</div>
-            <div class="tech-description">
-                <strong>背景和問題：</strong> 工程或建築設計需考慮節能、成本、材質等複雜參數。
-                <br><br>
-                <strong>解決方案：</strong> AI 把 CAD + 環境數據導入，經由演算法生成多種設計方案供選擇。 
-                <br><br>
-                <strong>例子：</strong>
-                <ul>
-                    <li>
-                        <strong>建築師需求：</strong>
-                        只描述「需要最大自然採光、用最低成本建一棟辦公室」，AI 畫出 5 種外觀與材料配置供選擇。
-                    </li>
-                    <li>
-                        <strong>IT 機櫃規劃：</strong>
-                        規劃機櫃配置時，AI 根據冷度流量與電力負載給出合理排佈建議。
-                    </li>
-                </ul>
-            </div>
-        </div>
-        
-        <!-- Causal AI 卡片 -->
-        <div class="tech-card causal-ai-card fade-in" id="causal-ai-card">
-            <div class="time-tag">2025</div>
-            <div class="tech-name">因果AI</div>
-            <div class="tech-name-en">Causal AI</div>
-            <div class="tech-description">
-                <strong>背景和問題：</strong> 傳統 AI 只「看關聯」，無法找原因，導致決策根據不夠穩健。
-                <br><br>
-                <strong>解決方案：</strong> 因果 AI 建立「X 導致 Y」模型，幫企業做更可靠的決策 
-                <br><br>
-                <strong>例子：</strong>
-                <ul>
-                    <li>IT 評估系統升級是否導致效能下降，就能區分「版本不穩定導致的問題」vs.「正確升級帶來的延遲」。</li>
-                    <li>客服部門可找出「培訓完客服是否真正改善滿意度」，而不是只看時間關聯。</li>
-                </ul>
-                <br><br>
-            </div>
-            <div class="tech-name">此時此刻，AI的演進還在繼續中...(未完待續)</div>
-        </div>
-
-        <!-- Question Card Container -->
-        <div class="tech-card question-card fade-in" id="question-card" style="display: block;">
-            <div class="question-name">
-                <!-- Question name will be dynamically inserted here -->
-            </div>
-            <div class="question-content">
-                <!-- Question content will be dynamically inserted here -->
-            </div>
-        </div>
-
-        </div> <!-- 關閉 cards-container -->
     </div>
 
     <script>
-        // 卡片順序控制系統
-        let currentCardIndex = -1;
-        const techCards = document.querySelectorAll('.tech-card');
-        const startBtn = document.getElementById('startBtn');
-        const prevBtn = document.getElementById('prevBtn');
-        const nextBtn = document.getElementById('nextBtn');
-        const resetBtn = document.getElementById('resetBtn');
-        const introAnimation = document.getElementById('introAnimation');
-        
-        // 初始化 - 隱藏所有卡片，顯示首頁動畫
-        function initializeCards() {
-            techCards.forEach(card => {
-                card.classList.remove('show');
-                card.style.animation = ''; // 移除所有動畫
-            });
+        document.addEventListener('DOMContentLoaded', () => {
+            mermaid.initialize({ startOnLoad: false, theme: 'neutral' });
 
-            currentCardIndex = -1;
-            startBtn.disabled = false;
-            prevBtn.disabled = true;
-            nextBtn.disabled = true;
-            startBtn.textContent = '開始演進之旅';
-            
-            // 顯示首頁動畫
-            introAnimation.classList.remove('hidden');
-        }
-        
-        // 創建粒子爆炸效果
-        function createParticleExplosion(element) {
-            const rect = element.getBoundingClientRect();
-            const centerX = rect.left + rect.width / 2;
-            const centerY = rect.top + rect.height / 2;
-            
-            // 創建16個粒子
-            for (let i = 0; i < 16; i++) {
-                const particle = document.createElement('div');
-                particle.className = `particle ${i % 2 === 0 ? 'green' : ''}`;
-                
-                // 計算方向和距離
-                const angle = (i * 22.5) * Math.PI / 180; // 360度分成16份
-                const distance = 30 + Math.random() * 40;
-                const deltaX = Math.cos(angle) * distance;
-                const deltaY = Math.sin(angle) * distance;
-                
-                // 設置初始位置
-                particle.style.left = centerX + 'px';
-                particle.style.top = centerY + 'px';
-                
-                // 設置CSS變量用於動畫
-                particle.style.setProperty('--deltaX', deltaX + 'px');
-                particle.style.setProperty('--deltaY', deltaY + 'px');
-                
-                // 添加動畫
-                particle.style.animation = `particleExplode 1.2s ease-out forwards`;
-                
-                document.body.appendChild(particle);
-                
-                // 清理粒子
-                setTimeout(() => {
-                    if (particle.parentNode) {
-                        particle.parentNode.removeChild(particle);
-                    }
-                }, 1200);
-            }
-        }
-        
-        // 顯示下一張卡片
-        function showNextCard() {
-            if (currentCardIndex < techCards.length - 1) {
-                // 隱藏首頁動畫（只在第一次點擊時）
-                if (currentCardIndex === -1) {
-                    introAnimation.classList.add('hidden');
-                }
-                
-                currentCardIndex++;
-                const currentCard = techCards[currentCardIndex];
-                
-                // 創建粒子效果
-                setTimeout(() => {
-                    createParticleExplosion(currentCard);
-                }, 200);
-                
-                // 添加顯示動畫
-                setTimeout(() => {
-                    currentCard.classList.add('show');
-                    
-                    // 播放音效
-                    initAudio();
-                    playCardAppearSound(currentCardIndex);
-                    
-                    // 添加卡片特定的動畫類
-                    applyCardSpecificAnimation(currentCard, currentCardIndex);
-                    
-                    // 滾動到當前卡片
-                    currentCard.scrollIntoView({
-                        behavior: 'smooth',
-                        block: 'center'
-                    });
-                    
-                    // 添加震動效果
-                    if (navigator.vibrate) {
-                        navigator.vibrate([100, 50, 100]);
-                    }
-                }, 100);
-                
-                // 更新按鈕狀態
-                updateButtonStates();
-            }
-        }
-        
-        // 回到前一代
-        function showPreviousCard() {
-            if (currentCardIndex > 0) {
-                // 隱藏當前卡片
-                const currentCard = techCards[currentCardIndex];
-                currentCard.classList.remove('show');
-                currentCard.style.animation = ''; // 移除動畫
-                
-                currentCardIndex--;
-                
-                // 顯示前一張卡片
-                const prevCard = techCards[currentCardIndex];
-                prevCard.scrollIntoView({
-                    behavior: 'smooth',
-                    block: 'center'
-                });
-                
-                // 更新按鈕狀態
-                updateButtonStates();
-            } else if (currentCardIndex === 0) {
-                // 如果在第一張卡片，回到首頁
-                const currentCard = techCards[currentCardIndex];
-                currentCard.classList.remove('show');
-                currentCard.style.animation = ''; // 移除動畫
-                
-                currentCardIndex = -1;
-                
-                // 顯示首頁動畫
-                introAnimation.classList.remove('hidden');
-                
-                // 滾動到頂部
-                window.scrollTo({
-                    top: 0,
-                    behavior: 'smooth'
-                });
-                
-                // 更新按鈕狀態
-                updateButtonStates();
-            }
-        }
-        
-        // 更新按鈕狀態
-        function updateButtonStates() {
-            if (currentCardIndex === -1) {
-                // 在首頁
-                startBtn.disabled = false;
-                prevBtn.disabled = true;
-                nextBtn.disabled = true;
-                startBtn.textContent = '開始演進之旅';
-            } else if (currentCardIndex === 0) {
-                // 第一張卡片
-                startBtn.disabled = true;
-                prevBtn.disabled = false;
-                nextBtn.disabled = false;
-                nextBtn.textContent = '下一頁';
-            } else if (currentCardIndex === techCards.length - 1) {
-                // 最後一張卡片
-                startBtn.disabled = true;
-                prevBtn.disabled = false;
-                nextBtn.disabled = true;
-                nextBtn.textContent = '演進還在繼續...';
-                
-                // Ensure the theme toggle button is always enabled
-                document.getElementById('themeToggleBtn').disabled = false;
-            } else {
-                // 中間卡片
-                startBtn.disabled = true;
-                prevBtn.disabled = false;
-                nextBtn.disabled = false;
-                nextBtn.textContent = '下一頁';
-            }
-        }
-        
-        // 重置到首頁
-        function resetToHome() {
-            // 隱藏所有卡片
-            techCards.forEach(card => {
-                card.classList.remove('show');
-                // 移除所有動畫類
-                card.style.animation = '';
-            });
-            
-            // 滾動到頂部
-            window.scrollTo({
-                top: 0,
-                behavior: 'smooth'
-            });
-            
-            // 重置狀態並顯示首頁動畫
-            setTimeout(() => {
-                initializeCards();
-            }, 600);
-        }
-        
-        // 顯示特定索引的卡片
-        function showCardByIndex(index) {
-            // 如果當前在首頁，隱藏首頁動畫
-            if (currentCardIndex === -1) {
-                introAnimation.classList.add('hidden');
-            }
-            
-            // 如果目標卡片索引大於當前索引，需要逐步顯示中間的卡片
-            if (index > currentCardIndex) {
-                for (let i = currentCardIndex + 1; i <= index; i++) {
-                    const card = techCards[i];
-                    card.classList.add('show');
-                    // 添加卡片特定的動畫類
-                    applyCardSpecificAnimation(card, i);
-                }
-            } 
-            // 如果目標卡片索引小於當前索引，隱藏多餘的卡片
-            else if (index < currentCardIndex) {
-                for (let i = currentCardIndex; i > index; i--) {
-                    const card = techCards[i];
-                    card.classList.remove('show');
-                    card.style.animation = '';
-                }
-            }
-            
-            // 更新當前卡片索引
-            currentCardIndex = index;
-            
-            // 滾動到目標卡片
-            const targetCard = techCards[currentCardIndex];
-            targetCard.scrollIntoView({
-                behavior: 'smooth',
-                block: 'center'
-            });
-            
-            // 更新按鈕狀態
-            updateButtonStates();
-        }
-        
-        // 根據ID顯示卡片
-        function showCardById(cardId) {
-            // 查找對應的卡片索引
-            for (let i = 0; i < techCards.length; i++) {
-                if (techCards[i].id === cardId) {
-                    showCardByIndex(i);
-                    break;
-                }
-            }
-        }
-        
-        // 事件監聽器
-        startBtn.addEventListener('click', showNextCard);
-        prevBtn.addEventListener('click', showPreviousCard);
-        nextBtn.addEventListener('click', showNextCard);
-        resetBtn.addEventListener('click', resetToHome);
-        
-        // 為tech-tag鏈接添加點擊事件監聽器
-        document.querySelectorAll('.tech-preview a').forEach(link => {
-            link.addEventListener('click', function(e) {
-                e.preventDefault();
-                const cardId = this.getAttribute('href').substring(1); // 移除#號
-                showCardById(cardId);
-            });
-        });
-        
-        // 音效系統
-        let audioContext;
-        
-        function initAudio() {
-            if (!audioContext) {
-                audioContext = new (window.AudioContext || window.webkitAudioContext)();
-            }
-        }
-        
-        function playCardAppearSound(cardIndex) {
-            if (!audioContext) return;
-            
-            // 為不同的卡片創建不同的音效
-            const oscillator = audioContext.createOscillator();
-            const gainNode = audioContext.createGain();
-            
-            oscillator.connect(gainNode);
-            gainNode.connect(audioContext.destination);
-            
-            // 根據卡片索引設置不同的音效
-            const frequencies = [
-                [800, 400, 600],    // Card 0
-                [600, 300, 450],    // Card 1
-                [1000, 500, 750],   // Card 2
-                [700, 350, 525],    // Card 3
-                [900, 450, 675],    // Card 4
-                [500, 250, 375],    // Card 5
-                [1100, 550, 825],   // Card 6
-                [750, 375, 562],    // Card 7
-                [950, 475, 712],    // Card 8
-                [550, 275, 412],    // Card 9
-                [1050, 525, 787],   // Card 10
-                [650, 325, 487],    // Card 11
-                [850, 425, 637],    // Card 12
-                [600, 300, 450],    // Card 13
-                [1000, 500, 750],   // Card 14
-                [800, 400, 600],    // Card 15
-                [600, 300, 450],    // Card 16
-                [1000, 500, 750],   // Card 17
-                [700, 350, 525],    // Card 18
-                [900, 450, 675],    // Card 19
-                [500, 250, 375],    // Card 20
-                [1100, 550, 825],   // Card 21
-                [750, 375, 562],    // Card 22
-                [950, 475, 712],    // Card 23
-                [550, 275, 412],    // Card 24
-                [1050, 525, 787],   // Card 25
-                [650, 325, 487],    // Card 26
-                [850, 425, 637],    // Card 27
-                [600, 300, 450],    // Card 28
-                [1000, 500, 750],   // Card 29
+            const cardData = [
+                {
+                    id: 1,
+                    anchor: '1',
+                    title: 'GPT-3/3.5',
+                    subtitle: '2020.06~2022.11',
+                    body: `<p>OpenAI 於 2020 年 6 月 發佈 GPT-3，標誌著大型語言模型（LLM）的重要進展。1750億參數展現前所未有的語言理解和生成能力。</p><p>OpenAI於 2022 年 推出 GPT‑3.5，包括 text-davinci-002/003 及 gpt-3.5‑turbo，其中 ChatGPT 正是基於 GPT‑3.5 的 fine‑tuned 版本（即 InstructGPT 系列）。</p><p>ChatGPT於 2022 年 11 月推出，僅 5 天即突破 100 萬用戶，2 個月內達到 1 億用戶，顯著改變全球對 AI 的認知與採用節奏 。</p><h4>GPT 系列模型發布時間表</h4><table class="w-full text-left border-collapse"><thead><tr><th>發佈時間</th><th>模型</th><th>參數</th></tr></thead><tbody><tr><td>2018</td><td>GPT-1 發佈</td><td>1.17 億個參數</td></tr><tr><td>2019</td><td>GPT-2 發佈</td><td>最大 15 億個參數</td></tr><tr><td>2020</td><td>GPT-3 發佈</td><td>1750 億個參數</td></tr><tr><td>2022-11-30</td><td>GPT-3.5 發佈</td><td>驅動 ChatGPT</td></tr><tr><td>2023-03</td><td>GPT-4 發佈</td><td>提升推理能力與穩定性</td></tr><tr><td>2023-11</td><td>GPT-4 Turbo</td><td>效能/成本優化，context 最長 128K</td></tr><tr><td>2024-05</td><td>GPT-4o 發佈</td><td>多模態整合 : 圖像、語音、影片</td></tr></tbody></table>`,
+                    mermaid: null
+                },
+                {
+                    id: 2,
+                    anchor: '2',
+                    title: '早期大語言模型 Early Large Language Models',
+                    subtitle: '~2022',
+                    body: `<p>早期的 LLM（如 GPT-2, GPT-3）能夠生成類似人類的自然語言文本，但存在幾個主要問題：</p><ul><li>知識受訓練數據限制：它們只能回答基於訓練數據的問題，無法即時更新知識。</li><li>幻覺（Hallucination）問題：經常生成錯誤或不存在的資訊。</li><li>缺乏行動能力：它們只能提供文本回應，不能與外部系統互動。</li></ul><h4>流程：</h4><p>在早期 LLM 應用中，用戶與模型之間的交互是單向且靜態的：</p><ul><li>用戶輸入:提供問題或指令</li><li>LLM 處理:根據訓練數據生成回應</li><li>靜態輸出:返回文本結果，並無與外部系統互動</li></ul>`,
+                    mermaid: `flowchart LR\n    USER((User)) ------>| Query | LLM((LLM))\n    LLM ------>| Response | USER\n\nstyle USER strostroke-width:4px,color:#000,fill:#EC2D7A\nstyle LLM strostroke-width:4px,color:#FFF,fill:#EF4444`
+                },
+                {
+                    id: 3,
+                    anchor: '3',
+                    title: '提示工程 Prompt Engineering',
+                    subtitle: '2022~',
+                    body: `<h4>發現的問題：</h4><ul><li>LLM雖然功能強大，但回應品質極度依賴使用者的輸入。</li><li>初期使用者經常無法得到預期的回答，原因可能是輸入模糊、不具體、或缺乏上下文說明。</li><li>LLM的回應常常出現錯誤、幻覺，或不符合商業應用場景的需求。</li></ul><h4>解決方案：Prompt Engineering（提示詞工程）</h4><p>提示詞工程的基本概念與原理：透過設計更明確、有結構的提示詞（Prompt），來引導語言模型產生更精確、穩定、有用的回應。這些提示詞可包括範例、角色設定、格式限制、步驟指令等，引導 LLM 「如何思考與回答」。</p><h4>改進點：</h4><ul><li>提升 LLM 回應的一致性與可預測性。</li><li>可針對不同任務（摘要、分類、問答、轉換格式等）設計不同的 prompt 模板，提高應用彈性與品質。</li><li>可結合「Chain-of-Thought（思路鏈）」、「Zero-shot/One-shot/Few-shot Examples」等技巧，提升推理與問題解決能力。</li></ul><h4>流程：</h4>`,
+                    mermaid: `flowchart TD\n    USER((User)) --> |Query:「三角形內角和是多少？」| COMPOSE{{Compose Prompt}}\n\n    subgraph PE[Prompt Engineering]\nZERO[Zero‑Shot CoT]\nSYSTEM[System Instructions]\nCONTEXT[Context Injection]\nFEWSHOT[Few‑shot Examples]\nZERO --> COMPOSE\nSYSTEM --> COMPOSE\nCONTEXT --> COMPOSE\nFEWSHOT --> COMPOSE\n    end\n\n    COMPOSE --> LLM((LLM))\n    LLM --> |Response: 邏輯思維 + 最終答案| USER\n\n    subgraph Examples\nZERO_EX[Zero‑Shot CoT:\n「三角形內角和是多少？ 請詳細分步驟解析之。」] --> ZERO\nSYSTEM_EX[系統指令:\n「你是一位資深數學教師，解答需邏輯清晰、步驟完整」] --> SYSTEM\nCONTEXT_EX[上下文:\n三角形知道內角和為 180°，問三角形的角推理。] --> CONTEXT\nFEW_EX[Few‑Shot CoT 示例:\nQ: 四邊形內角和？ \nA: …步驟… 最終答案\nQ: 三邊形內角和？ \nA: …步驟… 180°] --> FEWSHOT\n    end\n\nstyle USER strostroke-width:4px,color:#000,fill:#EC2D7A\nstyle LLM strostroke-width:4px,color:#FFF,fill:#EF4444`
+                },
+                {
+                    id: 4,
+                    anchor: '4',
+                    title: 'Token',
+                    subtitle: '2020~',
+                    body: `<h4>甚麼是Token？：</h4><p>token 是現代大型語言模型（LLM）處理文本的基本單位。它不是固定的「字」或「詞」，而是由模型 tokenizer 自動分割出具有意義的「字串」或「子詞單位」。</p><ul><li>英文中的 "unbelievable" 可能被斷成 ["un", "believ", "able"]，所以一個字可能是多個 token。</li><li>中文通常每個字是一個 token，例如「測」、「試」、「中」分別為獨立 tokens。</li></ul><h4>對話的完整上下文包含：</h4><ul><li>使用者的提問</li><li>模型之前的回應</li><li>系統訊息（如角色設定）</li><li>你可能傳的文件、表格、指令等外部內容</li><li>歷史對話記錄（多輪內容）</li><li>模型之後的回應</li></ul><h4>當總 token 數超過限制時，模型會：</h4><ul><li>裁切最早的歷史對話內容（通常是你最早的提問與模型的回覆）</li><li>保留最近的幾輪對話 + 當前提問 + 系統訊息</li><li>這會導致模型「忘記你先前說的話」，可能讓回答變得前後不一致。</li></ul>`,
+                    mermaid: `timeline\n    title 最大 Token 上限數\n\n    GPT-3.5 : 4k ~ 16k tokens : 最多 24 頁\n    GPT-4.1 : ≈1,000k tokens : 約 1,500–2,000 頁\n    Claude 4（Sonnet 4 / Opus 4）: 200k ~ 500k tokens : 約 300–500 頁\n    Gemini 2.5 Pro : 1,000k tokens : 約 1,500–2,000 頁`
+                },
+                {
+                    id: 5,
+                    anchor: '5',
+                    title: '檢索增強生成 Retrieval-Augmented Generation (RAG)',
+                    subtitle: '2021~',
+                    body: `<h4>發現的問題：</h4><ul><li>訓練好的 LLM 雖然能生成自然語言，但知識是靜態的，無法即時查詢最新資訊或公司內部資料。</li><li>如果訓練資料中缺少某些領域的知識，模型會給出錯誤答案或胡亂編造。</li></ul><h4>解決方案：RAG（Retrieval-Augmented Generation，檢索增強生成）</h4><ul><li>原理：在 LLM 生成回應前，先從外部知識庫（如向量資料庫、企業內部文件）檢索相關資訊，並將這些資訊傳給 LLM 作為上下文來生成更準確的回應。</li></ul><h4>改進點：</h4><ul><li>讓 LLM 可以即時訪問外部知識，減少幻覺。</li><li>企業可以利用自己的資料（如技術文件、客服對話）來增強 LLM 的回答能力。</li></ul><h4>流程：</h4><ul><li>原始文檔 (string) → 使用 tokenizer 統計 token 長度 → chunking (使用 token count 作為切分邊界 + overlap) → 每個 chunk 啟用 tokenizer → 生成真正的 token ID 列表 → 再 embed 做語意向量。</li><li>而使用者的提問流程則是 Tokenizing (分詞) → Embedding (向量化)，最後再進行 retrieval 和 generation。</li></ul>`,
+                    mermaid: `graph LR\n\n    %% --- Knowledge Base (Offline) ---\n    subgraph KB[Knowledge Base]\nPDF[PDF Files]\nPPTX[Office Files]\nCONF[Confluence Pages]\n    end\n\n    subgraph INGESTION[Embedding → Vector DB]\ndirection LR\nPDF --> CHUNK{{Chunk + Embed}}\nPPTX --> CHUNK\nCONF --> CHUNK\nCHUNK --> VDB[(Vector DB)]\n    end\n\n    %% --- User Query Flow (Online RAG) ---\n    USER((User)) -->|Query| EQ{{Embed Query}}\n    EQ --> VDB\n    VDB --> TOPK[Top-k Similarity Search]\n    TOPK --> PROMPT{{Build Prompt}}\n    PROMPT --> LLM((LLM))\n    LLM -->|Response| USER\n\nstyle USER strostroke-width:4px,color:#000,fill:#EC2D7A\nstyle LLM strostroke-width:4px,color:#FFF,fill:#EF4444`
+                },
+                {
+                    id: 6,
+                    anchor: '6',
+                    title: '上下文學習 Context Learning',
+                    subtitle: '2022~',
+                    body: `<h4>發現的問題：</h4><ul><li>LLM 雖然具備廣泛知識，但缺乏對特定企業情境的理解。</li><li>無法長期記憶先前對話，也無法處理大量文件（受限於 token 上限）。</li></ul><h4>解決方案：</h4><ul><li>在 LLM 生成回應時，將相關資訊（例如使用者上傳的文件、對話上下文）一併作為 prompt 提供給模型參考，讓 LLM「彷彿」當下就學會這些資訊。</li></ul><h4>改進點：</h4><ul><li>讓 LLM 在不需要重新訓練模型的情況下，也能理解特定情境或專案資料。</li><li>適合中小型應用，或一次性處理文件（如合約審閱、報告摘要）。</li><li>開發速度快、門檻低，是許多 Copilot 工具（如 Office、VS Code）常見的技術基礎。</li></ul><h4>流程：</h4>`,
+                    mermaid: `flowchart TD\n    subgraph ICL[In-Context Learning]\ndirection TB\n\nINST[Instruction Prompting<br/>Zero-shot] --> LLM1((LLM))\nFEWSHOT[Few-shot Prompting<br/>Examples] --> LLM2((LLM))\nSTUFFING[Prompt Stuffing<br/>Context Injection] --> LLM3((LLM))\n    end\n\n    USER((User)) ------> PROMPTING[Prompt Engineering]\n    PROMPTING ------>|Compose Prompt| ICL\n\n    LLM1 -->|Response| USER\n    LLM2 -->|Response| USER\n    LLM3 -->|Response| USER\n\n    subgraph Prompt_Stuffing_Context [Prompt Stuffing Details]\nDOCS[Documents / Tables / Knowledge] --> STUFFING\n    end\n\n    USER --> Prompt_Stuffing_Context\n\nstyle USER strostroke-width:4px,color:#000,fill:#EC2D7A\nstyle LLM1 strostroke-width:4px,color:#FFF,fill:#EF4444\nstyle LLM2 strostroke-width:4px,color:#FFF,fill:#EF4444\nstyle LLM3 strostroke-width:4px,color:#FFF,fill:#EF4444`
+                },
+                {
+                    id: 7,
+                    anchor: '7',
+                    title: '函數調用 Function Calling',
+                    subtitle: '2023.06',
+                    body: `<h4>發現的問題：</h4><ul><li>LLM 可以產生正確的建議（例如「你可以申請一張請購單」），但它無法執行具體的動作（如查詢某一張請購單進度，或將待簽核的表單填寫意見核准送出）。</li><li>使用者仍然需要手動操作系統，降低了自動化效率。</li></ul><h4>解決方案：</h4><ul><li>OpenAI 於 2023 年 6 月 在其 API 中引入此功能，讓 LLM 可以根據需求輸出結構化數據（如 JSON），並透過 API 調用外部系統來執行具體任務。</li></ul><h4>改進點：</h4><ul><li>讓 LLM 可以即時訪問外部知識，減少幻覺。</li><li>企業可以利用自己的資料（如儲存在關聯式資料庫的資料、客服對話）來增強 LLM 的回答能力。</li></ul><h4>流程：</h4>`,
+                    mermaid: `flowchart LR\n\n    USER((User)) -->|Query| LLM((LLM))\n    LLM --> CHECK{Need Function Call?}\n\n    CHECK -->|No| RESPONSE[Final Response]\n    CHECK -->|Yes| JSON{{Generate JSON Instructions}}\n\n    subgraph FC[Function Calling]\nJSON --> FUNCTION{{Call Tool / API}}\nFUNCTION --> EXECUTE{{Execute Function}}\n    end\n\n    EXECUTE -->|Execution Result| LLM\n    LLM -->|Response| USER\n    RESPONSE --> USER\n\nstyle USER strostroke-width:4px,color:#000,fill:#EC2D7A\nstyle LLM strostroke-width:4px,color:#FFF,fill:#EF4444`
+                },
+                {
+                    id: 8,
+                    anchor: '8',
+                    title: '智能代理 AI Agent',
+                    subtitle: '2023-24',
+                    body: `<h4>發現的問題：</h4><ul><li>Function Calling 讓 LLM 可以執行單個指令，但它無法自主計劃和執行複雜任務。例如：「幫我整理一份 IT 年度報告」涉及多個步驟（查詢數據 → 生成摘要 → 匯總成報告）。</li><li>Function Calling 只能處理單一 API 呼叫，無法自己決定「下一步該做什麼」。</li></ul><h4>解決方案：</h4><ul><li>讓 LLM 不只是回答問題，而是根據目標「規劃步驟」、「決策下一步行動」並「執行多個函數」。在人工智慧領域，智能代理的概念早已存在，但結合 LLM 的 Agent 系統在 2023 年 開始受到廣泛關注。</li></ul><h4>改進點：</h4><ul><li>讓 AI 可以自主處理複雜任務，而不只是單次回應。</li><li>可以與 Function Calling 和 RAG 結合，形成完整的智能工作流。</li></ul><h4>流程：</h4>`,
+                    mermaid: `flowchart TD\n\n    USER((User)) -->|Goal / Task| AGENT((AI Agent))\n\n    subgraph Agent Loop\nAGENT --> PLAN{{Plan Next Action}}\nPLAN --> ACT{Action Type?}\nACT -->|Tool| TOOL{{Tool / API Call}}\nACT -->|Reflect| THINK{{Internal Reflection}}\nACT -->|Ask| ASKUSER{{Ask User Clarification}}\nTOOL --> OBSERVE{{Observe Result}}\nTHINK --> OBSERVE\nASKUSER --> USER\nOBSERVE --> MEMORY{{Update Memory}}\nMEMORY --> PLAN\n    end\n\n    AGENT -->|Final Response / Completion| USER\n\nstyle USER strostroke-width:4px,color:#000,fill:#EC2D7A\nstyle AGENT strostroke-width:4px,color:#FFF,fill:#EF4444`
+                },
+                {
+                    id: 9,
+                    anchor: '9',
+                    title: '代理式檢索增強生成 Agentic RAG',
+                    subtitle: '2024',
+                    body: `<h4>技術特點：</h4><ul><li>作為 RAG 的進化版本，Agentic RAG 在 2024 年 開始出現，結合 Agent 能力，使檢索與生成過程更加自主和靈活。</li></ul><h4>改進點：</h4><ul><li>能夠動態調整檢索策略，自主決定何時檢索、檢索什麼內容，以及如何整合檢索到的資訊，提供更智能的知識增強生成能力。</li></ul><h4>流程：</h4>`,
+                    mermaid: `flowchart TD\n    USER((User)) -->|Query / Task| AGENT((AI Agent))\n\n    subgraph Agent Workflow\nAGENT --> PLAN{{Plan Step}}\nPLAN --> ACTION{Need External Knowledge?}\n\nACTION -->|Yes| RETRIEVE{{Retrieve Documents}}\nRETRIEVE --> EMBEDDING[Vector Similarity Search]\nEMBEDDING --> CONTEXT[Relevant Context]\n\nACTION -->|No| THINK{{Use Internal Reasoning}}\n\nCONTEXT --> AUGMENT[Augment Prompt]\nTHINK --> AUGMENT\n\nAUGMENT --> LLM((LLM))\n\nLLM --> TOOL_CHECK{Tool Call Needed?}\nTOOL_CHECK -->|Yes| TOOL_EXEC{{Call Tool/API}}\nTOOL_EXEC --> TOOL_RESULT[Tool Result]\nTOOL_RESULT --> PLAN\n\nTOOL_CHECK -->|No| RESPONSE[Final Response]\n    end\n\n    RESPONSE --> AGENT\n    AGENT -->|Response| USER\n\nstyle USER strostroke-width:4px,color:#000,fill:#EC2D7A\nstyle LLM strostroke-width:4px,color:#FFF,fill:#EF4444\nstyle AGENT strostroke-width:4px,color:#FFF,fill:#EF4444`
+                },
+                {
+                    id: 10,
+                    anchor: '10',
+                    title: '模型上下文協議 Model Context Protocol (MCP)',
+                    subtitle: '2024~25',
+                    body: `<h4>發現的問題：</h4><ul><li>在大型企業應用中，通常需要多個 AI 模型或和外部系統協作，例如：<ul><li>一個 RAG 系統負責檢索企業內部文件。</li><li>一個 Function Calling 負責執行業務操作。</li><li>一個 Agent 負責綜合決策並指導整個流程。</li></ul></li><li>這些 AI 模型和外部系統各自獨立，沒有標準化的方式來共享上下文資訊，導致資訊孤島。</li></ul><h4>解決方案：</h4><ul><li>由 Anthropic 在 2024 年底推出的開放標準，它徹底改變了 AI 如何與「外部世界」互動的方式。你可以把它視為「AI 應用程式的 USB-C 接口」一種通用的連接方式，讓 AI 模型能安全、標準化地存取外部即時資料與工具。</li></ul><h4>改進點：</h4><ul><li>讓不同的 AI 模型互通，不再是獨立運行的「黑箱」。</li><li>讓 AI 生態系統更加靈活，能夠跨系統處理更複雜的任務。</li></ul><h4>流程：</h4>`,
+                    mermaid: `flowchart TD\n    USER((User)) -->|Query| LLM((LLM))\n\n    LLM --> CHECK{Need context or tool?}\n    CHECK -->|No| RESPONSE[Final Response]\n    CHECK -->|Yes| MCP_CLIENT[MCP Client]\n\n    MCP_CLIENT -->|Prompt/Tool Request| MCP_SERVER[MCP Server]\n\n    subgraph Server Process\nCONTEXT_MANAGER[Context Manager]\nTOOL_REGISTRY[Tool Registry / Schema]\nTOOL_EXECUTOR[Tool Executor]\n\nMCP_SERVER --> CONTEXT_MANAGER\nCONTEXT_MANAGER --> MEMORY_DB[(Long-Term Memory)]\nCONTEXT_MANAGER --> VECTOR_DB[(Vector DB)]\nCONTEXT_MANAGER -->|Compose Prompt| FINAL_PROMPT{{Final Prompt}}\nFINAL_PROMPT --> MODEL((LLM))\nMODEL -->|Response or ToolCall| MCP_SERVER\nMCP_SERVER --> TOOL_REGISTRY\nTOOL_REGISTRY --> TOOL_EXECUTOR\nTOOL_EXECUTOR --> TOOL_RESULT[Result]\nTOOL_RESULT --> MCP_SERVER\n    end\n\n    MCP_SERVER -->|Return Output| MCP_CLIENT\n    MCP_CLIENT -->|Return Decision or Augmented Prompt| LLM\n    LLM --> RESPONSE\n    RESPONSE --> USER\n\nstyle USER strostroke-width:4px,color:#000,fill:#EC2D7A\nstyle LLM strostroke-width:4px,color:#FFF,fill:#EF4444\nstyle MODEL strostroke-width:4px,color:#FFF,fill:#EF4444`
+                },
+                {
+                    id: 11,
+                    anchor: '11',
+                    title: '多代理系統 Multi-Agent System',
+                    subtitle: '2024',
+                    body: `<h4>技術特點:</h4><ul><li>多代理系統的概念早已有之，但在 AI 領域，結合 LLM 的多代理協作系統在 2024 年 開始被廣泛研究和應用。</li></ul><h4>應用方式:</h4><ul><li>多個AI代理分工合作，各司其職，協同解決複雜問題，展現集體智慧的力量。每個代理可以專精於不同的任務領域，通過協作完成單一代理無法處理的複雜工作。</li></ul>`,
+                    mermaid: null
+                },
+                {
+                    id: 12,
+                    anchor: '12',
+                    title: 'AI 輔助開發 AI‑Assisted Software Development',
+                    subtitle: '2025',
+                    body: `<h4>背景和問題：</h4><ul><li>隨著程式愈來愈複雜，開發者不僅要寫程式，還要 Debug、測試、維護 legacy code。</li></ul><h4>解決方案：</h4><ul><li>AI 如 VS Code (內建GitHub Copilot，或外掛Gemini Code Assist、Cline、Roo Code等)、Cursor、Windsurf、Trae等IDE工具，可在撰寫程式時自動補全 code、生成測試範例、偵錯建議、撰寫註解，提升效率並減少 bug。</li><li>這些AI工具也不限於需要使用IDE才能使用。包括Claude (Claude Code)、Google (Gemini)、Atlassian (Rovo Dev)、Amazon (Kiro)、Qwen等都已釋出在命令列可以執行的AI輔助開發工具。</li></ul><h4>例子：</h4><ul><li>補全：你寫 for (int i=0; i<10; i++)，AI 即刻建議整個迴圈內容。</li><li>偵錯：AI 主動指出潛在 Null pointer，並標記風險行數。</li></ul>`,
+                    mermaid: null
+                },
+                {
+                    id: 13,
+                    anchor: '13',
+                    title: '氛圍編程 Vibe Coding',
+                    subtitle: '2025',
+                    body: `<h4>技術特點:</h4><ul><li>這個概念源自 OpenAI 聯合創辦人 Andrej Karpathy，在 2025 年提出，用來描述一種「幾乎忘記程式碼存在，只用語意導引 AI 寫程式」的新開發方式 。</li><li>它與「No‑code／Low‑code」不同，強調『自然語言 → AI 生成邏輯和介面』，開發者不需了解語法，只需透過描述讓 AI 完成大部分程式生成 。</li></ul><h4>技術特點:</h4><ul><li>建立在大型語言模型（如 GPT‑4、Claude、Gemini、DeepSeek、Qwen等）可理解並生成程式碼之能力。</li></ul><h4>應用方式:</h4><ul><li>幫助非程式背景者「自己作原型、小工具」。</li></ul>`,
+                    mermaid: null
+                },
+                {
+                    id: 14,
+                    anchor: '14',
+                    title: '規格先行 Vibe Spec',
+                    subtitle: '2025',
+                    body: `<h4>技術特點:</h4><ul><li>Vibe Spec（或稱 Vibespec）是一種將自然語言與正式規格結合的方式，讓 LLM 在生成程式碼前，先產生一份清晰、可追蹤的規格文件。這有助於避免隨性生成導致的混亂與錯誤。</li></ul><h4>解決的問題：</h4><ul><li>Vibe Coding 雖快速流暢，但容易缺乏結構、可測試性，並帶來安全與維護風險。</li><li>Vibe Spec 可以為每個功能定義需求、輸入/輸出、流程與測試標準，讓 AI 輸出的程式碼更穩健且可複製。</li></ul><h4>例子：</h4><ul><li>工具層級：在絕大多數的AI輔助開發工具中，你都可以設定規則或透過提示詞讓 AI 在開始寫程式前，自動先生成 spec，而不是直接生成程式碼。</li><li>實務流程：使用三份 Markdown 文件（requirements.md、design.md、tasks.md）來描述使用者故事、架構設計與任務拆解，類似 Kiro Spec 的開發流程，確保 AI 按 spec 編碼。</li></ul><h4>流程：</h4>`,
+                    mermaid: `flowchart TD\n  USER((User)) --> |啟動 Spec 模式| START[Spec Session]\n\n  subgraph Spec Workflow\n    START --> LLM((LLM))\n    LLM --> RA{{Define Requirements → requirements.md}}\n    RA --> DS{{Design System → design.md}}\n    DS --> TS{{Plan Tasks → tasks.md}}\n    TS --> EXEC{{Execute Tasks & Monitor Progress}}\n    EXEC --> DONE[功能完成]\n  end\n\n  subgraph Files \n    RA --> REQ[requirements.md（EARS 規範：WHEN … THE SYSTEM SHALL …）]\n    DS --> DES[design.md（系統架構圖／接口／資料流程）]\n    TS --> TAS[tasks.md（待辦清單、任務拆解、狀態追蹤）]\n  end\n\n  subgraph Auto Generation & Feedback\n    REQ --> TOOL_AI{{AI 製作需求草稿}}\n    TOOL_AI --> RA\n    DES --> TOOL_AI\n    TAS --> TOOL_AI\n    EXEC --> TOOL_AI\n  end\n\nstyle USER strostroke-width:4px,color:#000,fill:#EC2D7A\nstyle LLM strostroke-width:4px,color:#FFF,fill:#EF4444`
+                },
+                {
+                    id: 15,
+                    anchor: '15',
+                    title: '多模態人工智能 Multimodal AI',
+                    subtitle: '2025',
+                    body: `<h4>背景和問題：</h4><ul><li>單純文本或圖像的思維限制創意與應用場景。</li></ul><h4>解決方案：</h4><ul><li>多模態模型能處理文字／圖片／語音／影音，讓應用更貼近複雜需求。</li></ul><h4>例子：</h4><ul><li>客服 AI 能根據客戶上傳的故障照片，分析問題並語音回覆操作步驟。</li><li>企劃中 AI 幫你根據腳本直接生成簡短動畫提案片段。</li></ul>`,
+                    mermaid: null
+                },
+                {
+                    id: 16,
+                    anchor: '16',
+                    title: '合成式多媒體 Synthetic Media',
+                    subtitle: '2025',
+                    body: `<h4>背景和問題：</h4><ul><li>傳統影像、音頻內容製作耗時高、人力密集。</li></ul><h4>解決方案：</h4><ul><li>GenAI可自動生成圖像、音樂、影片、甚至互動遊戲元素。</li></ul><h4>例子：</h4><ul><li>藝術家用 AI 生成獨特的數位藝術作品。</li><li>影片製作者用 AI 生成動畫角色和背景。</li><li>音樂人用 AI 生成背景音樂或聲效。</li></ul>`,
+                    mermaid: null
+                },
+                {
+                    id: 17,
+                    anchor: '17',
+                    title: '生成設計 Generative Design',
+                    subtitle: '2025',
+                    body: `<h4>背景和問題：</h4><p>工程或建築設計需考慮節能、成本、材質等複雜參數。</p><h4>解決方案：</h4><ul><li>AI 把 CAD + 環境數據導入，經由演算法生成多種設計方案供選擇。</li></ul><h4>例子：</h4><ul><li>建築師需求：只描述「需要最大自然採光、用最低成本建一棟辦公室」，AI 畫出 5 種外觀與材料配置供選擇。</li><li>IT 機櫃規劃：規劃機櫃配置時，AI 根據冷度流量與電力負載給出合理排佈建議。</li><li>PTC的Creo：工程師可以透過互動方式指定各自的需求與目標，包括偏好的材料與製造流程，而生成式設計引擎就會自動產生可立即生產的設計，以便當做繼續設計的起點或最終版本的解決方案。因此工程師可以與技術互動，更快建立卓越的設計並推動產品創新。</li></ul>`,
+                    mermaid: null
+                },
+                {
+                    id: 18,
+                    anchor: '18',
+                    title: '因果人工智慧 Causal AI',
+                    subtitle: '2025',
+                    body: `<h4>背景和問題：</h4><ul><li>GenAI背後的大型語言模型雖然可以用類似人類對話的方式回答問題，甚至創建連貫且富有創意的文字，但 LLM 的回答內容事實上是以統計學上最有可能出現的字詞，而非像是人類在思考般以「因果」進行推論的。</li><li>世界經濟論壇報導提出，將「因果AI」與生成式AI 結合，將能輔助生成式AI 提升決策解釋力、減少偏差與風險。</li></ul><h4>解決方案：</h4><ul><li>因果 AI 建立「X 導致 Y」模型，幫企業做更可靠的決策。</li></ul><h4>例子：</h4><ul><li>IT 評估系統升級是否導致效能下降，就能區分「版本不穩定導致的問題」vs.「正確升級帶來的延遲」。</li><li>客服部門可找出「培訓完客服是否真正改善滿意度」，而不是只看時間關聯。</li></ul>`,
+                    mermaid: null
+                },
+                {
+                    id: 21,
+                    anchor: 'P1',
+                    title: '問題P1',
+                    subtitle: '',
+                    body: `<h4>那些應用技術是可以來解決GenAI產生幻覺？</h4>`,
+                    mermaid: null
+                },
+                {
+                    id: 19,
+                    anchor: 'R1',
+                    title: '問題R1',
+                    subtitle: '',
+                    body: `<h4>要怎麼讓已整合RAG技術的GenAI只回答搜尋到的文件內容，而不會亂說話？</h4>`,
+                    mermaid: null
+                },
+                {
+                    id: 24,
+                    anchor: 'R2',
+                    title: '問題R2',
+                    subtitle: '',
+                    body: `<h4>要讓GenAI能夠回答GeDCC上關於ISO 27001管理規範的問題，可以使用那種技術來達成？</h4>`,
+                    mermaid: null
+                },
+                {
+                    id: 23,
+                    anchor: 'F1',
+                    title: '問題F1',
+                    subtitle: '',
+                    body: `<h4>ChatGPT聊天介面上可以開啟的網頁搜尋功能，你覺得是使用哪一種應用技術達成？</h4>`,
+                    mermaid: null
+                },
+                {
+                    id: 20,
+                    anchor: 'M1',
+                    title: '問題M1',
+                    subtitle: '',
+                    body: `<h4>在剛剛講述的應用技術中，用那一種技術可以來查詢BPM資料庫中的資訊？</h4>`,
+                    mermaid: null
+                },
+                {
+                    id: 22,
+                    anchor: 'A1',
+                    title: '問題A1',
+                    subtitle: '',
+                    body: `<h4>AI輔助開發工具用了那些我們剛剛講述的應用技術？</h4>`,
+                    mermaid: null
+                },
+                {
+                    id: 25,
+                    anchor: 'A2',
+                    title: '問題A2',
+                    subtitle: '',
+                    body: `<h4>要讓GenAI 自動執行一連串任務，例如收集資料 → 整理摘要 → 寄出報告，應該用哪一種技術？</h4>`,
+                    mermaid: null
+                },
+                {
+                    id: 26,
+                    anchor: 'A3',
+                    title: '問題A3',
+                    subtitle: '',
+                    body: `<h4>如果我們希望不同 AI 模型（像查資料的 vs 處理數據的）能協作工作，該使用哪種技術？</h4>`,
+                    mermaid: null
+                },
+                {
+                    id: 27,
+                    anchor: 'V1',
+                    title: '問題V1',
+                    subtitle: '',
+                    body: `<h4>如果一位非工程背景的同仁，用自然語言就可以完成一個小工具，你覺得是用到哪個技術？</h4>`,
+                    mermaid: null
+                },
+                {
+                    id: 28,
+                    anchor: 'V2',
+                    title: '問題V2',
+                    subtitle: '',
+                    body: `<h4>Business Analyst或Project Manager們可以怎麼來使用這些GenAI技術？</h4>`,
+                    mermaid: null
+                },
             ];
-            
-            const freqSet = frequencies[cardIndex % frequencies.length];
-            
-            // 設置音效參數
-            oscillator.frequency.setValueAtTime(freqSet[0], audioContext.currentTime);
-            oscillator.frequency.exponentialRampToValueAtTime(freqSet[1], audioContext.currentTime + 0.1);
-            oscillator.frequency.exponentialRampToValueAtTime(freqSet[2], audioContext.currentTime + 0.2);
-            
-            gainNode.gain.setValueAtTime(0, audioContext.currentTime);
-            gainNode.gain.linearRampToValueAtTime(0.1, audioContext.currentTime + 0.01);
-            gainNode.gain.exponentialRampToValueAtTime(0.01, audioContext.currentTime + 0.3);
-            
-            // 為不同的卡片設置不同的波形
-            const waveforms = ['sine', 'square', 'triangle', 'sawtooth'];
-            oscillator.type = waveforms[cardIndex % waveforms.length];
-            
-            oscillator.start(audioContext.currentTime);
-            oscillator.stop(audioContext.currentTime + 0.3);
-        }
-        
-        // 為卡片應用特定的動畫效果
-        function applyCardSpecificAnimation(card, index) {
-            // 移除之前的動畫類
-            card.style.animation = '';
-            
-            // 根據索引應用不同的動畫
-            setTimeout(() => {
-                switch (index % 5) {
-                    case 0:
-                        card.style.animation = 'cardSlideInFromLeft 0.8s ease-out forwards';
-                        break;
-                    case 1:
-                        card.style.animation = 'cardSlideInFromRight 0.8s ease-out forwards';
-                        break;
-                    case 2:
-                        card.style.animation = 'cardSlideInFromTop 0.8s ease-out forwards';
-                        break;
-                    case 3:
-                        card.style.animation = 'cardSlideInFromBottom 0.8s ease-out forwards';
-                        break;
-                    case 4:
-                        card.style.animation = 'cardZoomInRotate 0.8s ease-out forwards';
-                        break;
-                }
-            }, 10);
-        }
-        
-        // 初始化頁面
-        initializeCards();
-        
-        // 總是滾動到頁面頂部
-        window.scrollTo(0, 0);
-        
-        // 保留標題的fade-in效果
-        const titleSection = document.querySelector('.title-section');
-        titleSection.classList.add('fade-in', 'visible');
-        
-        // 滑鼠移動視差效果
-        let mouseX = 0, mouseY = 0;
-        let targetX = 0, targetY = 0;
-        
-        document.addEventListener('mousemove', (e) => {
-            mouseX = e.clientX;
-            mouseY = e.clientY;
-        });
-        
-        // 平滑動畫循環
-        function animate() {
-            targetX += (mouseX - targetX) * 0.02;
-            targetY += (mouseY - targetY) * 0.02;
-            
-            // 像素裝飾元素跟隨滑鼠移動
-            const pixels = document.querySelectorAll('.pixel-decoration');
-            pixels.forEach((pixel, index) => {
-                const speed = (index + 1) * 0.01;
-                const x = targetX * speed;
-                const y = targetY * speed;
-                pixel.style.transform = `translate(${x}px, ${y}px)`;
-            });
-            
-            requestAnimationFrame(animate);
-        }
-        
-        animate();
-        
-        // 卡片hover效果增強
-        document.querySelectorAll('.tech-card').forEach(card => {
-            card.addEventListener('mouseenter', function() {
-                // 添加故障效果
-                this.style.animation = 'glitch 0.3s ease-in-out';
-                
-                // BUG修復註解: 使用setTimeout清除動畫避免動畫堆疊
-                setTimeout(() => {
-                    this.style.animation = '';
-                }, 300);
-            });
-            
-            // 點擊效果
-            card.addEventListener('click', function() {
-                // 創建點擊波紋效果
-                const ripple = document.createElement('div');
-                ripple.style.cssText = `
-                    position: absolute;
-                    border-radius: 50%;
-                    background: var(--highlight-color);
-                    transform: scale(0);
-                    animation: ripple 0.6s linear;
-                    pointer-events: none;
-                `;
-                
-                const rect = this.getBoundingClientRect();
-                const size = Math.max(rect.width, rect.height);
-                ripple.style.width = ripple.style.height = size + 'px';
-                ripple.style.left = (event.clientX - rect.left - size / 2) + 'px';
-                ripple.style.top = (event.clientY - rect.top - size / 2) + 'px';
-                
-                this.appendChild(ripple);
-                
-                // BUG修復註解: 清理DOM元素避免記憶體洩漏
-                setTimeout(() => {
-                    if (ripple.parentNode) {
-                        ripple.parentNode.removeChild(ripple);
-                    }
-                }, 600);
-            });
-        });
-        
-        // 添加ripple動畫CSS
-        const style = document.createElement('style');
-        style.textContent = `
-            @keyframes ripple {
-                to {
-                    transform: scale(4);
-                    opacity: 0;
-                }
-            }
-        `;
-        document.head.appendChild(style);
-        
-        // 鍵盤導航支持
-        document.addEventListener('keydown', (e) => {
-            if (e.key === 'Tab') {
-                // 確保tab導航可見性
-                document.body.classList.add('keyboard-navigation');
-            }
-        });
-        
-        document.addEventListener('mousedown', () => {
-            document.body.classList.remove('keyboard-navigation');
-        });
-        
-        // 性能監控 - 檢測卡頓
-        let lastTime = performance.now();
-        function checkPerformance() {
-            const currentTime = performance.now();
-            const delta = currentTime - lastTime;
-            
-            // BUG修復註解: 如果幀率低於30fps，減少動畫效果
-            if (delta > 33) { // 超過33ms表示低於30fps
-                document.body.classList.add('reduce-motion');
-            } else {
-                document.body.classList.remove('reduce-motion');
-            }
-            
-            lastTime = currentTime;
-            requestAnimationFrame(checkPerformance);
-        }
-        
-        checkPerformance();
-        
-        // 添加性能優化CSS
-        const performanceStyle = document.createElement('style');
-        performanceStyle.textContent = `
-            .reduce-motion * {
-                animation-duration: 0.01ms !important;
-                animation-iteration-count: 1 !important;
-                transition-duration: 0.01ms !important;
-            }
-            
-            .keyboard-navigation *:focus {
-                outline: 2px solid var(--highlight-color);
-                outline-offset: 2px;
-            }
-        `;
-        document.head.appendChild(performanceStyle);
 
-        document.addEventListener('DOMContentLoaded', function() {
-            document.querySelectorAll('.mermaid').forEach((elem) => {
-                elem.dataset.mermaid = elem.innerHTML;
-            });
+            const cardsContainer = document.getElementById('info-cards-container');
+            const visualAnchor = document.getElementById('visual-anchor-container');
+            const prevBtn = document.getElementById('prev-card');
+            const nextBtn = document.getElementById('next-card');
+            const startBtn = document.getElementById('start-journey');
+            const homeBtn = document.getElementById('go-home');
+            const modal = document.getElementById('mermaid-modal');
+            const modalOverlay = document.getElementById('modal-overlay');
+            const modalCloseBtn = document.getElementById('modal-close');
+            const modalTitle = document.getElementById('modal-title');
+            const mermaidRenderContainer = document.getElementById('mermaid-render-container');
+            const zoomInBtn = document.getElementById('zoom-in');
+            const zoomOutBtn = document.getElementById('zoom-out');
+            const zoomResetBtn = document.getElementById('zoom-reset');
+            const panToggleBtn = document.getElementById('pan-toggle');
+            const downloadSvgBtn = document.getElementById('download-svg');
+            const downloadPngBtn = document.getElementById('download-png');
 
-            setTimeout(() => {
-                import('https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.esm.min.mjs').then((mermaid) => {
-                    mermaid.default.run();
+            let currentIndex = 0;
+            let cardElements = [];
+            let zoomLevel = 1.0;
+            let panModeEnabled = false;
+            let isPanning = false;
+            let startX, startY, scrollLeft, scrollTop;
+
+            function generateCards() {
+                // Create Home Card (Card 0)
+                const homeCard = document.createElement('div');
+                homeCard.id = 'card-0';
+                homeCard.className = 'card-content bg-white p-8 shadow-lg rounded-lg';
+                homeCard.dataset.anchor = 'G';
+                
+                const homeListItems = cardData.map(card => `<li><a data-card-index="${card.id}">${card.title.split('<')[0].trim()}</a></li>`).join('');
+                homeCard.innerHTML = `
+                    <h3>探索GenAI應用技術演進</h3>
+                    <p>從早期的大型語言模型到現代的多代理系統，見證生成式人工智慧技術的革命性發展歷程。每一項技術都試圖解決前一代的問題，推動著AI向更智能、更實用的方向發展。</p>
+                    <ul class="grid grid-cols-2 gap-x-8 home-card-list">${homeListItems}</ul>`;
+                cardsContainer.appendChild(homeCard);
+
+                // Create other cards
+                cardData.forEach(data => {
+                    const cardEl = document.createElement('div');
+                    cardEl.id = `card-${data.id}`;
+                    cardEl.className = 'card-content bg-white p-8 shadow-lg rounded-lg hidden';
+                    cardEl.dataset.anchor = data.anchor;
+
+                    let subtitleHtml = data.subtitle ? `<p class="font-poppins text-sm text-gray-500 mb-4">時間：${data.subtitle}</p>` : '';
+                    let diagramHtml = data.mermaid ? `
+                        <div class="flex justify-center items-center flex-col mt-6">
+                            <i class="fa-solid fa-diagram-project diagram-placeholder"></i>
+                            <p class="font-poppins text-sm mt-2">點擊查看圖表</p>
+                        </div>` : '';
+
+                    cardEl.innerHTML = `<h3>${data.title}</h3>${subtitleHtml}${data.body}${diagramHtml}`;
+                    cardsContainer.appendChild(cardEl);
                 });
-            }, 100);
-            // Add question card to the techCards collection
-            const questionCard = document.getElementById('question-card');
-            const questionName = questionCard.querySelector('.question-name');
-            const questionContent = questionCard.querySelector('.question-content');
-            const questionLinks = document.querySelectorAll('.tech-tag[data-question]');
+
+                cardElements = [homeCard, ...Array.from(cardsContainer.querySelectorAll('.card-content:not(#card-0)'))];
+            }
             
-            // Store reference to all tech cards including question card
-            const allTechCards = Array.from(document.querySelectorAll('.tech-card'));
-            const questionCardIndex = allTechCards.indexOf(questionCard);
-            
-            // Remove question card from normal flow if it exists in the array
-            if (questionCardIndex > -1) {
-                allTechCards.splice(questionCardIndex, 1);
+            function updateButtons() {
+                const totalCards = cardElements.length;
+                prevBtn.disabled = currentIndex <= 1;
+                nextBtn.disabled = currentIndex >= totalCards - 1;
+                prevBtn.classList.toggle('opacity-50', currentIndex <= 1);
+                prevBtn.classList.toggle('cursor-not-allowed', currentIndex <= 1);
+                nextBtn.classList.toggle('opacity-50', currentIndex >= totalCards - 1);
+                nextBtn.classList.toggle('cursor-not-allowed', currentIndex >= totalCards - 1);
             }
 
-            questionLinks.forEach(link => {
-                link.addEventListener('click', function(event) {
-                    event.preventDefault();
-                    const questionNumber = this.getAttribute('data-question');
-                    const questionText = getQuestionText(questionNumber);
-                    
-                    // Update question content
-                    questionName.innerHTML = `<h3>問題${questionNumber}</h3>`;
-                    questionContent.innerHTML = `<p>${questionText}</p>`;
-                    
-                    // Hide all other tech cards
-                    document.querySelectorAll('.tech-card').forEach(card => {
-                        if (!card.classList.contains('question-card')) {
-                            card.classList.remove('show');
-                        }
-                    });
-                    
-                    // Show question card using the same method as other cards
-                    questionCard.classList.add('show');
-                    
-                    // Scroll to question card
-                    questionCard.scrollIntoView({ behavior: 'smooth', block: 'center' });
+            function showCard(index) {
+                if (index < 0 || index >= cardElements.length) return;
+                
+                cardElements.forEach((card, i) => {
+                    card.classList.toggle('hidden', i !== index);
                 });
-            });
+                
+                visualAnchor.textContent = cardElements[index].dataset.anchor;
+                currentIndex = index;
+                updateButtons();
+            }
 
-            function getQuestionText(questionNumber) {
-                switch (questionNumber) {
-                    case '1':
-                        return '要怎麼讓已整合RAG技術的GenAI只回答搜尋到的文件內容，而不會亂說話?';
-                    case '2':
-                        return '在剛剛講述的應用技術中，用那一種技術可以來查詢BPM資料庫中的資訊?';
-                    case '3':
-                        return 'AI輔助開發工具用了那些我們剛剛講述的應用技術?';
-                    case '4':
-                        return '那些應用技術是可以來解決GenAI產生幻覺?';
-                    case '5':
-                        return 'ChatGPT聊天介面上可以開啟的網頁搜尋功能，你覺得是使用哪一種應用技術達成?';
-                    case '6':
-                        return '要讓GenAI能夠回答GeDCC上關於ISO 27001管理規範的問題，可以使用那種技術來達成?';
-                    case '7':
-                        return '要讓 GenAI 自動執行一連串任務，例如收集資料 → 整理摘要 → 寄出報告，應該用哪一種技術？';
-                    case '8':
-                        return '如果我們希望不同 AI 模型（像查資料的 vs 處理數據的）能協作工作，該使用哪種技術？';
-                    case '9':
-                        return '如果一位非工程背景的同仁，用自然語言就可以完成一個小工具，你覺得是用到哪個技術？';
-                    case '10':
-                        return 'Business Analyst或Project Manager們可以怎麼來使用這些GenAI技術？';
-                    default:
-                        return 'Question not found.';
+            function applyZoom() {
+                const svg = mermaidRenderContainer.querySelector('svg');
+                if (svg) {
+                    svg.style.transform = `scale(${zoomLevel})`;
                 }
             }
-            
-            // Add function to hide question card
-            window.hideQuestionCard = function() {
-                questionCard.classList.remove('show');
-            };
 
-            const themeToggleBtn = document.getElementById('themeToggleBtn');
-            themeToggleBtn.addEventListener('click', () => {
-                document.body.classList.toggle('light-theme');
-                const isLightTheme = document.body.classList.contains('light-theme');
-                const theme = isLightTheme ? 'default' : 'dark';
+            function openModal(cardId) {
+                const data = cardData.find(c => c.id === cardId);
+                if (!data || !data.mermaid) return;
+
+                modalTitle.textContent = data.title.split('<')[0].trim() + ' - 流程圖';
+                mermaidRenderContainer.innerHTML = `<div class="mermaid">${data.mermaid}</div>`;
+                modal.classList.remove('hidden');
                 
-                // Re-initialize and re-render Mermaid diagrams
-                const mermaidConfig = {
-                    theme: isLightTheme ? 'default' : 'dark',
-                    themeVariables: {
-                        primaryColor: isLightTheme ? '#ffffff' : '#002200',
-                        primaryTextColor: isLightTheme ? '#333740' : '#00FF41',
-                        primaryBorderColor: isLightTheme ? '#dee2e6' : '#00FF41',
-                        lineColor: isLightTheme ? '#333740' : '#00FF41'
-                    }
+                zoomLevel = 1.0;
+                applyZoom();
+                
+                // Disable pan mode when opening modal
+                panModeEnabled = false;
+                mermaidRenderContainer.classList.remove('pan-active', 'panning');
+                panToggleBtn.classList.remove('bg-blue-300');
+
+                mermaid.run({ nodes: mermaidRenderContainer.querySelectorAll('.mermaid') }).then(() => {
+                    applyZoom();
+                });
+            }
+
+            function closeModal() {
+                modal.classList.add('hidden');
+                mermaidRenderContainer.innerHTML = '';
+                zoomLevel = 1.0;
+                panModeEnabled = false;
+                isPanning = false;
+            }
+
+            // Event Listeners
+            nextBtn.addEventListener('click', () => showCard(currentIndex + 1));
+            prevBtn.addEventListener('click', () => showCard(currentIndex - 1));
+            startBtn.addEventListener('click', () => showCard(1));
+            homeBtn.addEventListener('click', () => showCard(0));
+            modalOverlay.addEventListener('click', closeModal);
+            modalCloseBtn.addEventListener('click', closeModal);
+
+            zoomInBtn.addEventListener('click', () => {
+                zoomLevel += 0.1;
+                applyZoom();
+            });
+            zoomOutBtn.addEventListener('click', () => {
+                zoomLevel = Math.max(0.2, zoomLevel - 0.1);
+                applyZoom();
+            });
+            zoomResetBtn.addEventListener('click', () => {
+                zoomLevel = 1.0;
+                applyZoom();
+            });
+
+            panToggleBtn.addEventListener('click', () => {
+                panModeEnabled = !panModeEnabled;
+                panToggleBtn.classList.toggle('bg-blue-300', panModeEnabled);
+                mermaidRenderContainer.classList.toggle('pan-active', panModeEnabled);
+            });
+
+            mermaidRenderContainer.addEventListener('mousedown', (e) => {
+                if (!panModeEnabled) return;
+                isPanning = true;
+                mermaidRenderContainer.classList.add('panning');
+                startX = e.pageX - mermaidRenderContainer.offsetLeft;
+                startY = e.pageY - mermaidRenderContainer.offsetTop;
+                scrollLeft = mermaidRenderContainer.scrollLeft;
+                scrollTop = mermaidRenderContainer.scrollTop;
+            });
+
+            mermaidRenderContainer.addEventListener('mouseleave', () => {
+                if (!panModeEnabled) return;
+                isPanning = false;
+                mermaidRenderContainer.classList.remove('panning');
+            });
+
+            mermaidRenderContainer.addEventListener('mouseup', () => {
+                if (!panModeEnabled) return;
+                isPanning = false;
+                mermaidRenderContainer.classList.remove('panning');
+            });
+
+            mermaidRenderContainer.addEventListener('mousemove', (e) => {
+                if (!isPanning) return;
+                e.preventDefault();
+                const x = e.pageX - mermaidRenderContainer.offsetLeft;
+                const y = e.pageY - mermaidRenderContainer.offsetTop;
+                const walkX = (x - startX) * 2; // Pan speed
+                const walkY = (y - startY) * 2;
+                mermaidRenderContainer.scrollLeft = scrollLeft - walkX;
+                mermaidRenderContainer.scrollTop = scrollTop - walkY;
+            });
+
+            downloadSvgBtn.addEventListener('click', () => {
+                const svg = mermaidRenderContainer.querySelector('svg');
+                if (!svg) return;
+
+                const svgData = new XMLSerializer().serializeToString(svg);
+                const blob = new Blob([svgData], { type: 'image/svg+xml;charset=utf-8' });
+                const url = URL.createObjectURL(blob);
+                const a = document.createElement('a');
+                a.href = url;
+                a.download = 'mermaid-diagram.svg';
+                document.body.appendChild(a);
+                a.click();
+                document.body.removeChild(a);
+                URL.revokeObjectURL(url);
+            });
+
+            downloadPngBtn.addEventListener('click', () => {
+                const svg = mermaidRenderContainer.querySelector('svg');
+                if (!svg) return;
+
+                const canvas = document.createElement('canvas');
+                const ctx = canvas.getContext('2d');
+                const svgData = new XMLSerializer().serializeToString(svg);
+                const img = new Image();
+
+                img.onload = () => {
+                    // To get a sharper image, we can render it at a higher resolution
+                    const scale = 2;
+                    canvas.width = img.width * scale;
+                    canvas.height = img.height * scale;
+                    ctx.setTransform(scale, 0, 0, scale, 0, 0);
+                    ctx.drawImage(img, 0, 0);
+
+                    const pngUrl = canvas.toDataURL('image/png');
+                    const a = document.createElement('a');
+                    a.href = pngUrl;
+                    a.download = 'mermaid-diagram.png';
+                    document.body.appendChild(a);
+                    a.click();
+                    document.body.removeChild(a);
                 };
-                
-                // Re-render the diagrams
-                document.querySelectorAll('.mermaid').forEach((elem) => {
-                    const mermaidCode = elem.dataset.mermaid;
-                    elem.removeAttribute('data-processed');
-                    elem.innerHTML = mermaidCode;
-                });
-                
-                import('https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.esm.min.mjs').then((mermaid) => {
-                    mermaid.default.initialize(mermaidConfig);
-                    mermaid.default.run();
-                });
-            });
-        });
-        
-        console.log('🎮 AI Evolution Timeline loaded successfully!');
-        console.log('🔧 All bug fixes and performance optimizations applied.');
 
+                img.src = 'data:image/svg+xml;base64,' + btoa(unescape(encodeURIComponent(svgData)));
+            });
+
+            cardsContainer.addEventListener('click', e => {
+                // Home card links
+                if (e.target.matches('.home-card-list a')) {
+                    e.preventDefault();
+                    const index = parseInt(e.target.getAttribute('data-card-index'), 10);
+                    showCard(index);
+                }
+                // Diagram placeholders
+                if (e.target.matches('.diagram-placeholder')) {
+                    const cardElement = e.target.closest('.card-content');
+                    const cardId = parseInt(cardElement.id.replace('card-', ''), 10);
+                    openModal(cardId);
+                }
+            });
+
+            // Initialization
+            generateCards();
+            showCard(0);
+        });
     </script>
+
 </body>
 </html>
-<style>
-.tech-description ul {
-    margin-left: 2em;
-    padding-left: 1.5em;
-}
-</style>

@@ -1,21 +1,14 @@
-# 探索GenAI應用技術演進...
+# Vibe Spec Practices
 
-## 提示詞:
-幫我將 {輸入的文章} 生成一個 HTML 動態網頁。
-具體要求是:
-* 非對稱與“破界”網格佈局 (Asymmetrical & Broken Grid Layout)，打破傳統的、對稱的、規規矩矩的網格系統，採用非對稱佈局，讓元素之間相互重疊、穿插，創造出動感和視覺張力。
-* 元素重疊: 文字壓著圖形，不能遮擋文字。中英文混用，中文大字體粗體，英文小字作為點綴。
-* 模仿 apple 官網的藝術設計，採用{像素藝術 (Pixel Art) / 8位機風格 (8-bit)},{純黑色}底配合渲染模組的{宮殿綠色}{#EC2D7A}作為高亮。
-* 不規則對齊: 元素不嚴格按照水平或垂直線對齊。
-* 視覺引導: 通過佈局引導用戶的視線，形成獨特的閱讀流。
-* HTML 結構: 通常有一個包裹容器，內部的元素可以自由擺放。
-* CSS 技術: CSS Grid Layout: 這是實現這種佈局的最強工具。Grid 提供了強大的二維佈局能力，可以輕鬆定義非對稱的網格軌道，並讓元素跨越多個網格單元格。
-* position: absolute;: 與相對定位的父元素 (position: relative) 結合，可以精確地將某個元素放置在任何位置，實現自由的重疊效果。
-* 負 margin: 一個簡單粗暴但有效的方法，通過設置負的 margin 值讓元素向外移動，侵入其他元素的空間，實現重疊。
-* JavaScript 負責複雜的互動、狀態管理和性能優化 (如 Intersection Observer、Three.js)。
-* 避免使用傳統官網佈局作為全頁面設計。
-* 不要省略內容要點。
-* 底色不要為透明。
-* 自檢代碼中的bug，並對發生bug的地方進行註解，方便我檢查。
-* CSS 和 JavaScript 直接嵌入到 HTML 文件中，將三個文件合併為一個獨立的、自包含的網頁文件。
+## 成品：
+- [雜誌資訊卡風格](https://daxiaguojin.github.io/index.html)
+- [像素藝術風格](https://daxiaguojin.github.io/index-2.html)
 
+## 提示詞：
+- [雜誌資訊卡風格](https://github.com/daxiaguojin/daxiaguojin.github.io/blob/main/PROMPT-1.md)
+- [像素藝術風格](https://github.com/daxiaguojin/daxiaguojin.github.io/blob/main/PROMPT-1.md)
+
+## 本文：
+- [GenAI應用技術演進史](https://github.com/daxiaguojin/daxiaguojin.github.io/blob/main/TEXT.md)
+
+## 工具：
