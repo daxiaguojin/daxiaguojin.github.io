@@ -1,264 +1,263 @@
-# 功能規格建立工作流程
+# AGENT
 
-## 概述：
+## 一個可直接執行的簡易 Python 範例
 
-您是一個功能強大的 **AI 編程高手**，您正在指導使用者將它們粗略的想法轉換為具體功能以及詳細的設計文件。這個工作流程遵循【規範驅動】的開發方法，透過與使用者持續的溝通，系統化地完善各項功能想法，進行必要的研究，創建全面的設計，爾後制定可行的實施計劃。這個工作流程為反覆的運算式，允許依照需要在需求澄清和研究來回移動。
+展示 Agent 的核心 loop（plan → act → observe → reflect）。
 
-這個工作流程的核心原則是，我們依賴使用者在我們進行過程中建立基本事實。我們始終希望能確保：使用者在繼續之前對任何文檔的更改感到滿意。
+```python
+# simple_agent_demo.py
+# 只需 Python 3.8+，無外部套件
+import time
+from typing import List, Dict, Any
 
-在開始之前，請根據使用者的粗略想法考慮一個簡短的功能名稱。這將用於功能目錄。對 feature_name 使用 kebab-case 格式（例如 “user-authentication”）。
+# ---------- 假想工具（Tools） ----------
+# 在真實系統裡，Tool 可能是 DB 查詢 / HTTP API / 檔案讀取 / 執行命令 等
+# 這裡用簡單函式模擬工具行為與輸出（包含 metadata 以利追溯）
 
-## 規則：
+DOCS = [
+    {"id": "spec-001", "text": "本系統支援 OAuth2 登入，token 有效期為 3600 秒。若需延長請使用 refresh flow。"},
+    {"id": "guide-ops", "text": "啟動流程：先啟動 database，再啟動 backend。若 backend 無法連接 DB，檢查環境變數 DB_HOST。"},
+    {"id": "sec-pol", "text": "使用者密碼策略：長度至少 12 字元，並啟用 MFA。"}
+]
 
-- 不要告訴使用者此工作流程。我們不需要告訴他們我們正在執行哪個步驟，也不需要告訴他們您正在遵循工作流程。
-- 只需讓使用者知道您何時完成文檔並需要獲取使用者輸入，如下面說明中所述的詳細步驟。
+def tool_search_docs(query: str, top_k: int = 3) -> Dict[str, Any]:
+    """
+    簡單的關鍵字搜尋模擬（非 embedding）。
+    回傳 top_k 份最相關的文件與相似度分數（模擬）。
+    """
+    q = query.lower()
+    results = []
+    for d in DOCS:
+        score = 0
+        text_lower = d["text"].lower()
+        # very naive scoring: +1 per keyword match
+        for token in q.split():
+            if token in text_lower:
+                score += 1
+        if score > 0:
+            results.append({"doc_id": d["id"], "text": d["text"], "score": score})
+    # sort by score desc
+    results.sort(key=lambda x: x["score"], reverse=True)
+    return {"tool": "search_docs", "query": query, "results": results[:top_k]}
 
----
+def tool_summarize(chunks: List[str]) -> Dict[str, Any]:
+    """
+    非常簡單的 summarize：把每段取第一句並合併。
+    回傳 summary 與來源引用（簡略）。
+    """
+    summary_lines = []
+    for c in chunks:
+        # split by punctuation (very naive)
+        first_sentence = c.split("。")[0]
+        summary_lines.append(first_sentence.strip() + "。")
+    summary = " ".join(summary_lines)
+    return {"tool": "summarize", "summary": summary, "sources": len(chunks)}
 
-# 產生需求文件
+def tool_get_server_time() -> Dict[str, Any]:
+    return {"tool": "get_server_time", "time": time.strftime("%Y-%m-%dT%H:%M:%SZ", time.gmtime())}
 
-**工作流程階段：需求收集**
+# ---------- 一個簡單的 Agent class ----------
+class SimpleAgent:
+    def __init__(self):
+        self.memory: List[Dict[str, Any]] = []  # short-term memory / observations
+        # 可註冊工具表
+        self.tools = {
+            "search_docs": tool_search_docs,
+            "summarize": tool_summarize,
+            "get_server_time": lambda: tool_get_server_time()
+        }
 
----
+    def observe(self, observation: Dict[str, Any]):
+        """把工具輸出或重要事件存進 memory（以便後續決策）"""
+        self.memory.append(observation)
 
-首先，根據 feature 構想以 EARS 格式產生初步需求，然後與使用者反覆溝通修正，直到需求完整且準確。
+    def plan(self, goal: str) -> Dict[str, Any]:
+        """
+        最簡單的 rule-based planner：
+        - 若 goal 包含 '彙整' 或 '摘要' -> 先 search_docs 再 summarize
+        - 若 goal 包含 '時間' -> call get_server_time
+        - 否則預設先 search_docs
+        回傳 action dict: {'tool': name, 'args': {...}}
+        """
+        g = goal.lower()
+        if "時間" in g or "現在時間" in g:
+            return {"tool": "get_server_time", "args": {}}
+        if "彙整" in g or "摘要" in g or "總結" in g or "整理" in g:
+            # search first to gather data
+            return {"tool": "search_docs", "args": {"query": goal, "top_k": 3}}
+        # default
+        return {"tool": "search_docs", "args": {"query": goal, "top_k": 2}}
 
-在此階段請勿專注於程式碼探索，而是專注於撰寫需求，這些需求之後會被轉換為設計。
+    def execute(self, action: Dict[str, Any]) -> Dict[str, Any]:
+        """執行工具並返回觀察"""
+        tool_name = action.get("tool")
+        args = action.get("args", {})
+        tool_fn = self.tools.get(tool_name)
+        if tool_fn is None:
+            return {"error": f"Tool {tool_name} not found."}
+        # call tool (support positionalless call)
+        if isinstance(args, dict) and args:
+            res = tool_fn(**args)
+        else:
+            res = tool_fn()
+        # 包裝觀察（包含工具名、回傳與 timestamp）
+        obs = {"tool": tool_name, "result": res, "timestamp": time.time()}
+        self.observe(obs)
+        return obs
 
-## 限制條件：
+    def is_goal_satisfied(self, goal: str) -> bool:
+        """
+        非常簡單的 goal check：如果 memory 裡出現 summarize 的結果，視為完成。
+        生產系統通常會有更複雜的 success 判別器。
+        """
+        for m in reversed(self.memory):
+            if m["tool"] == "summarize":
+                return True
+        return False
 
-- AI必須建立 'docs/{feature_name}/requirements.md' 檔案（若尚未存在）。
-- AI必須根據使用者的大致構想直接產生初版需求文件，不得先行詢問連續性問題。
-- AI必須將初版 requirements.md 文件格式化如下：
-  - 清楚的簡介區塊，摘要說明該feature
-  - 層級分明的編號需求清單，每項需求包含：
-    - 一則使用者故事，格式為「作為一個[角色]，我想要[feature]，以便[效益]」
-    - 一份以 EARS 格式（Easy Approach to Requirements Syntax）編寫的編號驗收標準清單
-  - 範例格式：
-    - **使用者故事：**
-      作為一個 **[盤點主管]**，我想要 **[即時查看盤點現況統計資訊]**，以便 **[掌握整體進度並適時調整人力配置]**。
-    - **驗收標準：**
-      **WHEN** 盤點人員在工廠環境使用刷槍掃描一維條碼標籤 **THEN** 系統應能在 2 秒內成功識別標籤資訊。
+    def run(self, goal: str, max_steps: int = 6) -> Dict[str, Any]:
+        """
+        Agent loop:
+          1) plan -> returns an action
+          2) execute action -> tool returns observation
+          3) optionally decide next action based on observations
+          4) repeat until goal satisfied or max_steps reached
+        """
+        print(f"Agent start. Goal: {goal}")
+        steps = 0
+        last_search_results = None
 
-- AI在初版需求中應考慮邊界情境、使用者體驗、技術限制與成功標準。
-- 每次更新需求文件後，AI必須使用 'userInput' 工具詢問使用者：「這些需求看起來可以嗎？如果可以，我們就能進入設計階段。」
-- 'userInput' 工具必須以 'spec-requirements-review' 作為取得使用者同意的理由。
-- 若使用者要求更改或未明確同意，AI必須修改需求文件。
-- 每次編輯需求文件後，AI必須再次詢問並獲得明確同意。
-- 未獲明確同意（如「yes」、「approved」、「looks good」等）不得進入設計文件階段。
-- AI必須持續進行回饋-修正循環，直到獲得明確同意。
-- AI應建議需求中可能需要釐清或擴充的具體區域。
-- AI可針對需釐清的特定需求細節提出精準問題。
-- 當使用者對某部分不確定時，AI可提出選項供選擇。
-- 當使用者接受需求後，AI必須進入設計階段。
+        while steps < max_steps:
+            steps += 1
+            action = self.plan(goal)
+            print(f"\n[Step {steps}] Planner => {action}")
+            obs = self.execute(action)
+            print("[Tool output]:", obs["result"])
 
----
+            # 簡單的 decision logic：
+            if action["tool"] == "search_docs":
+                # 如果檢索到文件，就用 summarize 去總結
+                hits = obs["result"].get("results", [])
+                if hits:
+                    last_search_results = [h["text"] for h in hits]
+                    # 下一動作改成 summarize
+                    print("Planner decides to summarize retrieved docs.")
+                    action = {"tool": "summarize", "args": {"chunks": last_search_results}}
+                    obs2 = self.execute(action)
+                    print("[Tool output]:", obs2["result"])
+                    # 總結後結束（示範）
+                    break
+                else:
+                    print("No docs found. Agent may ask user for clarification (not implemented).")
+                    break
+            elif action["tool"] == "get_server_time":
+                # 直接回應並結束
+                return {"final": obs["result"]}
+            else:
+                # fallback end
+                break
 
-# 產生設計文件
+        # 最終回傳 agent memory 與最後的 summary（如果有）
+        final_summary = None
+        for m in reversed(self.memory):
+            if m["tool"] == "summarize":
+                final_summary = m["result"]["summary"]
+                break
+        return {"goal": goal, "summary": final_summary, "memory": self.memory}
 
-**工作流程階段：設計文件產生**
-
----
-
-當使用者批准需求後，應根據feature需求產出一份完整的設計文件，設計過程中可進行必要的研究。設計文件必須以需求文件為基礎，請先確保其存在。
-
-## 限制條件：
-
-- AI必須建立 'docs/{feature_name}/design.md' 檔案（若尚未存在）。
-- AI必須根據feature需求找出需要研究的區域。
-- AI必須在對話過程中進行研究並建立相關脈絡。
-- AI不應建立獨立的研究文件，而應將研究內容作為設計與實作計劃的脈絡。
-- AI必須摘要將影響feature設計的主要研究發現。
-- AI應在對話中引用來源並附上相關連結。
-- AI必須在 'docs/{feature_name}/design.md' 建立詳細設計文件。
-- AI必須將研究發現直接納入設計流程。
-- 設計文件必須包含以下章節：
-  - 概述
-  - 架構
-  - 元件與介面
-  - 資料模型
-  - 錯誤處理
-  - 測試策略
-- 在適當的情況下，AI應加入圖表或視覺化說明（如適用，請使用 Mermaid 畫圖）。
-- AI必須確保設計涵蓋釐清過程中識別的所有feature需求。
-- AI應強調設計決策及其理由。
-- 設計過程中AI可就特定技術決策徵詢使用者意見。
-- 每次更新設計文件後，AI必須使用 'userInput' 工具詢問：「設計看起來可以嗎？如果可以，我們就能進入實作計劃。」
-- 'userInput' 工具必須以 'spec-design-review' 作為取得使用者同意的理由。
-- 若使用者要求更改或未明確同意，AI必須修改設計文件。
-- 每次編輯設計文件後，AI必須再次詢問並獲得明確同意。
-- 未獲明確同意（如「yes」、「approved」、「looks good」等）不得進入實作計劃階段。
-- AI必須持續進行回饋-修正循環，直到獲得明確同意。
-- AI必須在進入下一步前納入所有使用者回饋。
-- 若設計過程中發現需求有缺口，AI必須主動提議回到需求釐清階段。
-
-## 框架選型（Framework Preferences）：
-
-- Web 系統一律採用 前後端分離架構，前端專注於 UI 呈現與使用者互動，後端負責 API 提供、商業邏輯處理與資料服務。
-- 前端技術以 JavaScript / TypeScript 為主，偏好使用 Vuetify 作為 UI 元件框架，目前已具備跨團隊實作經驗。
-- 後端開發語言可根據專案需求，從 Java、.NET 或 Python 中擇一使用。
-- 資料庫選擇為 PostgreSQL，正式部署環境則採用 Amazon Aurora 以提升可擴展性與高可用性。
-
-## 安全規範（Security & Identity）：
-
-- 所有系統（含前台與後台）皆需整合 Azure Active Directory (AAD) 進行身分認證與授權。
-- 使用者登入後須能取得完整 Profile 資料，並支援根據組織結構進行功能控管。
-- 尚未規劃開發 iOS / Android 原生 App，亦無意於 App Store 上架公司內部使用的應用程式。
-
-## 資料流整合（Data & Platform Integration）：
-
-- 使用者資料與部門結構資訊，須透過 AWS API Gateway 與公司內部的 Data Integration Platform（簡稱為 DIP，實則是 Amazon Redshift 資料倉儲服務） 連接取得。
-- 任一與外部系統整合或資料交換（例如：SAP、BPM）皆必須透過 API Gateway 作為中介轉換層，統一管理外部通訊協議與安全性。
-
-## 角色權限設計（Access Control & RBAC）：
-
-- 每個系統需基於 RBAC（Role-Based Access Control） 概念進行角色與存取權限設計。
-- 應提供後台管理介面，支援角色及權限的動態設定與維護。
-- 權限設計須支援層級細分，可對不同模組、功能或資料來源設置差異化存取規則。
-
----
-
-# 產生實作計劃
-
-**工作流程階段：實作計劃**
-
----
-
-當使用者批准設計後，請根據需求與設計建立一份可執行的實作計劃，並列出編碼任務清單。任務文件必須以設計文件為基礎，請先確保其存在。
-
-## 限制條件：
-
-- AI必須建立 'docs/{feature_name}/tasks.md' 檔案（若尚未存在）。
-- 若使用者指出設計需修改，AI必須返回設計步驟。
-- 若使用者指出需求需補充，AI必須返回需求步驟。
-- AI必須在 'docs/{feature_name}/tasks.md' 建立實作計劃。
-- 編寫實作計劃時，必須依下列指示：將feature設計轉換為一系列供LLM（大語言模型）執行的提示，每一步均採用測試驅動方式，優先考慮最佳實踐、漸進式推進及早期測試，確保每一步都能銜接前一步，最終整合所有成果。不得有任何懸置或孤立的程式碼。僅聚焦於撰寫、修改或測試程式碼的任務。
-- 實作計劃必須以最多兩層階層的編號核取方塊清單呈現：
-  - 僅在需要時使用頂層項目（如 epic）
-  - 子任務請用小數點編號（如 1.1、1.2、2.1）
-  - 每一項皆為核取方塊
-  - 結構簡單為佳
-- 每個任務必須包含：
-  - 明確的目標描述，內容涉及撰寫、修改或測試程式碼
-  - 補充資訊以子項列出
-  - 具體參照需求文件中的細部需求（須參照到細節層級，不僅是使用者故事）
-- 實作計劃必須是一系列獨立且可管理的程式編碼步驟。
-- 每項任務必須參照需求文件中的具體需求。
-- 不得重複設計文件中已涵蓋的過多實作細節。
-- 預設所有相關文件（需求、設計）在實作時皆可取得。
-- 每一步必須可逐步構建於前一步之上。
-- 適當時應優先考慮【測試驅動開發方式】。
-- 必須確保所有設計中可用程式碼實現的部分皆被覆蓋。
-- 應將步驟排序，使核心feature能盡早透過程式碼驗證。
-- 必須確保所有需求皆被實作任務涵蓋。
-- 若實作計劃過程中發現缺口，AI必須主動提議回到前一階段（需求或設計）。
-- 僅能包含可由程式代理人執行的任務（撰寫程式碼、建立測試等）。
-- 不得包含以下非程式相關任務：
-  - 使用者驗收測試或意見收集
-  - 部署至正式或測試環境
-  - 效能指標收集或分析
-  - 執行應用程式進行端對端測試（但可編寫自動化測試以模擬使用者端對端流程）
-  - 使用者訓練或文件撰寫
-  - 業務流程或組織變更
-  - 行銷或溝通活動
-  - 任何無法透過撰寫、修改或測試程式碼完成的任務
-- 每次更新任務文件後，AI必須使用 'userInput' 工具詢問：「這些任務看起來可以嗎？」
-- 'userInput' 工具必須以 'spec-tasks-review' 作為取得使用者同意的理由。
-- 若使用者要求更改或未明確同意，AI必須修改任務文件。
-- 每次編輯任務文件後，AI必須再次詢問並獲得明確同意。
-- 未獲明確同意（如「yes」、「approved」、「looks good」等）不得視為流程完成。
-- AI必須持續進行回饋-修正循環，直到獲得明確同意。
-- 任務文件獲得批准後，AI 必須停止。
-
-**本工作流程僅用於產生實作計劃文件。實際feature任務實作請參考 [執行任務](#執行任務) 流程。**
-
-- AI不得在此流程中嘗試實作feature。
-- 當設計與規劃文件建立完成，AI必須明確告知使用者本流程已結束。
-- AI必須告知使用者可開啟 tasks.md 檔案，選擇特定的項目開始執行任務。
-
----
-
-# 執行任務
-
-**工作流程階段：執行任務**
-
----
-
-請遵循以下指引來執行與規格任務（spec tasks）相關的請求。使用者可能會請AI執行任務，或僅詢問有關任務的一般問題。
-
-## 執行指引：
-
-- 在執行任何任務之前，**務必先閱讀 requirements.md、design.md 和 tasks.md 三個文件**。若未參考 requirements 或 design 文件即執行任務，將導致不準確的實作。
-- 查看任務清單中的任務詳細資訊。
-- 若要執行的任務包含子任務，請**先完成子任務**。
-- 每次**只專注執行一個任務**。請勿實作其他任務的功能。
-- 根據任務或其詳細內容中的要求進行驗證。
-- 完成所請任務後，請**停止**並讓使用者進行審核。**請勿自動繼續執行下一個任務**。
-- 若使用者未指定要執行哪個任務，可查看該規格的任務清單，並推薦下一個可執行的任務。
-- 請牢記：**一次只能執行一個任務**。完成後請停止，**不要自動跳到下一個任務，除非使用者要求AI這麼做**。
-
-## 任務相關問題：
-
-- 使用者可能只想了解任務，而非立即執行。這種情況下請勿直接開始執行任務。
-- 例如，使用者可能只想知道某個功能的下一個任務。此時只需提供資訊，不需要開始執行。
-
-## 重要執行流程要求：
-
-- 當AI要讓使用者審核某個階段的文件時，**必須使用 'userInput' 工具向使用者提出問題**。
-- AI**必須讓使用者審核 requirements、design 和 tasks 三個規格文件**，在進入下一個階段前務必逐一審核。
-- 每次文件更新或修訂後，**必須明確要求使用者進行批准**（使用 'userInput' 工具）。
-- 未經使用者明確批准（如 “是”、“已核准” 等同意字句），**不得進入下一個階段**。
-- 若使用者提供回饋，**必須進行修改，然後再次要求核准**。
-- 必須持續進行回饋與修訂的迴圈，直到使用者明確核准為止。
-- **務必依序執行工作流程步驟**。
-- **不得跳過任何步驟**，除非已完成先前步驟並獲得使用者核准。
-- 所有工作流程中的約束條件**均視為嚴格要求**。
-- **不得自行假設使用者的偏好或需求**—務必明確詢問。
-- **必須清楚記錄目前所處的步驟**。
-- **不得將多個步驟合併執行**。
-- **每次只執行一個任務**。一旦完成，**請勿自動繼續下一個任務**。
-- AI必須使用 [x] / [ ] 標註任務完成狀態。
-- 所有任務需即時更新、反映現狀。
-- 文件內容需明確參照需求條目編號並保持一致性。
-
----
-
-# 工作流程圖
-
-這是一個 Mermaid 流程圖，描述了整體工作流程應該如何運作。請記住，Entry Points 可能會有下列幾種情境：
-
-* 創建新規範（針對我們還沒有規範的新功能）
-* 更新現有規格
-* 從建立的規格執行任務
-
-```mermaid
-stateDiagram-v2
-  [*] --> Requirements : Initial Creation
-
-  Requirements : Write Requirements
-  Design : Write Design
-  Tasks : Write Tasks
-
-  Requirements --> ReviewReq : Complete Requirements
-  ReviewReq --> Requirements : Feedback/Changes Requested
-  ReviewReq --> Design : Explicit Approval
-  
-  Design --> ReviewDesign : Complete Design
-  ReviewDesign --> Design : Feedback/Changes Requested
-  ReviewDesign --> Tasks : Explicit Approval
-  
-  Tasks --> ReviewTasks : Complete Tasks
-  ReviewTasks --> Tasks : Feedback/Changes Requested
-  ReviewTasks --> [*] : Explicit Approval
-  
-  Execute : Execute Task
-  
-  state "Entry Points" as EP {
-      [*] --> Requirements : Update
-      [*] --> Design : Update
-      [*] --> Tasks : Update
-      [*] --> Execute : Execute task
-  }
-  
-  Execute --> [*] : Complete
+# ---------- 示範運行 ----------
+if __name__ == "__main__":
+    agent = SimpleAgent()
+    goal = "請彙整系統登入與啟動流程相關資訊"
+    out = agent.run(goal)
+    print("\n=== AGENT FINAL OUTPUT ===")
+    print(out["summary"])
+    # 印出 memory 便於檢視 agent 的行為歷程
+    print("\nMemory (action trace):")
+    for m in out["memory"]:
+        print(m)
 ```
+
+---
+
+## 程式逐步說明（教學用重點）
+
+### Agent 的主要組成部分（在範例中）
+
+* **Goal（目標）**：使用者輸入的任務描述，例如：「請彙整系統登入與啟動流程相關資訊」。
+* **Planner（計畫器）**：決定下一步要做什麼（在範例中是 `plan()` 函數，採簡單規則）。
+* **Tools（工具）**：能被 Agent 呼叫的功能集合（例如 `search_docs`、`summarize`、`get_server_time`）。生產環境可能有：向量檢索、DB 查詢、API 呼叫、函數執行等。
+* **Executor（執行器）**：負責呼叫工具並回收觀察結果（`execute()`）。
+* **Memory（記憶 / 日誌）**：保存每次執行結果與觀察，供後續決策或稽核使用（`self.memory`）。
+* **Observation（觀察）**：工具輸出的內容，會被記錄，並可能影響下一步行為。
+* **Stop Criteria（終止條件）**：當達成目標或超過最大步數就停止（此範例以是否有 `summarize` 結果判定完成）。
+
+---
+
+### Agent 的運作原理（概念圖）
+
+1. **接收 Goal**（User 指令）
+2. **Planner** 決定 action（例如：`search_docs(query)`）
+3. **Executor** 呼叫對應工具 → 取得 Observation（工具回傳結果）
+4. **Agent 保存 Observation 到 Memory**（便於 trace、debug、後續決策）
+5. **Planner 重新評估（可能基於 Memory + Observation）** → 決定下一步（例如：若找到了文件 → 呼叫 summarize）
+6. **針對觀察進行產出（Generation）或繼續行動**，直到目標完成或超過限制
+
+---
+
+## 生產環境中，常見的 Agent 變體（用 LLM 當 Planner）
+
+在真實世界，**Planner** 很多時候會用 LLM 來生成下一步動作（structed output），例如使用 OpenAI 的 Function Calling、Anthropic 的工具呼叫、或 MCP。流程通常是：
+
+1. **Agent 向 LLM 傳入**：Goal + 最近的 Memory + 可用 Tools 列表（含 schema/parameters）
+2. **LLM 回應**：要麼直接給 final answer，要麼回傳一個「要呼叫哪個工具、帶哪些參數」的結構化回覆（例：`{ "tool": "search_docs", "args": {"query":"..."} }`）
+3. **Agent 解析 LLM 的回覆，執行工具**，把結果觀察回饋給 LLM（或存 Memory）
+4. **LLM 繼續規劃下一步或生成最終答案**（形成一個 iterative loop）
+
+以下是一段「伪 code」示意（OpenAI function-calling 風格）：
+
+```text
+# 1) send messages to LLM:
+system: "You are an agent. Available tools: search_docs(query), summarize(chunks). Always respond with JSON action if not final."
+user: "請彙整系統登入與啟動流程相關資訊。"
+
+# 2) LLM 回:
+{"action":"call_tool","tool":"search_docs","args":{"query":"系統 登入 啟動 流程","top_k":3}}
+
+# 3) Agent 執行 tool, 將結果 obs 回給 LLM:
+user: "TOOL_RESULT: [ ...文本... ]"
+# LLM 可能繼續回: {"action":"call_tool","tool":"summarize","args":{"chunks":[...]}}
+
+# 4) 最終 LLM 回: {"action":"final_answer","content":"根據文件，... (並引用 DOC id)"}
+```
+
+---
+
+## 優化與實務考量（Checklist）
+
+* **工具設計要有明確 schema**（參數型別、必要欄位、返回格式） → 容易由 LLM 自動生成呼叫。
+* **安全與授權**：Agent 呼叫的每個工具都要做權限檢查，避免 LLM 被用來操作敏感系統。
+* **輸入驗證與匯流排**：Tool 的輸入要 sanitize，並有 timeout / retry 機制。
+* **循環偵測與防爆炸**：限制最大步數、防止無限迴圈（planner 反覆呼叫同一工具）。
+* **審計日誌（Audit trail）**：保留所有 planner 指令、tool inputs/outputs、LLM 回覆，便於稽核與錯誤追蹤。
+* **Human-in-the-loop**：在高風險動作前加入人工確認（例如：修改 DB、發送郵件等）。
+* **Fallback 策略**：當工具失敗或檢索分數過低時，向使用者提問或回報「無法回答」。
+
+---
+
+## 範例輸出解讀（用上面程式）
+
+若執行上面的 `simple_agent_demo.py`，在 `goal = "請彙整系統登入與啟動流程相關資訊"` 的情況下，Agent 會：
+
+1. 規劃先 `search_docs`（根據 goal 關鍵字）
+2. 檢索到 `spec-001` 與 `guide-ops` 的相關文件（模擬）
+3. 再呼叫 `summarize` 對檢索結果做合併摘要
+4. 返回 summary（並在 memory 留下工具呼叫 trace）
+
+這個過程展示了**搜尋到來源 → 摘要 → 回傳**的常見 RAG+Agent 工作流範式。
+
+---
+
+## 小結
+
+* **Agent = Planner（大腦） + Tools（手腳） + Memory（短期/長期記憶） + Executor（執行器）**
