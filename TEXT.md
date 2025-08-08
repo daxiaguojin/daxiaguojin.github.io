@@ -203,6 +203,10 @@ token 是現代大型語言模型（LLM）處理文本的基本單位。它不�
     - 讓 LLM 可以即時訪問外部知識，減少幻覺。
     - 企業可以利用自己的資料（如技術文件、客服對話）來增強 LLM 的回答能力。
 
+### 例子：
+
+    - [RAG程式範例](https://github.com/daxiaguojin/daxiaguojin.github.io/blob/main/rag.md)
+
 ### 流程：
 ```mermaid
 graph LR
@@ -454,7 +458,11 @@ style AGENT strostroke-width:4px,color:#FFF,fill:#540a0a
 ### 解決方案：
 
     - 由 Anthropic 在 2024 年底推出的開放標準，它徹底改變了 AI 如何與「外部世界」互動的方式。你可以把它視為「AI 應用程式的 USB-C 接口」一種通用的連接方式，讓 AI 模型能安全、標準化地存取外部即時資料與工具。
-    
+
+### 範例：
+
+    - [MCP程式範例](https://github.com/daxiaguojin/daxiaguojin.github.io/blob/main/mcp.md)
+
 ### 流程：
 ```mermaid
 flowchart TD
