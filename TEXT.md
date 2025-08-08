@@ -140,6 +140,10 @@ style LLM strostroke-width:4px,color:#FFF,fill:#540a0a
     - 中介層: 提示工程作為用戶和 LLM 之間的橋樑，引導模型產生更好的結果
     - 改進的輸出: 經過優化的提示詞，LLM 能產生更精確、一致的回應
 
+### 範例:
+
+    - [提示工程範例](https://github.com/daxiaguojin/daxiaguojin.github.io/blob/main/prompt_engineering.md)
+
 ---
       
 ## Token
@@ -345,7 +349,11 @@ Function Calling 只能處理單一 API 呼叫，無法自己決定「下一步�
 ### 解決方案：
 
     - 讓 LLM 不只是回答問題，而是根據目標「規劃步驟」、「決策下一步行動」並「執行多個函數」。在人工智慧領域，智能代理的概念早已存在，但結合 LLM 的 Agent 系統在 2023 年 開始受到廣泛關注。
-    
+
+### 範例：
+
+    - [function calling範例](https://github.com/daxiaguojin/daxiaguojin.github.io/blob/main/function_calling.md)
+
 ### 流程：
 
 ```mermaid
@@ -563,6 +571,7 @@ style MODEL strostroke-width:4px,color:#FFF,fill:#540a0a
 
     - 工具層級：在絕大多數的AI輔助開發工具中，你都可以設定規則或透過提示詞讓 AI 在開始寫程式前，自動先生成 spec，而不是直接生成程式碼。
     - 實務流程：使用三份 Markdown 文件（requirements.md、design.md、tasks.md）來描述使用者故事、架構設計與任務拆解，類似 Kiro Spec 的開發流程，確保 AI 按 spec 編碼。
+    - agent.md: [agent.md](https://github.com/daxiaguojin/daxiaguojin.github.io/blob/main/agent.md)
 
 ### 流程：
 
@@ -632,9 +641,15 @@ style LLM strostroke-width:4px,color:#FFF,fill:#540a0a
     
 ### 例子：
 
-    - 藝術家用 AI 生成獨特的數位藝術作品。
-    - 影片製作者用 AI 生成動畫角色和背景。
-    - 音樂人用 AI 生成背景音樂或聲效。
+    - 藝術家用 AI 生成獨特的數位藝術作品。如 Midjourney、DALL·E 3、Stable Diffusion、Adobe Firefly。使用者輸入文字描述生成圖像，可生成多風格藝術作品，並可進行風格融合與構圖微調。
+        - "A serene Chinese mountain landscape, ink wash style, misty valleys, flowing river, ancient pavilions, high detail, 8K"
+        - "Cyberpunk city at night, neon lights, rain reflections, flying cars, ultra-realistic, cinematic lighting"
+    - 影片製作者用 AI 生成動畫角色和背景。如Runway ML、Pika Labs、Synthesia、Kaiber。使用者輸入文字生成影片或動畫，部分工具支援影片擴展（video inpainting）與影片風格轉換。
+        - "Fantasy forest with glowing mushrooms and floating islands, magical atmosphere, Studio Ghibli style"
+        - "Slow motion cinematic showcase of a futuristic smartphone, rotating on a pedestal, holographic UI effects"
+    - 音樂人用 AI 生成背景音樂或聲效。如Suno AI、AIVA、Soundraw、Boomy、ElevenLabs（語音）。使用者輸入文字或上傳旋律片段生成完整音樂，支援多種音樂風格與音效設計。
+        - "Relaxing ambient background music with piano, soft strings, and nature sounds, loopable, 3 minutes"
+        - "Short sci-fi door opening sound, mechanical with soft pneumatic hiss"
 
 ---
 

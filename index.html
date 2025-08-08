@@ -23,6 +23,8 @@
         .card-content th, .card-content td { font-family: 'Poppins', sans-serif; border: 1px solid #d1d5db; padding: 0.75rem; text-align: left; }
         .card-content th { background-color: #f3f4f6; font-weight: 600; }
         .card-content pre { background-color: #f3f4f6; padding: 1rem; border-radius: 0.5rem; overflow-x: auto; margin: 1rem 0; font-family: 'Courier New', Courier, monospace; white-space: pre-wrap; }
+        .card-content li a { cursor: pointer; transition: color 0.2s; }
+        .card-content li a:hover { color: #ef4444; text-decoration: underline; }
         .footer { font-family: 'Noto Serif SC', serif; font-size: 1.5rem; font-weight: 700; margin-top: 2rem; margin-bottom: 0.5rem; background: #10bbbb; padding-left: 1rem; margin: 0;}
         .diagram-placeholder { cursor: pointer; font-size: 3rem; color: #ef4444; transition: transform 0.2s; }
         .diagram-placeholder:hover { transform: scale(1.1); }
@@ -98,14 +100,14 @@
                     title: '總覽',
                     subtitle: '2018~',
                     body: ``,
-                    mermaid: `timeline\n    title GenAI 應用技術演進總覽\n    2018 : GPT-1\n    2019 : GPT-2\n    2020 : GPT-3\n    2021 : RAG\n    2022 : GPT-3.5 : Prompt Engineering : In-Context Learning\n    2023 : GPT-4 : GPT-4 Turbo : Gemini 1 : Function Calling : AI Agent\n    2024 : GPT-4o : Gemini 1.5 Pro : Gemini 1.5 Flash : Agentic RAG : MCP : Multi-Agent System\n    2025 : Claude Opus 4 : Claude Sonnet 4 : Gemini 2.5 Pro : Gemini 2.5 Flash : AI-Assisted Software Development : Vibe Coding : Vibe Spec : Multimodal AI :  Synthetic Media : Generative Design : Causal AI`
+                    mermaid: `timeline\n    title GenAI 應用技術演進總覽\n    2018 : GPT-1\n    2019 : GPT-2\n    2020 : GPT-3\n    2021 : RAG\n    2022 : GPT-3.5 : Prompt Engineering : In-Context Learning\n    2023 : GPT-4 : GPT-4 Turbo : Gemini 1 : Function Calling : AI Agent\n    2024 : GPT-4o : Gemini 1.5 Pro : Gemini 1.5 Flash : Agentic RAG : MCP : Multi-Agent System\n    2025 : GPT-5 : Claude Opus 4 : Claude Sonnet 4 : Gemini 2.5 Pro : Gemini 2.5 Flash : AI-Assisted Software Development : Vibe Coding : Vibe Spec : Multimodal AI :  Synthetic Media : Generative Design : Causal AI`
                 },
                 {
                     id: 2,
                     anchor: '2',
                     title: 'GPT-3/3.5',
                     subtitle: '2020.06~2022.11',
-                    body: `<p>OpenAI 於 2020 年 6 月 發佈 GPT-3，標誌著大型語言模型（LLM）的重要進展。1750億參數展現前所未有的語言理解和生成能力。</p><p>OpenAI於 2022 年 推出 GPT‑3.5，包括 text-davinci-002/003 及 gpt-3.5‑turbo，其中 ChatGPT 正是基於 GPT‑3.5 的 fine‑tuned 版本（即 InstructGPT 系列）。</p><p>ChatGPT於 2022 年 11 月推出，僅 5 天即突破 100 萬用戶，2 個月內達到 1 億用戶，顯著改變全球對 AI 的認知與採用節奏 。</p><h4>GPT 系列模型發布時間表</h4><table class="w-full text-left border-collapse"><thead><tr><th>發佈時間</th><th>模型</th><th>參數</th></tr></thead><tbody><tr><td>2018</td><td>GPT-1 發佈</td><td>1.17 億個參數</td></tr><tr><td>2019</td><td>GPT-2 發佈</td><td>最大 15 億個參數</td></tr><tr><td>2020</td><td>GPT-3 發佈</td><td>1750 億個參數</td></tr><tr><td>2022-11-30</td><td>GPT-3.5 發佈</td><td>驅動 ChatGPT</td></tr><tr><td>2023-03</td><td>GPT-4 發佈</td><td>提升推理能力與穩定性</td></tr><tr><td>2023-11</td><td>GPT-4 Turbo</td><td>效能/成本優化，context 最長 128K</td></tr><tr><td>2024-05</td><td>GPT-4o 發佈</td><td>多模態整合 : 圖像、語音、影片</td></tr></tbody></table>`,
+                    body: `<p>OpenAI 於 2020 年 6 月 發佈 GPT-3，標誌著大型語言模型（LLM）的重要進展。1750億參數展現前所未有的語言理解和生成能力。</p><p>OpenAI於 2022 年 推出 GPT‑3.5，包括 text-davinci-002/003 及 gpt-3.5‑turbo，其中 ChatGPT 正是基於 GPT‑3.5 的 fine‑tuned 版本（即 InstructGPT 系列）。</p><p>ChatGPT於 2022 年 11 月推出，僅 5 天即突破 100 萬用戶，2 個月內達到 1 億用戶，顯著改變全球對 AI 的認知與採用節奏 。</p><h4>GPT 系列模型發布時間表</h4><table class="w-full text-left border-collapse"><thead><tr><th>發佈時間</th><th>模型</th><th>參數</th></tr></thead><tbody><tr><td>2018</td><td>GPT-1 發佈</td><td>1.17 億個參數</td></tr><tr><td>2019</td><td>GPT-2 發佈</td><td>最大 15 億個參數</td></tr><tr><td>2020</td><td>GPT-3 發佈</td><td>1750 億個參數</td></tr><tr><td>2022-11-30</td><td>GPT-3.5 發佈</td><td>驅動 ChatGPT</td></tr><tr><td>2023-03</td><td>GPT-4 發佈</td><td>提升推理能力與穩定性</td></tr><tr><td>2023-11</td><td>GPT-4 Turbo</td><td>效能/成本優化，context 最長 128K</td></tr><tr><td>2024-05</td><td>GPT-4o 發佈</td><td>多模態整合 : 圖像、語音、影片</td></tr><tr><td>2025-08</td><td>GPT-5 發佈</td><td>宣稱這款模型在寫作、寫程式、醫療輔助上的表現全球最強</td></tr></tbody></table>`,
                     mermaid: null
                 },
                 {
@@ -121,7 +123,7 @@
                     anchor: '4',
                     title: '提示工程 Prompt Engineering',
                     subtitle: '2022~',
-                    body: `<h4>發現的問題：</h4><ul><li>LLM雖然功能強大，但回應品質極度依賴使用者的輸入。</li><li>初期使用者經常無法得到預期的回答，原因可能是輸入模糊、不具體、或缺乏上下文說明。</li><li>LLM的回應常常出現錯誤、幻覺，或不符合商業應用場景的需求。</li></ul><h4>解決方案：Prompt Engineering（提示詞工程）</h4><p>提示詞工程的基本概念與原理：透過設計更明確、有結構的提示詞（Prompt），來引導語言模型產生更精確、穩定、有用的回應。這些提示詞可包括範例、角色設定、格式限制、步驟指令等，引導 LLM 「如何思考與回答」。</p><h4>改進點：</h4><ul><li>提升 LLM 回應的一致性與可預測性。</li><li>可針對不同任務（摘要、分類、問答、轉換格式等）設計不同的 prompt 模板，提高應用彈性與品質。</li><li>可結合「Chain-of-Thought（思路鏈）」、「Zero-shot/One-shot/Few-shot Examples」等技巧，提升推理與問題解決能力。</li></ul><h4>流程：</h4>`,
+                    body: `<h4>發現的問題：</h4><ul><li>LLM雖然功能強大，但回應品質極度依賴使用者的輸入。</li><li>初期使用者經常無法得到預期的回答，原因可能是輸入模糊、不具體、或缺乏上下文說明。</li><li>LLM的回應常常出現錯誤、幻覺，或不符合商業應用場景的需求。</li></ul><h4>解決方案：Prompt Engineering（提示詞工程）</h4><p>提示詞工程的基本概念與原理：透過設計更明確、有結構的提示詞（Prompt），來引導語言模型產生更精確、穩定、有用的回應。這些提示詞可包括範例、角色設定、格式限制、步驟指令等，引導 LLM 「如何思考與回答」。</p><h4>改進點：</h4><ul><li>提升 LLM 回應的一致性與可預測性。</li><li>可針對不同任務（摘要、分類、問答、轉換格式等）設計不同的 prompt 模板，提高應用彈性與品質。</li><li>可結合「Chain-of-Thought（思路鏈）」、「Zero-shot/One-shot/Few-shot Examples」等技巧，提升推理與問題解決能力。</li></ul><h4>例子：</h4><ul><li><a href="https://github.com/daxiaguojin/daxiaguojin.github.io/blob/main/prompt_engineering.md" target="_blank">提示工程範例</a></li></ul><h4>流程：</h4>`,
                     mermaid: `flowchart TD\n    USER((User)) --> |Query:「三角形內角和是多少？」| COMPOSE{{Compose Prompt}}\n\n    subgraph PE[Prompt Engineering]\nZERO[Zero‑Shot CoT]\nSYSTEM[System Instructions]\nCONTEXT[Context Injection]\nFEWSHOT[Few‑shot Examples]\nZERO --> COMPOSE\nSYSTEM --> COMPOSE\nCONTEXT --> COMPOSE\nFEWSHOT --> COMPOSE\n    end\n\n    COMPOSE --> LLM((LLM))\n    LLM --> |Response: 邏輯思維 + 最終答案| USER\n\n    subgraph Examples\nZERO_EX[Zero‑Shot CoT:\n「三角形內角和是多少？ 請詳細分步驟解析之。」] --> ZERO\nSYSTEM_EX[系統指令:\n「你是一位資深數學教師，解答需邏輯清晰、步驟完整」] --> SYSTEM\nCONTEXT_EX[上下文:\n三角形知道內角和為 180°，問三角形的角推理。] --> CONTEXT\nFEW_EX[Few‑Shot CoT 示例:\nQ: 四邊形內角和？ \nA: …步驟… 最終答案\nQ: 三邊形內角和？ \nA: …步驟… 180°] --> FEWSHOT\n    end\n\nstyle USER strostroke-width:4px,color:#000,fill:#10BBBB\nstyle LLM strostroke-width:4px,color:#FFF,fill:#EF4444`
                 },
                 {
@@ -153,7 +155,7 @@
                     anchor: '8',
                     title: '函數調用 Function Calling',
                     subtitle: '2023.06',
-                    body: `<h4>發現的問題：</h4><ul><li>LLM 可以產生正確的建議（例如「你可以申請一張請購單」），但它無法執行具體的動作（如查詢某一張請購單進度，或將待簽核的表單填寫意見核准送出）。</li><li>使用者仍然需要手動操作系統，降低了自動化效率。</li></ul><h4>解決方案：</h4><ul><li>OpenAI 於 2023 年 6 月 在其 API 中引入此功能，讓 LLM 可以根據需求輸出結構化數據（如 JSON），並透過 API 調用外部系統來執行具體任務。</li></ul><h4>改進點：</h4><ul><li>讓 LLM 可以即時訪問外部知識，減少幻覺。</li><li>企業可以利用自己的資料（如儲存在關聯式資料庫的資料、客服對話）來增強 LLM 的回答能力。</li></ul><h4>流程：</h4>`,
+                    body: `<h4>發現的問題：</h4><ul><li>LLM 可以產生正確的建議（例如「你可以申請一張請購單」），但它無法執行具體的動作（如查詢某一張請購單進度，或將待簽核的表單填寫意見核准送出）。</li><li>使用者仍然需要手動操作系統，降低了自動化效率。</li></ul><h4>解決方案：</h4><ul><li>OpenAI 於 2023 年 6 月 在其 API 中引入此功能，讓 LLM 可以根據需求輸出結構化數據（如 JSON），並透過 API 調用外部系統來執行具體任務。</li></ul><h4>改進點：</h4><ul><li>讓 LLM 可以即時訪問外部知識，減少幻覺。</li><li>企業可以利用自己的資料（如儲存在關聯式資料庫的資料、客服對話）來增強 LLM 的回答能力。</li></ul><h4>例子：</h4><ul><li><a href="https://github.com/daxiaguojin/daxiaguojin.github.io/blob/main/function_calling.md" target="_blank">function calling範例</a></li></ul><h4>流程：</h4>`,
                     mermaid: `flowchart LR\n\n    USER((User)) -->|Query| LLM((LLM))\n    LLM --> CHECK{Need Function Call?}\n\n    CHECK -->|No| RESPONSE[Final Response]\n    CHECK -->|Yes| JSON{{Generate JSON Instructions}}\n\n    subgraph FC[Function Calling]\nJSON --> FUNCTION{{Call Tool / API}}\nFUNCTION --> EXECUTE{{Execute Function}}\n    end\n\n    EXECUTE -->|Execution Result| LLM\n    LLM -->|Response| USER\n    RESPONSE --> USER\n\nstyle USER strostroke-width:4px,color:#000,fill:#10BBBB\nstyle LLM strostroke-width:4px,color:#FFF,fill:#EF4444`
                 },
                 {
@@ -209,7 +211,7 @@
                     anchor: '15',
                     title: '規格先行 Vibe Spec',
                     subtitle: '2025',
-                    body: `<h4>技術特點:</h4><ul><li>Vibe Spec（或稱 Vibespec）是一種將自然語言與正式規格結合的方式，讓 LLM 在生成程式碼前，先產生一份清晰、可追蹤的規格文件。這有助於避免隨性生成導致的混亂與錯誤。</li></ul><h4>解決的問題：</h4><ul><li>Vibe Coding 雖快速流暢，但容易缺乏結構、可測試性，並帶來安全與維護風險。</li><li>Vibe Spec 可以為每個功能定義需求、輸入/輸出、流程與測試標準，讓 AI 輸出的程式碼更穩健且可複製。</li></ul><h4>例子：</h4><ul><li>工具層級：在絕大多數的AI輔助開發工具中，你都可以設定規則或透過提示詞讓 AI 在開始寫程式前，自動先生成 spec，而不是直接生成程式碼。</li><li>實務流程：使用三份 Markdown 文件（requirements.md、design.md、tasks.md）來描述使用者故事、架構設計與任務拆解，類似 Kiro Spec 的開發流程，確保 AI 按 spec 編碼。</li></ul><h4>流程：</h4>`,
+                    body: `<h4>技術特點:</h4><ul><li>Vibe Spec（或稱 Vibespec）是一種將自然語言與正式規格結合的方式，讓 LLM 在生成程式碼前，先產生一份清晰、可追蹤的規格文件。這有助於避免隨性生成導致的混亂與錯誤。</li></ul><h4>解決的問題：</h4><ul><li>Vibe Coding 雖快速流暢，但容易缺乏結構、可測試性，並帶來安全與維護風險。</li><li>Vibe Spec 可以為每個功能定義需求、輸入/輸出、流程與測試標準，讓 AI 輸出的程式碼更穩健且可複製。</li></ul><h4>例子：</h4><ul><li>工具層級：在絕大多數的AI輔助開發工具中，你都可以設定規則或透過提示詞讓 AI 在開始寫程式前，自動先生成 spec，而不是直接生成程式碼。</li><li>實務流程：使用三份 Markdown 文件（requirements.md、design.md、tasks.md）來描述使用者故事、架構設計與任務拆解，類似 Kiro Spec 的開發流程，確保 AI 按 spec 編碼。</li><li><a href="https://github.com/daxiaguojin/daxiaguojin.github.io/blob/main/agent.md" target="_blank">agent提示詞範例</a></li></ul><h4>流程：</h4>`,
                     mermaid: `flowchart TD\n  USER((User)) --> |啟動 Spec 模式| START[Spec Session]\n\n  subgraph Spec Workflow\n    START --> LLM((LLM))\n    LLM --> RA{{Define Requirements → requirements.md}}\n    RA --> DS{{Design System → design.md}}\n    DS --> TS{{Plan Tasks → tasks.md}}\n    TS --> EXEC{{Execute Tasks & Monitor Progress}}\n    EXEC --> DONE[功能完成]\n  end\n\n  subgraph Files \n    RA --> REQ[requirements.md（EARS 規範：WHEN … THE SYSTEM SHALL …）]\n    DS --> DES[design.md（系統架構圖／接口／資料流程）]\n    TS --> TAS[tasks.md（待辦清單、任務拆解、狀態追蹤）]\n  end\n\n  subgraph Auto Generation & Feedback\n    REQ --> TOOL_AI{{AI 製作需求草稿}}\n    TOOL_AI --> RA\n    DES --> TOOL_AI\n    TAS --> TOOL_AI\n    EXEC --> TOOL_AI\n  end\n\nstyle USER strostroke-width:4px,color:#000,fill:#10BBBB\nstyle LLM strostroke-width:4px,color:#FFF,fill:#EF4444`
                 },
                 {
@@ -224,8 +226,8 @@
                     id: 17,
                     anchor: '17',
                     title: '合成式多媒體 Synthetic Media',
-                    subtitle: '2025',
-                    body: `<h4>背景和問題：</h4><ul><li>傳統影像、音頻內容製作耗時高、人力密集。</li></ul><h4>解決方案：</h4><ul><li>GenAI可自動生成圖像、音樂、影片、甚至互動遊戲元素。</li></ul><h4>例子：</h4><ul><li>藝術家用 AI 生成獨特的數位藝術作品。</li><li>影片製作者用 AI 生成動畫角色和背景。</li><li>音樂人用 AI 生成背景音樂或聲效。</li></ul>`,
+                    subtitle: '2023~2025',
+                    body: `<h4>背景和問題：</h4><ul><li>傳統影像、音頻內容製作耗時高、人力密集。</li></ul><h4>解決方案：</h4><ul><li>利用 AI 技術生成的各種媒體內容，包括圖片、影片、音頻、3D 資產等，廣泛應用於藝術、影視、廣告、遊戲等領域。</li></ul><h4>例子：</h4><ul><li><strong>藝術家用 AI 生成獨特的數位藝術作品</strong><ul><li>工具：Midjourney、DALL·E 3、Stable Diffusion、Adobe Firefly。</li><li>使用者輸入文字描述生成圖像，可生成多風格藝術作品，並可進行風格融合與構圖微調。</li><li><em>提示詞範例：</em><ul><li>"A serene Chinese mountain landscape, ink wash style, misty valleys, flowing river, ancient pavilions, high detail, 8K"</li><li>"Cyberpunk city at night, neon lights, rain reflections, flying cars, ultra-realistic, cinematic lighting"</li></ul></li></ul></li><li><strong>影片製作者用 AI 生成動畫角色和背景</strong><ul><li>工具：Runway ML、Pika Labs、Synthesia、Kaiber。</li><li>使用者輸入文字生成影片或動畫，部分工具支援影片擴展（video inpainting）與影片風格轉換。</li><li><em>提示詞範例：</em><ul><li>"Fantasy forest with glowing mushrooms and floating islands, magical atmosphere, Studio Ghibli style"</li><li>"Slow motion cinematic showcase of a futuristic smartphone, rotating on a pedestal, holographic UI effects"</li></ul></li></ul></li><li><strong>音樂人用 AI 生成背景音樂或聲效</strong><ul><li>工具：Suno AI、AIVA、Soundraw、Boomy、ElevenLabs（語音）。</li><li>使用者輸入文字或上傳旋律片段生成完整音樂，支援多種音樂風格與音效設計。</li><li><em>提示詞範例：</em><ul><li>"Relaxing ambient background music with piano, soft strings, and nature sounds, loopable, 3 minutes"</li><li>"Short sci-fi door opening sound, mechanical with soft pneumatic hiss"</li></ul></li></ul></li></ul>`,
                     mermaid: null
                 },
                 {
