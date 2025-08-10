@@ -8,17 +8,19 @@
 3. 安裝孔之間距離: 112mm
 4. 水箱至安裝孔中心距離: 102mm
 
-## GenAI:
-
 以下是符合您提供尺寸（馬桶內緣長度 268 mm、前緣至安裝孔中心 420 mm、安裝孔間距 112 mm）的溫水洗淨便座推薦，我根據安裝孔間距及總長度來篩選適配款，並整理如下：
 
-### [INAX CW‑RL10‑TW (短版) 電腦免治座](https://betterchoice.com.tw/products/inax-e-bidet-cw-rl10-tw?variant=39747084419166&utm_source=chatgpt.com)
+### INAX CW‑RL10‑TW (短版) 電腦免治座
+
+![INAX CW‑RL10‑TW (短版) 電腦免治座](https://betterchoice.com.tw/cdn/shop/products/3_79ce810f-2b15-45e9-b477-b2732b69121f_800x800.jpg?v=1658457732)
 
 #### 短版適合尺寸較短馬桶
 
 *\$15,600.00*
 
-### [禾聯 HTS‑12TJ010 瞬熱式溫水洗淨便座]()
+### 禾聯 HTS‑12TJ010 瞬熱式溫水洗淨便座
+
+![禾聯 HTS‑12TJ010 瞬熱式溫水洗淨便座](https://down-tw.img.susercontent.com/file/5e40657ab2e05b1247989f310bc7c717)
 
 #### 高性價比台灣品牌
 
@@ -28,12 +30,12 @@
 
 ### 推薦款式解說：
 
-* **[INAX CW‑RL10‑TW (短版) 電腦免治座](https://betterchoice.com.tw/products/inax-e-bidet-cw-rl10-tw?variant=39747084419166&utm_source=chatgpt.com)**
+* **INAX CW‑RL10‑TW (短版) 電腦免治座**
 
   * 專為「短版」馬桶設計，整體深度 D 約 502 mm，比一般款短，較適合您 420 mm 的前緣距離。
   * 寬度 W 為 474 mm，安裝孔間距資訊未明示，但短版設計傾向小型便座，符合您空間限制。
 
-* **[禾聯 HTS‑12TJ010 瞬熱式溫水洗淨便座]()**
+* **禾聯 HTS‑12TJ010 瞬熱式溫水洗淨便座**
 
   * 瞬熱式、省電、功能完整，並標榜「超高適配馬桶座」，具備較靈活的安裝適配性，或許能符合您現有馬桶的 112 mm 孔距限制。([禾聯科技][1])
 
