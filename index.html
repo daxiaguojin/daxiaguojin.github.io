@@ -26,8 +26,22 @@
         .card-content li a { cursor: pointer; transition: color 0.2s; }
         .card-content li a:hover { color: #ef4444; text-decoration: underline; }
         .footer { font-family: 'Noto Serif SC', serif; font-size: 1.5rem; font-weight: 700; margin-top: 2rem; margin-bottom: 0.5rem; background: #10bbbb; padding-left: 1rem; margin: 0;}
-        .diagram-placeholder { cursor: pointer; font-size: 3rem; color: #ef4444; transition: transform 0.2s; }
-        .diagram-placeholder:hover { transform: scale(1.1); }
+        .diagram-placeholder {
+            cursor: pointer;
+            font-size: 3rem;
+            color: #ef4444;
+            transition: transform 0.3s cubic-bezier(.4,2,.3,1), box-shadow 0.3s;
+            animation: diagram-pulse 1.6s infinite cubic-bezier(.4,2,.3,1);
+        }
+        .diagram-placeholder:hover {
+            transform: scale(1.18) rotate(-6deg);
+            animation-play-state: paused;
+        }
+        @keyframes diagram-pulse {
+            0% { transform: scale(1) rotate(0deg);}
+            60% { transform: scale(1.12) rotate(-4deg);}
+            100% { transform: scale(1) rotate(0deg);}
+        }
         .home-card-list li { font-size: 1.1rem; line-height: 1.8; margin-bottom: 0.5rem; }
         .home-card-list li a { cursor: pointer; transition: color 0.2s; }
         .home-card-list li a:hover { color: #ef4444; text-decoration: underline; }
@@ -36,6 +50,34 @@
         #mermaid-render-container.pan-active.panning { cursor: grabbing; }
         .mermaid { display: flex; justify-content: center; width:100%; height:100%; font-family: 'Poppins', sans-serif; font-size: 1.2rem; }
         #zoom-controls { padding-right: 20px; }
+        /* --- Card Entrance Animation --- */
+        .card-content {
+            opacity: 0;
+            transform: translateY(40px) scale(0.98);
+            transition: opacity 0.5s cubic-bezier(.4,2,.3,1), transform 0.5s cubic-bezier(.4,2,.3,1);
+        }
+        .card-content.card-visible {
+            opacity: 1;
+            transform: translateY(0) scale(1);
+        }
+
+        /* --- Card Hover Effects --- */
+        .card-content:not(.hidden):hover {
+            box-shadow: 0 12px 32px 0 rgba(16,187,187,0.10), 0 2px 8px 0 rgba(239,68,68,0.10);
+            border: 2px solid #10bbbb;
+            transition: box-shadow 0.25s, transform 0.25s, border 0.25s;
+            z-index: 2;
+        }
+
+        .card-content:not(.hidden):hover::after {
+            content: '';
+            display: block;
+            position: absolute;
+            inset: 0;
+            border-radius: 0.75rem;
+            pointer-events: none;
+            box-shadow: 0 0 0 4px #10bbbb33;
+        }
     </style>
 </head>
 <body class="text-gray-800">
@@ -451,8 +493,16 @@
                 
                 cardElements.forEach((card, i) => {
                     card.classList.toggle('hidden', i !== index);
+                    // Remove animation class from all
+                    card.classList.remove('card-visible');
                 });
-                
+
+                // Animate the current card entrance
+                const currentCard = cardElements[index];
+                setTimeout(() => {
+                    currentCard.classList.add('card-visible');
+                }, 10);
+
                 visualAnchor.textContent = cardElements[index].dataset.anchor;
                 currentIndex = index;
                 updateButtons();
