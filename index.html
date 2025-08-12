@@ -14,6 +14,7 @@
         body { font-family: 'Poppins', sans-serif; background-color: #f8f7f2; }
         .font-noto { font-family: 'Noto Serif SC', serif; border-left: 16px solid #10bbbb; padding-left: 1rem;}
         .visual-anchor { font-size: 14rem; font-weight: 900; line-height: 0.8; color: transparent; -webkit-text-stroke: 2px #ef4444; z-index: -1; }
+        .visual-anchor:hover { -webkit-text-stroke: 4px #ef4444; cursor: pointer; }
         .card-content { min-height: 800px; }
         .card-content h3 { font-family: 'Noto Serif SC', serif; font-size: 2.5rem; font-weight: 700; margin-bottom: 1rem; }
         .card-content h4 { font-family: 'Noto Serif SC', serif; font-size: 1.5rem; font-weight: 700; margin-top: 2rem; margin-bottom: 0.5rem; border-left: 4px solid #ef4444; padding-left: 1rem; }
@@ -77,6 +78,39 @@
             border-radius: 0.75rem;
             pointer-events: none;
             box-shadow: 0 0 0 4px #10bbbb33;
+        }
+        /* 粒子效果 */
+        .particle {
+            position: absolute;
+            width: 4px;
+            height: 4px;
+            background: #ef4444;
+            border-radius: 50%;
+            pointer-events: none;
+            z-index: 1000;
+        }
+        
+        .particle.green {
+            background: #10bbbb;
+        }
+        
+        @keyframes particleExplode {
+            0% {
+                transform: translate(0, 0) scale(0) rotate(0deg);
+                opacity: 1;
+            }
+            20% {
+                transform: translate(var(--deltaX, 0), var(--deltaY, 0)) scale(1.2) rotate(90deg);
+                opacity: 1;
+            }
+            80% {
+                transform: translate(calc(var(--deltaX, 0) * 2), calc(var(--deltaY, 0) * 2)) scale(0.8) rotate(270deg);
+                opacity: 0.3;
+            }
+            100% {
+                transform: translate(calc(var(--deltaX, 0) * 3), calc(var(--deltaY, 0) * 3)) scale(0) rotate(360deg);
+                opacity: 0;
+            }
         }
     </style>
 </head>
@@ -488,6 +522,45 @@
                 nextBtn.classList.toggle('cursor-not-allowed', currentIndex >= totalCards - 1);
             }
 
+            // 創建粒子爆炸效果
+            function createParticleExplosion(element) {
+                const rect = element.getBoundingClientRect();
+                const centerX = rect.left + rect.width / 2;
+                const centerY = rect.top + rect.height / 2;
+                
+                // 創建16個粒子
+                for (let i = 0; i < 16; i++) {
+                    const particle = document.createElement('div');
+                    particle.className = `particle ${i % 2 === 0 ? 'green' : ''}`;
+                    
+                    // 計算方向和距離
+                    const angle = (i * 22.5) * Math.PI / 180; // 360度分成16份
+                    const distance = 30 + Math.random() * 40;
+                    const deltaX = Math.cos(angle) * distance;
+                    const deltaY = Math.sin(angle) * distance;
+                    
+                    // 設置初始位置
+                    particle.style.left = centerX + 'px';
+                    particle.style.top = centerY + 'px';
+                    
+                    // 設置CSS變量用於動畫
+                    particle.style.setProperty('--deltaX', deltaX + 'px');
+                    particle.style.setProperty('--deltaY', deltaY + 'px');
+                    
+                    // 添加動畫
+                    particle.style.animation = `particleExplode 1.2s ease-out forwards`;
+                    
+                    document.body.appendChild(particle);
+                    
+                    // 清理粒子
+                    setTimeout(() => {
+                        if (particle.parentNode) {
+                            particle.parentNode.removeChild(particle);
+                        }
+                    }, 1200);
+                }
+            }            
+
             function showCard(index) {
                 if (index < 0 || index >= cardElements.length) return;
                 
@@ -502,6 +575,11 @@
                 setTimeout(() => {
                     currentCard.classList.add('card-visible');
                 }, 10);
+
+                // 創建粒子效果
+                setTimeout(() => {
+                    createParticleExplosion(currentCard);
+                }, 200);
 
                 visualAnchor.textContent = cardElements[index].dataset.anchor;
                 currentIndex = index;
