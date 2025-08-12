@@ -105,7 +105,7 @@
                     title: '總覽',
                     subtitle: '2018~',
                     body: ``,
-                    mermaid: `timeline\n    title GenAI 應用技術演進總覽\n    2018 : GPT-1\n    2019 : GPT-2\n    2020 : GPT-3\n    2021 : RAG\n    2022 : GPT-3.5 : Prompt Engineering : In-Context Learning\n    2023 : GPT-4 : GPT-4 Turbo : Gemini 1 : Function Calling : AI Agent\n    2024 : GPT-4o : Gemini 1.5 Pro : Gemini 1.5 Flash : Agentic RAG : MCP : Multi-Agent System\n    2025 : GPT-5 : Claude Opus 4 : Claude Sonnet 4 : Gemini 2.5 Pro : Gemini 2.5 Flash : AI-Assisted Software Development : Vibe Coding : Vibe Spec : Multimodal AI :  Synthetic Media : Generative Design : Causal AI`
+                    mermaid: `timeline\n    title GenAI 應用技術演進總覽\n    2018 : GPT-1\n    2019 : GPT-2\n    2020 : GPT-3\n    2021 : RAG\n    2022 : GPT-3.5 : Prompt Engineering : In-Context Learning : Fine Tuning\n    2023 : GPT-4 : GPT-4 Turbo : Gemini 1 : Function Calling : AI Agent\n    2024 : GPT-4o : Gemini 1.5 Pro : Gemini 1.5 Flash : Agentic RAG : MCP : Multi-Agent System\n    2025 : GPT-5 : Claude Opus 4 : Claude Sonnet 4 : Gemini 2.5 Pro : Gemini 2.5 Flash : AI-Assisted Software Development : Vibe Coding : Vibe Spec : Multimodal AI :  Synthetic Media : Generative Design : Causal AI`
                 },
                 {
                     id: 2,
@@ -233,7 +233,7 @@
                     id: 16,
                     anchor: '16',
                     title: '多模態人工智能 Multimodal AI',
-                    subtitle: '2025',
+                    subtitle: '2023~2025',
                     body: `<h4>背景和問題：</h4><ul><li>單純文本或圖像的思維限制創意與應用場景。</li></ul><h4>解決方案：</h4><ul><li>多模態模型能處理文字／圖片／語音／影音，讓應用更貼近複雜需求。</li></ul><h4>範例：</h4><ul><li>客服 AI 能根據客戶上傳的故障照片，分析問題並語音回覆操作步驟。</li><li>企劃中 AI 幫你根據腳本直接生成簡短動畫提案片段。</li></ul>`,
                     mermaid: null,
                     youtubeSrc: "https://www.youtube.com/embed/pEmCgIGpIoo?si=vY783jedRkQ19hyM&amp;start=81"
@@ -265,7 +265,16 @@
                     mermaid: null
                 },
                 {
-                    id: 19,
+                    id: 20,
+                    anchor: '20',
+                    title: '微調 Fine Tuning',
+                    subtitle: '2022',
+                    body: `<h4>背景和問題：</h4><ul><li>大型語言模型（LLM）雖然具備強大的語言理解與生成能力，但在特定領域或專業任務上，常因知識不足或風格不符而產生不精確或偏離需求的回答。</li><li>單純依靠 Prompt Engineering 難以完全克服這些限制，尤其是需要模型使用特定術語、固定格式或遵循企業規範時。</li><li>部分產業（如醫療、法律、金融）需要模型融入專業資料與行業知識，才能符合合規與精準要求。</li></ul><h4>解決方案：Fine-Tuning</h4><ul><li>是在現有預訓練 LLM 基礎上，利用特定領域或任務的標註資料進行再訓練，讓模型更契合目標用途。</li><li>能使模型在生成內容時，遵循特定語氣、結構與知識範圍，減少錯誤與偏離。</li><li>可用於分類、結構化輸出、長期風格一致性等任務，比單純調 Prompt 更穩定。</li></ul><h4>例子：</h4><ul><li><strong>客服問答系統</strong>：以公司 FAQ 與歷史客服對話紀錄微調模型，使其回覆更貼近品牌語氣與內部知識。</li><li><strong>法律文件生成</strong>：針對合約模板與法規條文進行微調，讓模型自動生成符合法律格式與用詞的草稿。</li><li><strong>醫療診斷建議</strong>：用經過專業審核的病歷與診斷資料微調模型，輔助醫師提供符合臨床指南的初步建議。</li><li><a href="https://threadreaderapp.com/thread/1954792403153621355.html?utm_campaign=topunroll" target="_blank"><strong>學習如何微調OpenAI的開源模型</strong></a></li></ul><h4>流程：</h4><ul><li>準備資料集 → 收集與任務相關的高品質資料，例如 FAQ、合約、醫療紀錄等。</li><li>資料清理與格式化 → 去除錯誤、不一致的內容，並轉換成模型可接受的 JSONL、CSV 或其他格式。</li><li>劃分資料集 → 按比例分為 訓練集（Training Set） 與 驗證集（Validation Set），確保能在訓練中評估效果。</li><li>選擇基礎模型 → 根據需求選擇 GPT-3.5、LLaMA、Mistral 等作為微調基礎。</li><li>開始微調訓練 → 使用 Fine-Tuning API 或框架（如 Hugging Face Trainer）對模型再訓練。</li><li>監控與驗證 → 在驗證集上測試，確保模型的準確率、格式一致性與風格達標。</li><li>儲存微調後模型 → 保存成可部署的模型權重與設定檔。</li><li>部署至應用系統 → 上線到聊天機器人、API、文件生成系統等。</li><li>持續監控與再訓練 → 收集新資料，週期性更新模型，保持效果最佳化。</li></ul>`,
+                    mermaid: `flowchart LR\n    A[準備資料集] --> B[資料清理與格式化]\n    B --> C[劃分資料集<br>訓練集 / 驗證集]\n    C --> D[選擇基礎模型]\n    D --> E[開始微調訓練]\n    E --> F[監控與驗證<br>評估性能]\n    F --> G[儲存微調後模型]\n    G --> H[部署至應用系統]\n    H --> I[持續監控與再訓練]`,
+                    youtubeSrc: "https://www.youtube.com/embed/fdRyVzz0DUE?si=1-bA4pGy3S7Ovzey"
+                },
+                {
+                    id: 22,
                     anchor: 'R1',
                     title: '問題R1',
                     subtitle: '',
@@ -273,7 +282,7 @@
                     mermaid: null
                 },
                 {
-                    id: 20,
+                    id: 23,
                     anchor: 'M1',
                     title: '問題M1',
                     subtitle: '',
@@ -281,7 +290,7 @@
                     mermaid: null
                 },
                 {
-                    id: 21,
+                    id: 24,
                     anchor: 'P1',
                     title: '問題P1',
                     subtitle: '',
@@ -289,7 +298,7 @@
                     mermaid: null
                 },
                 {
-                    id: 22,
+                    id: 25,
                     anchor: 'A1',
                     title: '問題A1',
                     subtitle: '',
@@ -297,7 +306,7 @@
                     mermaid: null
                 },
                 {
-                    id: 23,
+                    id: 26,
                     anchor: 'F1',
                     title: '問題F1',
                     subtitle: '',
@@ -305,7 +314,7 @@
                     mermaid: null
                 },
                 {
-                    id: 24,
+                    id: 27,
                     anchor: 'R2',
                     title: '問題R2',
                     subtitle: '',
@@ -313,7 +322,7 @@
                     mermaid: null
                 },
                 {
-                    id: 25,
+                    id: 28,
                     anchor: 'A2',
                     title: '問題A2',
                     subtitle: '',
@@ -321,7 +330,7 @@
                     mermaid: null
                 },
                 {
-                    id: 26,
+                    id: 29,
                     anchor: 'A3',
                     title: '問題A3',
                     subtitle: '',
@@ -329,7 +338,7 @@
                     mermaid: null
                 },
                 {
-                    id: 27,
+                    id: 30,
                     anchor: 'V1',
                     title: '問題V1',
                     subtitle: '',
@@ -337,7 +346,7 @@
                     mermaid: null
                 },
                 {
-                    id: 28,
+                    id: 31,
                     anchor: 'V2',
                     title: '問題V2',
                     subtitle: '',
@@ -345,7 +354,7 @@
                     mermaid: null
                 },
                 {
-                    id: 29,
+                    id: 32,
                     anchor: 'M2',
                     title: '問題M2',
                     subtitle: '',
@@ -353,7 +362,7 @@
                     mermaid: null
                 },
                 {
-                    id: 30,
+                    id: 33,
                     anchor: 'P2',
                     title: '問題P2',
                     subtitle: '',
