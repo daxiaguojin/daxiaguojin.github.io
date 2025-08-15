@@ -22,6 +22,7 @@
     - Synthetic Media
     - Generative Design
     - Causal AI
+    - Fine Tuning
 
 ---
 
@@ -46,6 +47,8 @@ ChatGPT於 2022 年 11 月推出，僅 5 天即突破 100 萬用戶，2 個月�
 | 2023-03 | GPT-4 發佈 | 提升推理能力與穩定性 |
 | 2023-11 | GPT-4 Turbo | 效能/成本優化，context 最長 128K |
 | 2024-05 | GPT-4o 發佈 | 多模態整合 : 圖像、語音、影片 |
+| 2025-08 | GPT-5 發佈 | 宣稱這款模型在寫作、寫程式、醫療輔助上的表現全球最強 |
+| 2025-08 | gpt-oss 開源模型發佈 | 宣稱效能直逼o4-mini、單張H100就能跑 |
 
 ---
 
@@ -73,9 +76,6 @@ style LLM strostroke-width:4px,color:#FFF,fill:#540a0a
     - 用戶輸入:提供問題或指令
     - LLM 處理:根據訓練數據生成回應
     - 靜態輸出:返回文本結果，並無與外部系統互動
-
-<!-- Prompt Engineering 卡片 -->
-prompt-card fade-in" id="prompt-engineering-card">
 
 ---
 
@@ -135,6 +135,7 @@ A: …步驟… 180°] --> FEWSHOT
 style USER strostroke-width:4px,color:#000,fill:#EC2D7A
 style LLM strostroke-width:4px,color:#FFF,fill:#540a0a
 ```
+
 提示工程改善了用戶與 LLM 之間的交互：
 
     - 結構化輸入: 用戶學習如何構造更有效的提示詞
