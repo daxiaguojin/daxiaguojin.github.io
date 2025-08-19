@@ -24,6 +24,59 @@
     - Causal AI
     - Fine Tuning
 
+### 架構
+
+```mermaid
+flowchart TD
+
+    subgraph D1[雲端平台]
+      A2[OpenAI GPT 系列]
+      A3[Claude 系列]
+      A4[Google Gemini]
+    end
+
+
+
+    subgraph A1[模型層]
+      A5[DeepSeek / Qwen / Mistral / Gemma 等開源 LLM]
+    end
+
+    subgraph B1[開源平台層]
+      B2[Ollama<br>本地模型運行管理]
+      B3[LangChain<br>應用框架]
+      B4[LlamaIndex<br>資料檢索框架]
+    end
+
+    subgraph C1[應用技術層]
+      subgraph C1a[基礎應用]
+        C2[Prompt Engineering]
+        C3[RAG 檢索增強生成]
+        C4[In-Context Learning]
+      end
+
+      subgraph C1b[進階應用]
+        C5[Function Calling]
+        C6[智能代理 AI Agent]
+        C7[Agentic RAG]
+        C8[MCP 模型上下文協議]
+        C9[Multi-Agent System]
+        C10[Fine-Tuning]
+      end
+
+      subgraph C1c[未來方向]
+        C11[AI-Assisted Development]
+        C12[Vibe Coding / Vibe Spec]
+        C13[Multimodal AI]
+        C14[Synthetic Media]
+        C15[Generative Design]
+        C16[Causal AI]
+      end
+    end
+
+    C1 ----> B1 ----> A1
+    C1 ----> D1
+```
+
 ---
 
 ## GPT-3/3.5
